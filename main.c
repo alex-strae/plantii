@@ -5,6 +5,8 @@
 #include "usart.h"
 #define EI 1
 #define DI 0
+#define STR_COPY(dest, src) \
+    snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
 void rtcInit(void){
    
@@ -40,27 +42,69 @@ void rtcInit(void){
    }
 }
 
+typedef struct
+{
+    char timeStamp[15];
+    int reading;
+} SensorReading;
+
+SensorReading initSensorReading(char timeStamp[], int inReading) {
+  SensorReading newReading;
+  STR_COPY(newReading.timeStamp, timeStamp);
+  newReading.reading = inReading;
+  return newReading;
+}
+
+typedef struct
+{
+    char name[10];
+    SensorReading dampReading;
+    SensorReading sunReading;
+    char currentStatus[10];
+} Plant;
+
+Plant initPlant(char inName[]) {
+  Plant newPlant;
+  SensorReading defaultReading = initSensorReading("20250401-1200", 50);
+
+  STR_COPY(newPlant.name, inName);
+  STR_COPY(newPlant.currentStatus, "OK");
+  newPlant.dampReading = defaultReading;
+  newPlant.sunReading = defaultReading;
+  return newPlant;
+}
+
+void renderLCD(Plant plant1, Plant plant2) {
+    LCD_ShowStr(80, 0, "PlantiiOS", GREEN, TRANSPARENT);
+    LCD_ShowStr(0, 0, plant1.name, WHITE, TRANSPARENT);
+    LCD_ShowNum(0, 20, plant1.dampReading.reading, 2, WHITE);
+    LCD_ShowNum(0, 40, plant1.sunReading.reading, 2, WHITE);
+    LCD_ShowStr(0, 60, plant1.currentStatus, GBLUE, TRANSPARENT);
+}
+
 int main(void){
     int ms=0, s=0, key, pKey=-1, c=0, idle=0, rtc, hh, mm, ss;
     int lookUpTbl[16]={1,4,7,14,2,5,8,0,3,6,9,15,10,11,12,13};
     int dac=0, speed=-100;
     int adcr, tmpr;
 
+    Plant gurka = initPlant("Gurka");
+    Plant tomat = initPlant("Tomat");
 
     t5omsi();                               // Initialize timer5 1kHz
     colinit();                              // Initialize column toolbox
     l88init();                              // Initialize 8*8 led toolbox
     keyinit();                              // Initialize keyboard toolbox
-    ADC3powerUpInit(1);                     // Initialize ADC0, Ch3
+    //ADC3powerUpInit(1);                     // Initialize ADC0, Ch3
     Lcd_SetType(LCD_INVERTED);                // or use LCD_INVERTED!
     Lcd_Init();
     LCD_Clear(BLACK);
-    
+
     //rtcInit();                              // Initialize RTC
     //rtc_counter_set(3600+60+1);
-    u0init(EI);                               // Initialize USART0 toolbox
+    //u0init(EI);                               // Initialize USART0 toolbox
     //eclic_global_interrupt_enable();          // !!! INTERRUPT ENABLED !!!
-
+    renderLCD(gurka, tomat);
     while (1) {
         idle++;                               // Manage Async events
 
@@ -69,12 +113,12 @@ int main(void){
             ms++;                               // ...One second heart beat
             if (ms==1000){
               ms=0;
-              LCD_ShowStr(0, 0, "Plantii v0.1", WHITE, TRANSPARENT);
+              
             }
             l88mem(2,idle>>8);                  // ...Performance monitor
             l88mem(3,idle); idle=0;
-            adc_software_trigger_enable(ADC0,   // Trigger another ADC conversion!
-                                        ADC_REGULAR_CHANNEL);
+            //adc_software_trigger_enable(ADC0,   // Trigger another ADC conversion!
+                                        //ADC_REGULAR_CHANNEL);
         }
     }
 }

@@ -8,7 +8,7 @@ Systemet utgår från lab5 och kursen HE1028 där målet bland annat var att anv
 Kod som skrivs av mig Alex, kommer inte markeras som skriven av mig. Undantag om jag behöver göra komplicerad kod där man kanske kan tro att jag fick färdig kod från KTHs exempel bibliotek.
 Kod som tas från KTH kommer markeras, om jag tycker att det inte framgår tydligt att jag inte skrivit den.
 Kod som tas från andra externa källor (ej AI) kommer markeras.
-Kod som tagits från AI eller bearbetats av AI kommer markeras. 
+Kod som tagits från AI eller bearbetats av AI kommer markeras. Kod som tas av AI kommer självklart undersökas tills jag förstår den innan jag använder den.
 Kod som tagits från andra teammedlemmar i mitt projekt kommer införlivas i detta projekt, och markeras med respektives namn
 
 Det vill säga: om kod saknar markering så är den sannolikt skriven av mig.
