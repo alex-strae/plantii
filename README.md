@@ -6,16 +6,16 @@ Målet med readme är att förmedla vem som gjort vad av koden och eventuellt f�
 Systemet utgår från lab5 och kursen HE1028 där målet bland annat var att använda LCDn. En del kod har skalats bort, och antagligen kommer mer kunna skalas bort.
 
 Kod som skrivs av mig Alex, kommer inte markeras som skriven av mig. Undantag om jag behöver göra komplicerad kod där man kanske kan tro att jag fick färdig kod från KTHs exempel bibliotek.
-Kod som tas från KTH kommer markeras, om jag tycker att det inte framgår tydligt att jag inte skrivit den.
+Kod som tas från KTH kommer markeras om jag tycker att det inte framgår tydligt att det inte är jag som skrivit den.
 Kod som tas från andra externa källor (ej AI) kommer markeras.
-Kod som tagits från AI eller bearbetats av AI kommer markeras. Kod som tas av AI kommer självklart undersökas tills jag förstår den innan jag använder den.
-Kod som tagits från andra teammedlemmar i mitt projekt kommer införlivas i detta projekt, och markeras med respektives namn
+Kod som tagits från AI eller bearbetats av AI kommer markeras. Generellt sett har jag inget emot att sno syntax-tips från AI medans jag vill skriva all logik själv. 
+Kod från andra teammedlemmar i mitt projekt kommer införlivas i detta projekt och markeras med respektives namn.
 
-Det vill säga: om kod saknar markering så är den sannolikt skriven av mig.
+Det vill säga: om kod saknar markering, och inte uppenbart är från färdiga libs vi fick från KTH, så är den sannolikt skriven av mig.
 
-En av mig sent på kvällen skriven fundering, under ca 10 min, kring systemarkitekturen av projektet:
+En sent på kvällen skriven fundering under ca 10 min kring systemarkitekturen av projektet:
     
-    Main()
+Angående Main()
 En pollad lösning: 
 Rullar konstant. Vi har inga tunga eller kritiska utrökningar så en pollad lösning kab fungera. Men det känns desto desto proffsigare med interrupts, eller det lär ju bli en slags hybrid men ändå.
 
@@ -33,3 +33,6 @@ Vad har vi för kommunikation mellan main och interrupts? Eventuellt ingen alls?
 Vi behöver structs för plantor också.
 
 Slut
+
+Nytt:
+Det kanske blir så att sensors hamnar i pollad medans user input hamnar i interrupt. Eftersom userInput kan generera ett avbrott. Sensorer kanske inte kan göra det. Vi får undersöka.
