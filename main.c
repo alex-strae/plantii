@@ -66,8 +66,9 @@ typedef struct
   char currentStatus[10];
 } Plant;
 
-Plant initPlant(char inName[])
+void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
 {
+  if (*numberOfPlants > 2) return;
   Plant newPlant;
   SensorReading defaultReading = initSensorReading("20250401-1200", 50);
 
@@ -75,20 +76,20 @@ Plant initPlant(char inName[])
   STR_COPY(newPlant.currentStatus, "OK");
   newPlant.dampReading = defaultReading;
   newPlant.sunReading = defaultReading;
-  return newPlant;
+  allPlants[*numberOfPlants] = newPlant;
+  (*numberOfPlants)++;
 }
 
-void renderLCD(Plant allPlants[])
+void renderLCD(Plant allPlants[], int numberOfPlants)
 {
-  // Nuvarande render stödjer bara 2 plantor. Sedan content utanför skärm.
-  LCD_ShowStr(110, 0, "PlantOS", GREEN, TRANSPARENT);
-
-  for (int i = 0; i < sizeof(allPlants); i++)
+  // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
+  //LCD_ShowStr(100, 0, "PlantOS", GREEN, TRANSPARENT);
+  for (int i = 0; i < numberOfPlants; i++)
   {
-    LCD_ShowStr(i * 80, 0, allPlants[i].name, WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 80, 20, allPlants[i].dampReading.reading, 2, WHITE);
-    LCD_ShowNum(i * 80, 40, allPlants[i].sunReading.reading, 2, WHITE);
-    LCD_ShowStr(i * 80, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
+    LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
+    LCD_ShowNum(i * 55, 20, allPlants[i].dampReading.reading, 2, WHITE);
+    LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 2, WHITE);
+    LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
   }
 }
 
@@ -117,15 +118,14 @@ int main(void)
 // SLUT KVARBLIVEN KOD LAB5
 
 // PLANT-KOD START
+  Plant allPlants[3];
+  int numberOfPlants = 0;
+  initPlant("Gurka", &numberOfPlants, allPlants);
+  initPlant("Tomat", &numberOfPlants, allPlants);
+  initPlant("Chili", &numberOfPlants, allPlants);
 
-  Plant gurka = initPlant("Gurka");
-  Plant tomat = initPlant("Ört");
+  renderLCD(allPlants, numberOfPlants);
 
-  Plant allPlants[2];
-  allPlants[0] = gurka;
-  allPlants[1] = tomat;
-  renderLCD(allPlants);
-  
   while (1)
   {
     idle++; // Manage Async events
