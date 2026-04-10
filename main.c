@@ -47,8 +47,6 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
 
 void renderLCD(Plant allPlants[], int numberOfPlants)
 {
-  // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
-  // LCD_ShowStr(100, 0, "PlantOS", GREEN, TRANSPARENT);
   for (int i = 0; i < numberOfPlants; i++)
   {
     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
@@ -59,29 +57,19 @@ void renderLCD(Plant allPlants[], int numberOfPlants)
 }
 
 int main(void)
-{ // KVARBLIVEN KOD FRÅN LAB5
-  int ms = 0, s = 0, key, pKey = -1, c = 0, idle = 0, rtc, hh, mm, ss;
-  int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
-  int dac = 0, speed = -100;
+{
+  int ms = 0, s = 0, idle = 0;
+  //int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
 
   t5omsi();           // Initialize timer5 1kHz
   colinit();          // Initialize column toolbox
   l88init();          // Initialize 8*8 led toolbox
-  keyinit();          // Initialize keyboard toolbox
-  ADC3powerUpInit(0); // Initialize ADC0, Ch3 ADC INIT!!
+  //keyinit();          // Initialize keyboard toolbox
+  ADC3powerUpInit(0); // Initialize ADC0, Ch3
 
   Lcd_SetType(LCD_INVERTED); // or use LCD_INVERTED!
   Lcd_Init();
   LCD_Clear(BLACK);
-
-  // rtcInit();                              // Initialize RTC
-  // rtc_counter_set(3600+60+1);
-  //u0init(EI);                      // Initialize USART0 toolbox
-  eclic_global_interrupt_enable(); // !!! INTERRUPT ENABLED !!!
-
-  // SLUT KVARBLIVEN KOD LAB5
-
-  // PLANT-KOD START
 
   Plant allPlants[3];
   int numberOfPlants = 0;
@@ -101,8 +89,8 @@ int main(void)
       {
         if (adc_flag_get(ADC0, ADC_FLAG_EOC))
         {
-          int tempValue = 300 - adc_regular_data_read(ADC0); //300 verkar vara maxvärde i fullt mörker
-          allPlants[1].sunReading.reading = tempValue / 3; // i procent
+          int tempValue = 360 - adc_regular_data_read(ADC0); //360 verkar vara maxvärde i fullt mörker
+          allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
           adc_flag_clear(ADC0, ADC_FLAG_EOC);
           adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
         }

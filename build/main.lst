@@ -1,4 +1,4 @@
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 1
 
 
    1              		.file	"main.c"
@@ -57,8 +57,8 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
   26              		.cfi_offset 9, -12
   27 0004 B284     		mv	s1,a2
   28              		.loc 1 28 3
-  29 0006 37060000 		lui	a2,%hi(.LC1)
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 2
+  29 0006 37060000 		lui	a2,%hi(.LC0)
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 2
 
 
   30              	.LVL1:
@@ -72,7 +72,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
   36              		.loc 1 26 1
   37 000e 2A84     		mv	s0,a0
   38              		.loc 1 28 3
-  39 0010 13060600 		addi	a2,a2,%lo(.LC1)
+  39 0010 13060600 		addi	a2,a2,%lo(.LC0)
   40 0014 BD45     		li	a1,15
   41              	.LVL2:
   42 0016 6800     		addi	a0,sp,12
@@ -118,7 +118,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
   75              		.cfi_endproc
   76              	.LFE2:
   78              		.section	.text.initPlant.part.0,"ax",@progbits
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 3
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 3
 
 
   79              		.align	1
@@ -145,7 +145,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
   93              		.cfi_offset 8, -8
   94 0004 2E84     		mv	s0,a1
   95              		.loc 1 38 34
-  96 0006 B7050000 		lui	a1,%hi(.LC2)
+  96 0006 B7050000 		lui	a1,%hi(.LC1)
   97              	.LVL9:
   33:main.c        **** {
   98              		.loc 1 33 6
@@ -158,7 +158,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  105              	.LVL10:
  106 0012 13062003 		li	a2,50
  107              	.LVL11:
- 108 0016 93850500 		addi	a1,a1,%lo(.LC2)
+ 108 0016 93850500 		addi	a1,a1,%lo(.LC1)
   33:main.c        **** {
  109              		.loc 1 33 6
  110 001a 86DE     		sw	ra,124(sp)
@@ -171,20 +171,20 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
   40:main.c        ****   STR_COPY(newPlant.name, inName);
  115              		.loc 1 40 3 is_stmt 1
  116 0024 B246     		lw	a3,12(sp)
- 117 0026 37060000 		lui	a2,%hi(.LC1)
- 118 002a 13060600 		addi	a2,a2,%lo(.LC1)
+ 117 0026 37060000 		lui	a2,%hi(.LC0)
+ 118 002a 13060600 		addi	a2,a2,%lo(.LC0)
  119 002e A945     		li	a1,10
  120 0030 0818     		addi	a0,sp,48
  121 0032 97000000 		call	snprintf
  121      E7800000 
  122              	.LVL13:
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 4
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 4
 
 
   41:main.c        ****   STR_COPY(newPlant.currentStatus, "OK");
  123              		.loc 1 41 3
- 124 003a B7050000 		lui	a1,%hi(.LC3)
- 125 003e 93850500 		addi	a1,a1,%lo(.LC3)
+ 124 003a B7050000 		lui	a1,%hi(.LC2)
+ 125 003e 93850500 		addi	a1,a1,%lo(.LC2)
  126 0042 C810     		addi	a0,sp,100
  127 0044 97000000 		call	strcpy
  127      E7800000 
@@ -238,7 +238,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  166 0086 6654     		lw	s0,120(sp)
  167              		.cfi_restore 8
  168              	.LVL19:
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 5
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 5
 
 
  169 0088 0961     		addi	sp,sp,128
@@ -283,14 +283,12 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  205              		.loc 1 49 1 is_stmt 1
  206              		.cfi_startproc
  207              	.LVL23:
-  50:main.c        ****   // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
-  51:main.c        ****   // LCD_ShowStr(100, 0, "PlantOS", GREEN, TRANSPARENT);
-  52:main.c        ****   for (int i = 0; i < numberOfPlants; i++)
- 208              		.loc 1 52 3
+  50:main.c        ****   for (int i = 0; i < numberOfPlants; i++)
+ 208              		.loc 1 50 3
  209              	.LBB2:
- 210              		.loc 1 52 8
+ 210              		.loc 1 50 8
  211              	.LBE2:
-  49:main.c        ****   // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
+  49:main.c        ****   for (int i = 0; i < numberOfPlants; i++)
  212              		.loc 1 49 1 is_stmt 0
  213 0000 7971     		addi	sp,sp,-48
  214              	.LCFI4:
@@ -298,15 +296,15 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  216 0002 22D4     		sw	s0,40(sp)
  217              		.cfi_offset 8, -8
  218              	.LBB3:
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 6
+  51:main.c        ****   {
+  52:main.c        ****     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 6
 
 
-  53:main.c        ****   {
-  54:main.c        ****     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
- 219              		.loc 1 54 5
+ 219              		.loc 1 52 5
  220 0004 4164     		li	s0,65536
  221              	.LBE3:
-  49:main.c        ****   // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
+  49:main.c        ****   for (int i = 0; i < numberOfPlants; i++)
  222              		.loc 1 49 1
  223 0006 26D2     		sw	s1,36(sp)
  224 0008 4ECE     		sw	s3,28(sp)
@@ -324,31 +322,31 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  236              		.cfi_offset 1, -4
  237              		.cfi_offset 18, -16
  238              		.cfi_offset 21, -28
-  49:main.c        ****   // Nuvarande render stödjer 3 plantor. Sedan content utanför skärm.
+  49:main.c        ****   for (int i = 0; i < numberOfPlants; i++)
  239              		.loc 1 49 1
  240 0016 2E8B     		mv	s6,a1
  241 0018 AA84     		mv	s1,a0
  242              	.LBB4:
-  52:main.c        ****   {
- 243              		.loc 1 52 12
+  50:main.c        ****   {
+ 243              		.loc 1 50 12
  244 001a 8149     		li	s3,0
  245 001c 930B7003 		li	s7,55
- 246              		.loc 1 54 5
+ 246              		.loc 1 52 5
  247 0020 7D14     		addi	s0,s0,-1
-  55:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
- 248              		.loc 1 55 78
- 249 0022 370A0000 		lui	s4,%hi(.LC4)
+  53:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
+ 248              		.loc 1 53 78
+ 249 0022 370A0000 		lui	s4,%hi(.LC3)
  250              	.LVL24:
  251              	.L8:
-  52:main.c        ****   {
- 252              		.loc 1 52 3 discriminator 1
+  50:main.c        ****   {
+ 252              		.loc 1 50 3 discriminator 1
  253 0026 63CD6901 		blt	s3,s6,.L9
  254              	.LBE4:
-  56:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
-  57:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
-  58:main.c        ****   }
-  59:main.c        **** }
- 255              		.loc 1 59 1
+  54:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
+  55:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
+  56:main.c        ****   }
+  57:main.c        **** }
+ 255              		.loc 1 57 1
  256 002a B250     		lw	ra,44(sp)
  257              		.cfi_remember_state
  258              		.cfi_restore 1
@@ -358,11 +356,11 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  262              		.cfi_restore 9
  263 0030 0259     		lw	s2,32(sp)
  264              		.cfi_restore 18
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 7
-
-
  265 0032 F249     		lw	s3,28(sp)
  266              		.cfi_restore 19
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 7
+
+
  267              	.LVL25:
  268 0034 624A     		lw	s4,24(sp)
  269              		.cfi_restore 20
@@ -382,25 +380,25 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  283              	.LCFI6:
  284              		.cfi_restore_state
  285              	.LBB5:
-  54:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
- 286              		.loc 1 54 5 is_stmt 1 discriminator 3
+  52:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
+ 286              		.loc 1 52 5 is_stmt 1 discriminator 3
  287 0040 33897903 		mul	s2,s3,s7
  288 0044 2686     		mv	a2,s1
  289 0046 0547     		li	a4,1
  290 0048 A286     		mv	a3,s0
  291 004a 8145     		li	a1,0
-  52:main.c        ****   {
- 292              		.loc 1 52 40 is_stmt 0 discriminator 3
+  50:main.c        ****   {
+ 292              		.loc 1 50 40 is_stmt 0 discriminator 3
  293 004c 8509     		addi	s3,s3,1
  294              	.LVL28:
-  54:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
- 295              		.loc 1 54 5 discriminator 3
+  52:main.c        ****     LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30,
+ 295              		.loc 1 52 5 discriminator 3
  296 004e 4A85     		mv	a0,s2
  297 0050 97000000 		call	LCD_ShowStr
  297      E7800000 
  298              	.LVL29:
-  55:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
- 299              		.loc 1 55 5 is_stmt 1 discriminator 3
+  53:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
+ 299              		.loc 1 53 5 is_stmt 1 discriminator 3
  300 0058 D04C     		lw	a2,28(s1)
  301 005a 2287     		mv	a4,s0
  302 005c 8D46     		li	a3,3
@@ -409,22 +407,22 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  305 0062 97000000 		call	LCD_ShowNum
  305      E7800000 
  306              	.LVL30:
-  55:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
- 307              		.loc 1 55 78 discriminator 3
+  53:main.c        ****     LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, 
+ 307              		.loc 1 53 78 discriminator 3
  308 006a 930AE901 		addi	s5,s2,30
  309 006e 0547     		li	a4,1
  310 0070 A286     		mv	a3,s0
- 311 0072 13060A00 		addi	a2,s4,%lo(.LC4)
+ 311 0072 13060A00 		addi	a2,s4,%lo(.LC3)
  312 0076 D145     		li	a1,20
  313 0078 5685     		mv	a0,s5
  314 007a 97000000 		call	LCD_ShowStr
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 8
-
-
  314      E7800000 
  315              	.LVL31:
-  56:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
- 316              		.loc 1 56 5 discriminator 3
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 8
+
+
+  54:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
+ 316              		.loc 1 54 5 discriminator 3
  317 0082 9058     		lw	a2,48(s1)
  318 0084 2287     		mv	a4,s0
  319 0086 8D46     		li	a3,3
@@ -433,18 +431,18 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  322 008e 97000000 		call	LCD_ShowNum
  322      E7800000 
  323              	.LVL32:
-  56:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
- 324              		.loc 1 56 73 discriminator 3
+  54:main.c        ****     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
+ 324              		.loc 1 54 73 discriminator 3
  325 0096 0547     		li	a4,1
  326 0098 A286     		mv	a3,s0
- 327 009a 13060A00 		addi	a2,s4,%lo(.LC4)
+ 327 009a 13060A00 		addi	a2,s4,%lo(.LC3)
  328 009e 93058002 		li	a1,40
  329 00a2 5685     		mv	a0,s5
  330 00a4 97000000 		call	LCD_ShowStr
  330      E7800000 
  331              	.LVL33:
-  57:main.c        ****   }
- 332              		.loc 1 57 5 discriminator 3
+  55:main.c        ****   }
+ 332              		.loc 1 55 5 discriminator 3
  333 00ac 13864403 		addi	a2,s1,52
  334 00b0 0547     		li	a4,1
  335 00b2 9306F07F 		li	a3,2047
@@ -458,928 +456,919 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page
  342              	.LBE5:
  343              		.cfi_endproc
  344              	.LFE4:
- 346              		.section	.text.startup.main,"ax",@progbits
- 347              		.align	1
- 348              		.globl	main
- 350              	main:
- 351              	.LFB5:
-  60:main.c        **** 
-  61:main.c        **** int main(void)
-  62:main.c        **** { // KVARBLIVEN KOD FRÅN LAB5
- 352              		.loc 1 62 1
- 353              		.cfi_startproc
-  63:main.c        ****   int ms = 0, s = 0, key, pKey = -1, c = 0, idle = 0, rtc, hh, mm, ss;
- 354              		.loc 1 63 3
- 355              	.LVL35:
-  64:main.c        ****   int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
- 356              		.loc 1 64 3
-  65:main.c        ****   int dac = 0, speed = -100;
- 357              		.loc 1 65 3
-  66:main.c        **** 
-  67:main.c        ****   t5omsi();           // Initialize timer5 1kHz
- 358              		.loc 1 67 3
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 9
+ 346              		.globl	__floatsidf
+ 347              		.globl	__divdf3
+ 348              		.globl	__fixdfsi
+ 349              		.section	.text.startup.main,"ax",@progbits
+ 350              		.align	1
+ 351              		.globl	main
+ 353              	main:
+ 354              	.LFB5:
+  58:main.c        **** 
+  59:main.c        **** int main(void)
+  60:main.c        **** {
+ 355              		.loc 1 60 1
+ 356              		.cfi_startproc
+  61:main.c        ****   int ms = 0, s = 0, idle = 0;
+ 357              		.loc 1 61 3
+ 358              	.LVL35:
+  62:main.c        ****   //int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
+  63:main.c        **** 
+  64:main.c        ****   t5omsi();           // Initialize timer5 1kHz
+ 359              		.loc 1 64 3
+  60:main.c        ****   int ms = 0, s = 0, idle = 0;
+ 360              		.loc 1 60 1 is_stmt 0
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 9
 
 
-  62:main.c        ****   int ms = 0, s = 0, key, pKey = -1, c = 0, idle = 0, rtc, hh, mm, ss;
- 359              		.loc 1 62 1 is_stmt 0
- 360 0000 5171     		addi	sp,sp,-240
- 361              	.LCFI7:
- 362              		.cfi_def_cfa_offset 240
- 363 0002 86D7     		sw	ra,236(sp)
- 364 0004 A2D5     		sw	s0,232(sp)
- 365 0006 CAD1     		sw	s2,224(sp)
- 366 0008 CECF     		sw	s3,220(sp)
- 367 000a D2CD     		sw	s4,216(sp)
- 368 000c D6CB     		sw	s5,212(sp)
- 369 000e A6D3     		sw	s1,228(sp)
- 370              		.cfi_offset 1, -4
- 371              		.cfi_offset 8, -8
- 372              		.cfi_offset 18, -16
- 373              		.cfi_offset 19, -20
- 374              		.cfi_offset 20, -24
- 375              		.cfi_offset 21, -28
- 376              		.cfi_offset 9, -12
- 377              		.loc 1 67 3
- 378 0010 97000000 		call	t5omsi
- 378      E7800000 
- 379              	.LVL36:
-  68:main.c        ****   colinit();          // Initialize column toolbox
- 380              		.loc 1 68 3 is_stmt 1
- 381 0018 97000000 		call	colinit
+ 361 0000 5171     		addi	sp,sp,-240
+ 362              	.LCFI7:
+ 363              		.cfi_def_cfa_offset 240
+ 364 0002 86D7     		sw	ra,236(sp)
+ 365 0004 A2D5     		sw	s0,232(sp)
+ 366 0006 CAD1     		sw	s2,224(sp)
+ 367 0008 CECF     		sw	s3,220(sp)
+ 368 000a D2CD     		sw	s4,216(sp)
+ 369 000c DACB     		sw	s6,212(sp)
+ 370 000e DEC9     		sw	s7,208(sp)
+ 371 0010 A6D3     		sw	s1,228(sp)
+ 372              		.cfi_offset 1, -4
+ 373              		.cfi_offset 8, -8
+ 374              		.cfi_offset 18, -16
+ 375              		.cfi_offset 19, -20
+ 376              		.cfi_offset 20, -24
+ 377              		.cfi_offset 22, -28
+ 378              		.cfi_offset 23, -32
+ 379              		.cfi_offset 9, -12
+ 380              		.loc 1 64 3
+ 381 0012 97000000 		call	t5omsi
  381      E7800000 
- 382              	.LVL37:
-  69:main.c        ****   l88init();          // Initialize 8*8 led toolbox
- 383              		.loc 1 69 3
- 384 0020 97000000 		call	l88init
+ 382              	.LVL36:
+  65:main.c        ****   colinit();          // Initialize column toolbox
+ 383              		.loc 1 65 3 is_stmt 1
+ 384 001a 97000000 		call	colinit
  384      E7800000 
- 385              	.LVL38:
-  70:main.c        ****   keyinit();          // Initialize keyboard toolbox
- 386              		.loc 1 70 3
- 387 0028 97000000 		call	keyinit
+ 385              	.LVL37:
+  66:main.c        ****   l88init();          // Initialize 8*8 led toolbox
+ 386              		.loc 1 66 3
+ 387 0022 97000000 		call	l88init
  387      E7800000 
- 388              	.LVL39:
-  71:main.c        ****   ADC3powerUpInit(0); // Initialize ADC0, Ch3 ADC INIT!!
- 389              		.loc 1 71 3
- 390 0030 0145     		li	a0,0
- 391 0032 97000000 		call	ADC3powerUpInit
+ 388              	.LVL38:
+  67:main.c        ****   //keyinit();          // Initialize keyboard toolbox
+  68:main.c        ****   ADC3powerUpInit(0); // Initialize ADC0, Ch3
+ 389              		.loc 1 68 3
+ 390 002a 0145     		li	a0,0
+ 391 002c 97000000 		call	ADC3powerUpInit
  391      E7800000 
- 392              	.LVL40:
-  72:main.c        **** 
-  73:main.c        ****   Lcd_SetType(LCD_INVERTED); // or use LCD_INVERTED!
- 393              		.loc 1 73 3
- 394 003a 0545     		li	a0,1
- 395 003c 97000000 		call	Lcd_SetType
+ 392              	.LVL39:
+  69:main.c        **** 
+  70:main.c        ****   Lcd_SetType(LCD_INVERTED); // or use LCD_INVERTED!
+ 393              		.loc 1 70 3
+ 394 0034 0545     		li	a0,1
+ 395 0036 97000000 		call	Lcd_SetType
  395      E7800000 
- 396              	.LVL41:
-  74:main.c        ****   Lcd_Init();
- 397              		.loc 1 74 3
- 398 0044 97000000 		call	Lcd_Init
+ 396              	.LVL40:
+  71:main.c        ****   Lcd_Init();
+ 397              		.loc 1 71 3
+ 398 003e 97000000 		call	Lcd_Init
  398      E7800000 
- 399              	.LVL42:
-  75:main.c        ****   LCD_Clear(BLACK);
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 10
-
-
- 400              		.loc 1 75 3
- 401 004c 0145     		li	a0,0
- 402 004e 97000000 		call	LCD_Clear
+ 399              	.LVL41:
+  72:main.c        ****   LCD_Clear(BLACK);
+ 400              		.loc 1 72 3
+ 401 0046 0145     		li	a0,0
+ 402 0048 97000000 		call	LCD_Clear
  402      E7800000 
- 403              	.LVL43:
-  76:main.c        **** 
-  77:main.c        ****   // rtcInit();                              // Initialize RTC
-  78:main.c        ****   // rtc_counter_set(3600+60+1);
-  79:main.c        ****   //u0init(EI);                      // Initialize USART0 toolbox
-  80:main.c        ****   eclic_global_interrupt_enable(); // !!! INTERRUPT ENABLED !!!
- 404              		.loc 1 80 3
- 405 0056 97000000 		call	eclic_global_interrupt_enable
- 405      E7800000 
- 406              	.LVL44:
-  81:main.c        **** 
-  82:main.c        ****   // SLUT KVARBLIVEN KOD LAB5
-  83:main.c        **** 
-  84:main.c        ****   // PLANT-KOD START
-  85:main.c        **** 
-  86:main.c        ****   Plant allPlants[3];
- 407              		.loc 1 86 3
-  87:main.c        ****   int numberOfPlants = 0;
- 408              		.loc 1 87 3
- 409              	.LBB9:
- 410              	.LBB10:
- 411 005e 37050000 		lui	a0,%hi(.LC5)
- 412 0062 1008     		addi	a2,sp,16
- 413 0064 6C00     		addi	a1,sp,12
- 414 0066 13050500 		addi	a0,a0,%lo(.LC5)
- 415              	.LBE10:
- 416              	.LBE9:
- 417              		.loc 1 87 7 is_stmt 0
- 418 006a 02C6     		sw	zero,12(sp)
-  88:main.c        ****   initPlant("Gurka", &numberOfPlants, allPlants);
- 419              		.loc 1 88 3 is_stmt 1
- 420              	.LVL45:
- 421              	.LBB12:
- 422              	.LBB11:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 10
+
+
+ 403              	.LVL42:
+  73:main.c        **** 
+  74:main.c        ****   Plant allPlants[3];
+ 404              		.loc 1 74 3
+  75:main.c        ****   int numberOfPlants = 0;
+ 405              		.loc 1 75 3
+ 406              	.LBB9:
+ 407              	.LBB10:
+ 408 0050 37050000 		lui	a0,%hi(.LC4)
+ 409 0054 1008     		addi	a2,sp,16
+ 410 0056 6C00     		addi	a1,sp,12
+ 411 0058 13050500 		addi	a0,a0,%lo(.LC4)
+ 412              	.LBE10:
+ 413              	.LBE9:
+ 414              		.loc 1 75 7 is_stmt 0
+ 415 005c 02C6     		sw	zero,12(sp)
+  76:main.c        ****   initPlant("Gurka", &numberOfPlants, allPlants);
+ 416              		.loc 1 76 3 is_stmt 1
+ 417              	.LVL43:
+ 418              	.LBB12:
+ 419              	.LBB11:
   35:main.c        ****     return;
- 423              		.loc 1 35 3
- 424 006c 97000000 		call	initPlant.part.0
- 424      E7800000 
- 425              	.LVL46:
- 426              	.LBE11:
- 427              	.LBE12:
-  89:main.c        ****   initPlant("Tomat", &numberOfPlants, allPlants);
- 428              		.loc 1 89 3
- 429 0074 37050000 		lui	a0,%hi(.LC6)
- 430 0078 1008     		addi	a2,sp,16
- 431 007a 6C00     		addi	a1,sp,12
- 432 007c 13050500 		addi	a0,a0,%lo(.LC6)
- 433 0080 97000000 		call	initPlant
- 433      E7800000 
- 434              	.LVL47:
-  90:main.c        ****   initPlant("Chili", &numberOfPlants, allPlants);
- 435              		.loc 1 90 3
- 436 0088 37050000 		lui	a0,%hi(.LC7)
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 11
+ 420              		.loc 1 35 3
+ 421 005e 97000000 		call	initPlant.part.0
+ 421      E7800000 
+ 422              	.LVL44:
+ 423              	.LBE11:
+ 424              	.LBE12:
+  77:main.c        ****   initPlant("Tomat", &numberOfPlants, allPlants);
+ 425              		.loc 1 77 3
+ 426 0066 37050000 		lui	a0,%hi(.LC5)
+ 427 006a 1008     		addi	a2,sp,16
+ 428 006c 6C00     		addi	a1,sp,12
+ 429 006e 13050500 		addi	a0,a0,%lo(.LC5)
+ 430 0072 97000000 		call	initPlant
+ 430      E7800000 
+ 431              	.LVL45:
+  78:main.c        ****   initPlant("Chili", &numberOfPlants, allPlants);
+ 432              		.loc 1 78 3
+ 433 007a 37050000 		lui	a0,%hi(.LC6)
+ 434 007e 1008     		addi	a2,sp,16
+ 435 0080 6C00     		addi	a1,sp,12
+ 436 0082 13050500 		addi	a0,a0,%lo(.LC6)
+ 437 0086 97000000 		call	initPlant
+ 437      E7800000 
+ 438              	.LVL46:
+ 439              	.LBB13:
+  79:main.c        **** 
+  80:main.c        ****   while (1)
+  81:main.c        ****   {
+  82:main.c        ****     idle++; // Manage Async events
+  83:main.c        **** 
+  84:main.c        ****     if (t5expq())
+  85:main.c        ****     {                   // Manage periodic tasks
+  86:main.c        ****       l88row(colset()); // ...8*8LED and Keyboard
+  87:main.c        ****       ms++;             // ...One second heart beat
+  88:main.c        ****       if (ms == 1000)
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 11
 
 
- 437 008c 1008     		addi	a2,sp,16
- 438 008e 6C00     		addi	a1,sp,12
- 439 0090 13050500 		addi	a0,a0,%lo(.LC7)
-  91:main.c        **** 
-  92:main.c        ****   while (1)
-  93:main.c        ****   {
-  94:main.c        ****     idle++; // Manage Async events
-  95:main.c        **** 
-  96:main.c        ****     if (t5expq())
-  97:main.c        ****     {                   // Manage periodic tasks
-  98:main.c        ****       l88row(colset()); // ...8*8LED and Keyboard
-  99:main.c        ****       ms++;             // ...One second heart beat
- 100:main.c        ****       if (ms == 1000)
- 101:main.c        ****       {
- 102:main.c        ****         if (adc_flag_get(ADC0, ADC_FLAG_EOC))
- 440              		.loc 1 102 13 is_stmt 0
- 441 0094 37240140 		li	s0,1073815552
-  90:main.c        ****   initPlant("Chili", &numberOfPlants, allPlants);
- 442              		.loc 1 90 3
- 443 0098 97000000 		call	initPlant
- 443      E7800000 
- 444              	.LVL48:
-  63:main.c        ****   int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
- 445              		.loc 1 63 7
- 446 00a0 0149     		li	s2,0
- 100:main.c        ****       {
- 447              		.loc 1 100 10
- 448 00a2 9309803E 		li	s3,1000
- 449              		.loc 1 102 13
- 450 00a6 13040440 		addi	s0,s0,1024
- 451              	.LBB13:
- 103:main.c        ****         {
- 104:main.c        ****           int tempValue = 300 - adc_regular_data_read(ADC0); //300 verkar vara maxvärde i fullt m�
- 452              		.loc 1 104 15
- 453 00aa 130AC012 		li	s4,300
- 105:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3; // i procent
- 454              		.loc 1 105 55
- 455 00ae 8D4A     		li	s5,3
- 456              	.LVL49:
+  89:main.c        ****       {
+  90:main.c        ****         if (adc_flag_get(ADC0, ADC_FLAG_EOC))
+  91:main.c        ****         {
+  92:main.c        ****           int tempValue = 360 - adc_regular_data_read(ADC0); //360 verkar vara maxvärde i fullt m�
+  93:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
+ 440              		.loc 1 93 55 is_stmt 0
+ 441 008e B7070000 		lui	a5,%hi(.LC7)
+ 442 0092 03AB0700 		lw	s6,%lo(.LC7)(a5)
+ 443 0096 83AB4700 		lw	s7,%lo(.LC7+4)(a5)
+ 444              	.LBE13:
+  90:main.c        ****         {
+ 445              		.loc 1 90 13
+ 446 009a 37240140 		li	s0,1073815552
+  61:main.c        ****   //int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
+ 447              		.loc 1 61 7
+ 448 009e 0149     		li	s2,0
+  88:main.c        ****       {
+ 449              		.loc 1 88 10
+ 450 00a0 9309803E 		li	s3,1000
+  90:main.c        ****         {
+ 451              		.loc 1 90 13
+ 452 00a4 13040440 		addi	s0,s0,1024
+ 453              	.LBB14:
+  92:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
+ 454              		.loc 1 92 15
+ 455 00a8 130A8016 		li	s4,360
+ 456              	.LVL47:
  457              	.L15:
- 458              	.LBE13:
-  63:main.c        ****   int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
- 459              		.loc 1 63 7
- 460 00b0 8144     		li	s1,0
- 461              	.LVL50:
+ 458              	.LBE14:
+  61:main.c        ****   //int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
+ 459              		.loc 1 61 7
+ 460 00ac 8144     		li	s1,0
+ 461              	.LVL48:
  462              	.L12:
-  92:main.c        ****   {
- 463              		.loc 1 92 3 is_stmt 1
-  94:main.c        **** 
- 464              		.loc 1 94 5
-  94:main.c        **** 
- 465              		.loc 1 94 9 is_stmt 0
- 466 00b2 8504     		addi	s1,s1,1
- 467              	.LVL51:
-  96:main.c        ****     {                   // Manage periodic tasks
- 468              		.loc 1 96 5 is_stmt 1
-  96:main.c        ****     {                   // Manage periodic tasks
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 12
-
-
- 469              		.loc 1 96 9 is_stmt 0
- 470 00b4 97000000 		call	t5expq
+  80:main.c        ****   {
+ 463              		.loc 1 80 3 is_stmt 1
+  82:main.c        **** 
+ 464              		.loc 1 82 5
+  82:main.c        **** 
+ 465              		.loc 1 82 9 is_stmt 0
+ 466 00ae 8504     		addi	s1,s1,1
+ 467              	.LVL49:
+  84:main.c        ****     {                   // Manage periodic tasks
+ 468              		.loc 1 84 5 is_stmt 1
+  84:main.c        ****     {                   // Manage periodic tasks
+ 469              		.loc 1 84 9 is_stmt 0
+ 470 00b0 97000000 		call	t5expq
  470      E7800000 
- 471              	.LVL52:
-  96:main.c        ****     {                   // Manage periodic tasks
- 472              		.loc 1 96 8
- 473 00bc 7DD9     		beq	a0,zero,.L12
-  98:main.c        ****       ms++;             // ...One second heart beat
- 474              		.loc 1 98 7 is_stmt 1
- 475 00be 97000000 		call	colset
+ 471              	.LVL50:
+  84:main.c        ****     {                   // Manage periodic tasks
+ 472              		.loc 1 84 8
+ 473 00b8 7DD9     		beq	a0,zero,.L12
+  86:main.c        ****       ms++;             // ...One second heart beat
+ 474              		.loc 1 86 7 is_stmt 1
+ 475 00ba 97000000 		call	colset
  475      E7800000 
- 476              	.LVL53:
-  99:main.c        ****       if (ms == 1000)
- 477              		.loc 1 99 9 is_stmt 0
- 478 00c6 0509     		addi	s2,s2,1
- 479              	.LVL54:
-  98:main.c        ****       ms++;             // ...One second heart beat
- 480              		.loc 1 98 7
- 481 00c8 97000000 		call	l88row
+ 476              	.LVL51:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 12
+
+
+  87:main.c        ****       if (ms == 1000)
+ 477              		.loc 1 87 9 is_stmt 0
+ 478 00c2 0509     		addi	s2,s2,1
+ 479              	.LVL52:
+  86:main.c        ****       ms++;             // ...One second heart beat
+ 480              		.loc 1 86 7
+ 481 00c4 97000000 		call	l88row
  481      E7800000 
- 482              	.LVL55:
-  99:main.c        ****       if (ms == 1000)
- 483              		.loc 1 99 7 is_stmt 1
- 100:main.c        ****       {
- 484              		.loc 1 100 7
- 100:main.c        ****       {
- 485              		.loc 1 100 10 is_stmt 0
- 486 00d0 63163905 		bne	s2,s3,.L13
- 102:main.c        ****         {
- 487              		.loc 1 102 9 is_stmt 1
- 102:main.c        ****         {
- 488              		.loc 1 102 13 is_stmt 0
- 489 00d4 8945     		li	a1,2
- 490 00d6 2285     		mv	a0,s0
- 491 00d8 97000000 		call	adc_flag_get
+ 482              	.LVL53:
+  87:main.c        ****       if (ms == 1000)
+ 483              		.loc 1 87 7 is_stmt 1
+  88:main.c        ****       {
+ 484              		.loc 1 88 7
+  88:main.c        ****       {
+ 485              		.loc 1 88 10 is_stmt 0
+ 486 00cc 63123907 		bne	s2,s3,.L13
+  90:main.c        ****         {
+ 487              		.loc 1 90 9 is_stmt 1
+  90:main.c        ****         {
+ 488              		.loc 1 90 13 is_stmt 0
+ 489 00d0 8945     		li	a1,2
+ 490 00d2 2285     		mv	a0,s0
+ 491 00d4 97000000 		call	adc_flag_get
  491      E7800000 
- 492              	.LVL56:
- 102:main.c        ****         {
- 493              		.loc 1 102 12
- 494 00e0 1DC5     		beq	a0,zero,.L14
- 495              	.LBB14:
- 104:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3; // i procent
- 496              		.loc 1 104 11 is_stmt 1
- 104:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3; // i procent
- 497              		.loc 1 104 33 is_stmt 0
- 498 00e2 2285     		mv	a0,s0
- 499 00e4 97000000 		call	adc_regular_data_read
+ 492              	.LVL54:
+  90:main.c        ****         {
+ 493              		.loc 1 90 12
+ 494 00dc 39C1     		beq	a0,zero,.L14
+ 495              	.LBB15:
+  92:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
+ 496              		.loc 1 92 11 is_stmt 1
+  92:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
+ 497              		.loc 1 92 33 is_stmt 0
+ 498 00de 2285     		mv	a0,s0
+ 499 00e0 97000000 		call	adc_regular_data_read
  499      E7800000 
- 500              	.LVL57:
- 501              		.loc 1 105 11 is_stmt 1
- 104:main.c        ****           allPlants[1].sunReading.reading = tempValue / 3; // i procent
- 502              		.loc 1 104 15 is_stmt 0
- 503 00ec 3305AA40 		sub	a0,s4,a0
- 504              	.LVL58:
- 505              		.loc 1 105 55
- 506 00f0 33455503 		div	a0,a0,s5
- 106:main.c        ****           adc_flag_clear(ADC0, ADC_FLAG_EOC);
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 13
+ 500              	.LVL55:
+ 501              		.loc 1 93 11 is_stmt 1
+ 502              		.loc 1 93 55 is_stmt 0
+ 503 00e8 3305AA40 		sub	a0,s4,a0
+ 504              	.LVL56:
+ 505 00ec 97000000 		call	__floatsidf
+ 505      E7800000 
+ 506              	.LVL57:
+ 507 00f4 5A86     		mv	a2,s6
+ 508 00f6 DE86     		mv	a3,s7
+ 509 00f8 97000000 		call	__divdf3
+ 509      E7800000 
+ 510              	.LVL58:
+ 511              		.loc 1 93 43
+ 512 0100 97000000 		call	__fixdfsi
+ 512      E7800000 
+ 513              	.LVL59:
+ 514 0108 2AC1     		sw	a0,128(sp)
+  94:main.c        ****           adc_flag_clear(ADC0, ADC_FLAG_EOC);
+ 515              		.loc 1 94 11 is_stmt 1
+ 516 010a 8945     		li	a1,2
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 13
 
 
- 507              		.loc 1 106 11
- 508 00f4 8945     		li	a1,2
- 105:main.c        ****           adc_flag_clear(ADC0, ADC_FLAG_EOC);
- 509              		.loc 1 105 43
- 510 00f6 2AC1     		sw	a0,128(sp)
- 511              		.loc 1 106 11 is_stmt 1
- 512 00f8 2285     		mv	a0,s0
- 513 00fa 97000000 		call	adc_flag_clear
- 513      E7800000 
- 514              	.LVL59:
- 107:main.c        ****           adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
- 515              		.loc 1 107 11
- 516 0102 8545     		li	a1,1
- 517 0104 2285     		mv	a0,s0
- 518 0106 97000000 		call	adc_software_trigger_enable
+ 517 010c 2285     		mv	a0,s0
+ 518 010e 97000000 		call	adc_flag_clear
  518      E7800000 
  519              	.LVL60:
- 520              	.L14:
- 521              	.LBE14:
- 108:main.c        ****         }
- 109:main.c        ****         renderLCD(allPlants, numberOfPlants);
- 522              		.loc 1 109 9
- 523 010e B245     		lw	a1,12(sp)
- 524 0110 0808     		addi	a0,sp,16
- 110:main.c        ****         ms = 0;
- 525              		.loc 1 110 12 is_stmt 0
- 526 0112 0149     		li	s2,0
- 527              	.LVL61:
- 109:main.c        ****         ms = 0;
- 528              		.loc 1 109 9
- 529 0114 97000000 		call	renderLCD
- 529      E7800000 
- 530              	.LVL62:
- 531              		.loc 1 110 9 is_stmt 1
- 532              	.L13:
- 111:main.c        ****       }
- 112:main.c        ****       l88mem(0, idle >> 8); // ...Performance monitor
- 533              		.loc 1 112 7
- 534 011c 93D58440 		srai	a1,s1,8
- 535 0120 0145     		li	a0,0
- 536 0122 97000000 		call	l88mem
- 536      E7800000 
- 537              	.LVL63:
- 113:main.c        ****       l88mem(1, idle);
- 538              		.loc 1 113 7
- 539 012a A685     		mv	a1,s1
- 540 012c 0545     		li	a0,1
- 541 012e 97000000 		call	l88mem
+  95:main.c        ****           adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
+ 520              		.loc 1 95 11
+ 521 0116 8545     		li	a1,1
+ 522 0118 2285     		mv	a0,s0
+ 523 011a 97000000 		call	adc_software_trigger_enable
+ 523      E7800000 
+ 524              	.LVL61:
+ 525              	.L14:
+ 526              	.LBE15:
+  96:main.c        ****         }
+  97:main.c        ****         renderLCD(allPlants, numberOfPlants);
+ 527              		.loc 1 97 9
+ 528 0122 B245     		lw	a1,12(sp)
+ 529 0124 0808     		addi	a0,sp,16
+  98:main.c        ****         ms = 0;
+ 530              		.loc 1 98 12 is_stmt 0
+ 531 0126 0149     		li	s2,0
+ 532              	.LVL62:
+  97:main.c        ****         ms = 0;
+ 533              		.loc 1 97 9
+ 534 0128 97000000 		call	renderLCD
+ 534      E7800000 
+ 535              	.LVL63:
+ 536              		.loc 1 98 9 is_stmt 1
+ 537              	.L13:
+  99:main.c        ****       }
+ 100:main.c        ****       l88mem(0, idle >> 8); // ...Performance monitor
+ 538              		.loc 1 100 7
+ 539 0130 93D58440 		srai	a1,s1,8
+ 540 0134 0145     		li	a0,0
+ 541 0136 97000000 		call	l88mem
  541      E7800000 
  542              	.LVL64:
- 114:main.c        ****       idle = 0;
- 543              		.loc 1 114 7
- 544 0136 ADBF     		j	.L15
- 545              		.cfi_endproc
- 546              	.LFE5:
- 548              		.section	.rodata.initPlant.part.0.str1.4,"aMS",@progbits,1
- 549              		.align	2
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 14
+ 101:main.c        ****       l88mem(1, idle);
+ 543              		.loc 1 101 7
+ 544 013e A685     		mv	a1,s1
+ 545 0140 0545     		li	a0,1
+ 546 0142 97000000 		call	l88mem
+ 546      E7800000 
+ 547              	.LVL65:
+ 102:main.c        ****       idle = 0;
+ 548              		.loc 1 102 7
+ 549 014a 8DB7     		j	.L15
+ 550              		.cfi_endproc
+ 551              	.LFE5:
+ 553              		.section	.rodata.initPlant.part.0.str1.4,"aMS",@progbits,1
+ 554              		.align	2
+ 555              	.LC1:
+ 556 0000 32303235 		.string	"20250401-1200"
+ 556      30343031 
+ 556      2D313230 
+ 556      3000
+ 557 000e 0000     		.zero	2
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 14
 
 
- 550              	.LC2:
- 551 0000 32303235 		.string	"20250401-1200"
- 551      30343031 
- 551      2D313230 
- 551      3000
- 552 000e 0000     		.zero	2
- 553              	.LC3:
- 554 0010 4F4B00   		.string	"OK"
- 555              		.section	.rodata.initSensorReading.str1.4,"aMS",@progbits,1
- 556              		.align	2
- 557              	.LC1:
- 558 0000 257300   		.string	"%s"
- 559              		.section	.rodata.main.str1.4,"aMS",@progbits,1
- 560              		.align	2
- 561              	.LC5:
- 562 0000 4775726B 		.string	"Gurka"
- 562      6100
- 563 0006 0000     		.zero	2
- 564              	.LC6:
- 565 0008 546F6D61 		.string	"Tomat"
- 565      7400
- 566 000e 0000     		.zero	2
- 567              	.LC7:
- 568 0010 4368696C 		.string	"Chili"
- 568      6900
- 569              		.section	.rodata.renderLCD.str1.4,"aMS",@progbits,1
+ 558              	.LC2:
+ 559 0010 4F4B00   		.string	"OK"
+ 560              		.section	.rodata.initSensorReading.str1.4,"aMS",@progbits,1
+ 561              		.align	2
+ 562              	.LC0:
+ 563 0000 257300   		.string	"%s"
+ 564              		.section	.rodata.main.cst8,"aM",@progbits,8
+ 565              		.align	3
+ 566              	.LC7:
+ 567 0000 CDCCCCCC 		.word	3435973837
+ 568 0004 CCCC0C40 		.word	1074580684
+ 569              		.section	.rodata.main.str1.4,"aMS",@progbits,1
  570              		.align	2
  571              	.LC4:
- 572 0000 2500     		.string	"%"
- 573              		.text
- 574              	.Letext0:
- 575              		.file 2 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/machine/_d
- 576              		.file 3 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_stdin
- 577              		.file 4 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/lib/gcc/riscv64-unknown-elf/8.3.0/incl
- 578              		.file 5 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_types
- 579              		.file 6 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/reent.
- 580              		.file 7 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/lock.h
- 581              		.file 8 "../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h"
- 582              		.file 9 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/stdlib.h"
- 583              		.file 10 "lcd.h"
- 584              		.file 11 "<built-in>"
- 585              		.file 12 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_adc.h"
- 586              		.file 13 "drivers.h"
- 587              		.file 14 "adc.h"
- 588              		.file 15 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_eclic.h"
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 15
+ 572 0000 4775726B 		.string	"Gurka"
+ 572      6100
+ 573 0006 0000     		.zero	2
+ 574              	.LC5:
+ 575 0008 546F6D61 		.string	"Tomat"
+ 575      7400
+ 576 000e 0000     		.zero	2
+ 577              	.LC6:
+ 578 0010 4368696C 		.string	"Chili"
+ 578      6900
+ 579              		.section	.rodata.renderLCD.str1.4,"aMS",@progbits,1
+ 580              		.align	2
+ 581              	.LC3:
+ 582 0000 2500     		.string	"%"
+ 583              		.text
+ 584              	.Letext0:
+ 585              		.file 2 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/machine/_d
+ 586              		.file 3 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_stdin
+ 587              		.file 4 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/lib/gcc/riscv64-unknown-elf/8.3.0/incl
+ 588              		.file 5 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_types
+ 589              		.file 6 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/reent.
+ 590              		.file 7 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/lock.h
+ 591              		.file 8 "../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h"
+ 592              		.file 9 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/stdlib.h"
+ 593              		.file 10 "lcd.h"
+ 594              		.file 11 "<built-in>"
+ 595              		.file 12 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_adc.h"
+ 596              		.file 13 "drivers.h"
+ 597              		.file 14 "adc.h"
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:13     .text.initSensorReading:0000000000000000 initSensorReading
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:17     .text.initSensorReading:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:19     .text.initSensorReading:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:20     .text.initSensorReading:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:21     .text.initSensorReading:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:22     .text.initSensorReading:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:24     .text.initSensorReading:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:26     .text.initSensorReading:0000000000000004 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:29     .text.initSensorReading:0000000000000006 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:32     .text.initSensorReading:000000000000000a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:34     .text.initSensorReading:000000000000000c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:35     .text.initSensorReading:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:37     .text.initSensorReading:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:39     .text.initSensorReading:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:45     .text.initSensorReading:0000000000000018 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:46     .text.initSensorReading:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:48     .text.initSensorReading:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:51     .text.initSensorReading:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:52     .text.initSensorReading:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:56     .text.initSensorReading:0000000000000028 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:58     .text.initSensorReading:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:59     .text.initSensorReading:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:62     .text.initSensorReading:0000000000000032 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:64     .text.initSensorReading:0000000000000036 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:66     .text.initSensorReading:0000000000000038 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:69     .text.initSensorReading:000000000000003a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:73     .text.initSensorReading:000000000000003c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:75     .text.initSensorReading:000000000000003e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:81     .text.initPlant.part.0:0000000000000000 initPlant.part.0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:84     .text.initPlant.part.0:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:86     .text.initPlant.part.0:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:87     .text.initPlant.part.0:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:88     .text.initPlant.part.0:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:89     .text.initPlant.part.0:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:91     .text.initPlant.part.0:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:93     .text.initPlant.part.0:0000000000000004 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:96     .text.initPlant.part.0:0000000000000006 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:99     .text.initPlant.part.0:000000000000000a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:101    .text.initPlant.part.0:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:104    .text.initPlant.part.0:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:110    .text.initPlant.part.0:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:111    .text.initPlant.part.0:000000000000001c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:113    .text.initPlant.part.0:000000000000001c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:116    .text.initPlant.part.0:0000000000000024 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:124    .text.initPlant.part.0:000000000000003a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:130    .text.initPlant.part.0:000000000000004c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:131    .text.initPlant.part.0:000000000000004c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:137    .text.initPlant.part.0:000000000000005a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:138    .text.initPlant.part.0:000000000000005a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:144    .text.initPlant.part.0:0000000000000068 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:145    .text.initPlant.part.0:0000000000000068 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:147    .text.initPlant.part.0:000000000000006a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:154    .text.initPlant.part.0:000000000000007c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:155    .text.initPlant.part.0:000000000000007c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:157    .text.initPlant.part.0:000000000000007e .L0 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:13     .text.initSensorReading:0000000000000000 initSensorReading
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:17     .text.initSensorReading:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:19     .text.initSensorReading:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:20     .text.initSensorReading:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:21     .text.initSensorReading:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:22     .text.initSensorReading:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:24     .text.initSensorReading:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:26     .text.initSensorReading:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:29     .text.initSensorReading:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:32     .text.initSensorReading:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:34     .text.initSensorReading:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:35     .text.initSensorReading:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:37     .text.initSensorReading:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:39     .text.initSensorReading:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:45     .text.initSensorReading:0000000000000018 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:46     .text.initSensorReading:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:48     .text.initSensorReading:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:51     .text.initSensorReading:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:52     .text.initSensorReading:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:56     .text.initSensorReading:0000000000000028 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:58     .text.initSensorReading:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:59     .text.initSensorReading:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:62     .text.initSensorReading:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:64     .text.initSensorReading:0000000000000036 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:66     .text.initSensorReading:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:69     .text.initSensorReading:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:73     .text.initSensorReading:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:75     .text.initSensorReading:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:81     .text.initPlant.part.0:0000000000000000 initPlant.part.0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:84     .text.initPlant.part.0:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:86     .text.initPlant.part.0:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:87     .text.initPlant.part.0:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:88     .text.initPlant.part.0:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:89     .text.initPlant.part.0:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:91     .text.initPlant.part.0:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:93     .text.initPlant.part.0:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:96     .text.initPlant.part.0:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:99     .text.initPlant.part.0:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:101    .text.initPlant.part.0:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:104    .text.initPlant.part.0:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:110    .text.initPlant.part.0:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:111    .text.initPlant.part.0:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:113    .text.initPlant.part.0:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:116    .text.initPlant.part.0:0000000000000024 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:124    .text.initPlant.part.0:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:130    .text.initPlant.part.0:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:131    .text.initPlant.part.0:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:137    .text.initPlant.part.0:000000000000005a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:138    .text.initPlant.part.0:000000000000005a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:144    .text.initPlant.part.0:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:145    .text.initPlant.part.0:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:147    .text.initPlant.part.0:000000000000006a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:154    .text.initPlant.part.0:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:155    .text.initPlant.part.0:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:157    .text.initPlant.part.0:000000000000007e .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 16
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:158    .text.initPlant.part.0:0000000000000080 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:160    .text.initPlant.part.0:0000000000000082 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:163    .text.initPlant.part.0:0000000000000082 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:166    .text.initPlant.part.0:0000000000000086 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:167    .text.initPlant.part.0:0000000000000088 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:171    .text.initPlant.part.0:000000000000008a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:174    .text.initPlant.part.0:000000000000008c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:181    .text.initPlant:0000000000000000 initPlant
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:184    .text.initPlant:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:186    .text.initPlant:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:187    .text.initPlant:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:188    .text.initPlant:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:195    .text.initPlant:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:196    .text.initPlant:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:203    .text.renderLCD:0000000000000000 renderLCD
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:206    .text.renderLCD:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:208    .text.renderLCD:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:210    .text.renderLCD:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:212    .text.renderLCD:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:213    .text.renderLCD:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:215    .text.renderLCD:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:217    .text.renderLCD:0000000000000004 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:220    .text.renderLCD:0000000000000004 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:223    .text.renderLCD:0000000000000006 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:231    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:232    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:233    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:234    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:235    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:236    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:237    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:238    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:240    .text.renderLCD:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:244    .text.renderLCD:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:247    .text.renderLCD:0000000000000020 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:249    .text.renderLCD:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:253    .text.renderLCD:0000000000000026 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:256    .text.renderLCD:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:257    .text.renderLCD:000000000000002c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:258    .text.renderLCD:000000000000002c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:260    .text.renderLCD:000000000000002e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:262    .text.renderLCD:0000000000000030 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:264    .text.renderLCD:0000000000000032 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:266    .text.renderLCD:0000000000000034 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:269    .text.renderLCD:0000000000000036 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:271    .text.renderLCD:0000000000000038 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:273    .text.renderLCD:000000000000003a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:276    .text.renderLCD:000000000000003c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:279    .text.renderLCD:000000000000003e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:284    .text.renderLCD:0000000000000040 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:287    .text.renderLCD:0000000000000040 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:293    .text.renderLCD:000000000000004c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:296    .text.renderLCD:000000000000004e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:300    .text.renderLCD:0000000000000058 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:308    .text.renderLCD:000000000000006a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:317    .text.renderLCD:0000000000000082 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:325    .text.renderLCD:0000000000000096 .L0 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:158    .text.initPlant.part.0:0000000000000080 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:160    .text.initPlant.part.0:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:163    .text.initPlant.part.0:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:166    .text.initPlant.part.0:0000000000000086 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:167    .text.initPlant.part.0:0000000000000088 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:171    .text.initPlant.part.0:000000000000008a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:174    .text.initPlant.part.0:000000000000008c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:181    .text.initPlant:0000000000000000 initPlant
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:184    .text.initPlant:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:186    .text.initPlant:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:187    .text.initPlant:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:188    .text.initPlant:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:195    .text.initPlant:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:196    .text.initPlant:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:203    .text.renderLCD:0000000000000000 renderLCD
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:206    .text.renderLCD:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:208    .text.renderLCD:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:210    .text.renderLCD:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:212    .text.renderLCD:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:213    .text.renderLCD:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:215    .text.renderLCD:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:217    .text.renderLCD:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:220    .text.renderLCD:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:223    .text.renderLCD:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:231    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:232    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:233    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:234    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:235    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:236    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:237    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:238    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:240    .text.renderLCD:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:244    .text.renderLCD:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:247    .text.renderLCD:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:249    .text.renderLCD:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:253    .text.renderLCD:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:256    .text.renderLCD:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:257    .text.renderLCD:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:258    .text.renderLCD:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:260    .text.renderLCD:000000000000002e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:262    .text.renderLCD:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:264    .text.renderLCD:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:266    .text.renderLCD:0000000000000034 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:269    .text.renderLCD:0000000000000036 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:271    .text.renderLCD:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:273    .text.renderLCD:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:276    .text.renderLCD:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:279    .text.renderLCD:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:284    .text.renderLCD:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:287    .text.renderLCD:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:293    .text.renderLCD:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:296    .text.renderLCD:000000000000004e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:300    .text.renderLCD:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:308    .text.renderLCD:000000000000006a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:317    .text.renderLCD:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:325    .text.renderLCD:0000000000000096 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 17
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:333    .text.renderLCD:00000000000000ac .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:343    .text.renderLCD:00000000000000ca .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:350    .text.startup.main:0000000000000000 main
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:353    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:354    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:356    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:357    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:358    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:359    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:360    .text.startup.main:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:362    .text.startup.main:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:370    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:371    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:372    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:373    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:374    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:375    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:376    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:378    .text.startup.main:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:381    .text.startup.main:0000000000000018 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:384    .text.startup.main:0000000000000020 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:387    .text.startup.main:0000000000000028 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:390    .text.startup.main:0000000000000030 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:394    .text.startup.main:000000000000003a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:398    .text.startup.main:0000000000000044 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:401    .text.startup.main:000000000000004c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:405    .text.startup.main:0000000000000056 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:408    .text.startup.main:000000000000005e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:411    .text.startup.main:000000000000005e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:418    .text.startup.main:000000000000006a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:423    .text.startup.main:000000000000006c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:424    .text.startup.main:000000000000006c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:429    .text.startup.main:0000000000000074 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:436    .text.startup.main:0000000000000088 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:441    .text.startup.main:0000000000000094 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:443    .text.startup.main:0000000000000098 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:446    .text.startup.main:00000000000000a0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:448    .text.startup.main:00000000000000a2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:450    .text.startup.main:00000000000000a6 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:453    .text.startup.main:00000000000000aa .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:455    .text.startup.main:00000000000000ae .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:460    .text.startup.main:00000000000000b0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:464    .text.startup.main:00000000000000b2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:465    .text.startup.main:00000000000000b2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:466    .text.startup.main:00000000000000b2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:469    .text.startup.main:00000000000000b4 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:470    .text.startup.main:00000000000000b4 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:473    .text.startup.main:00000000000000bc .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:475    .text.startup.main:00000000000000be .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:478    .text.startup.main:00000000000000c6 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:481    .text.startup.main:00000000000000c8 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:484    .text.startup.main:00000000000000d0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:485    .text.startup.main:00000000000000d0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:486    .text.startup.main:00000000000000d0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:488    .text.startup.main:00000000000000d4 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:489    .text.startup.main:00000000000000d4 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:494    .text.startup.main:00000000000000e0 .L0 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:333    .text.renderLCD:00000000000000ac .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:343    .text.renderLCD:00000000000000ca .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:353    .text.startup.main:0000000000000000 main
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:356    .text.startup.main:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:357    .text.startup.main:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:359    .text.startup.main:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:360    .text.startup.main:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:361    .text.startup.main:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:363    .text.startup.main:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:372    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:373    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:374    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:375    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:376    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:377    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:378    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:379    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:381    .text.startup.main:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:384    .text.startup.main:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:387    .text.startup.main:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:390    .text.startup.main:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:394    .text.startup.main:0000000000000034 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:398    .text.startup.main:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:401    .text.startup.main:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:405    .text.startup.main:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:408    .text.startup.main:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:415    .text.startup.main:000000000000005c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:420    .text.startup.main:000000000000005e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:421    .text.startup.main:000000000000005e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:426    .text.startup.main:0000000000000066 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:433    .text.startup.main:000000000000007a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:441    .text.startup.main:000000000000008e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:446    .text.startup.main:000000000000009a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:448    .text.startup.main:000000000000009e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:450    .text.startup.main:00000000000000a0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:452    .text.startup.main:00000000000000a4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:455    .text.startup.main:00000000000000a8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:460    .text.startup.main:00000000000000ac .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:464    .text.startup.main:00000000000000ae .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:465    .text.startup.main:00000000000000ae .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:466    .text.startup.main:00000000000000ae .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:469    .text.startup.main:00000000000000b0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:470    .text.startup.main:00000000000000b0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:473    .text.startup.main:00000000000000b8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:475    .text.startup.main:00000000000000ba .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:478    .text.startup.main:00000000000000c2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:481    .text.startup.main:00000000000000c4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:484    .text.startup.main:00000000000000cc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:485    .text.startup.main:00000000000000cc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:486    .text.startup.main:00000000000000cc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:488    .text.startup.main:00000000000000d0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:489    .text.startup.main:00000000000000d0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:494    .text.startup.main:00000000000000dc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:497    .text.startup.main:00000000000000de .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:498    .text.startup.main:00000000000000de .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:502    .text.startup.main:00000000000000e8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:503    .text.startup.main:00000000000000e8 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 18
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:497    .text.startup.main:00000000000000e2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:498    .text.startup.main:00000000000000e2 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:502    .text.startup.main:00000000000000ec .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:503    .text.startup.main:00000000000000ec .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:506    .text.startup.main:00000000000000f0 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:508    .text.startup.main:00000000000000f4 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:510    .text.startup.main:00000000000000f6 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:512    .text.startup.main:00000000000000f8 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:516    .text.startup.main:0000000000000102 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:523    .text.startup.main:000000000000010e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:526    .text.startup.main:0000000000000112 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:529    .text.startup.main:0000000000000114 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:533    .text.startup.main:000000000000011c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:534    .text.startup.main:000000000000011c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:539    .text.startup.main:000000000000012a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:544    .text.startup.main:0000000000000136 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:545    .text.startup.main:0000000000000138 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:78     .text.initSensorReading:000000000000003e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:177    .text.initPlant.part.0:000000000000008c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:199    .text.initPlant:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:346    .text.renderLCD:00000000000000ca .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:548    .text.startup.main:0000000000000138 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:512    .text.startup.main:0000000000000100 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:516    .text.startup.main:000000000000010a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:521    .text.startup.main:0000000000000116 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:528    .text.startup.main:0000000000000122 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:531    .text.startup.main:0000000000000126 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:534    .text.startup.main:0000000000000128 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:538    .text.startup.main:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:539    .text.startup.main:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:544    .text.startup.main:000000000000013e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:549    .text.startup.main:000000000000014a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:550    .text.startup.main:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:78     .text.initSensorReading:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:177    .text.initPlant.part.0:000000000000008c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:199    .text.initPlant:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:349    .text.renderLCD:00000000000000ca .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:553    .text.startup.main:000000000000014c .L0 
                      .debug_frame:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:557    .rodata.initSensorReading.str1.4:0000000000000000 .LC1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:550    .rodata.initPlant.part.0.str1.4:0000000000000000 .LC2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:553    .rodata.initPlant.part.0.str1.4:0000000000000010 .LC3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:193    .text.initPlant:0000000000000010 .L5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:571    .rodata.renderLCD.str1.4:0000000000000000 .LC4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:282    .text.renderLCD:0000000000000040 .L9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:251    .text.renderLCD:0000000000000026 .L8
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:561    .rodata.main.str1.4:0000000000000000 .LC5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:564    .rodata.main.str1.4:0000000000000008 .LC6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:567    .rodata.main.str1.4:0000000000000010 .LC7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:462    .text.startup.main:00000000000000b2 .L12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:532    .text.startup.main:000000000000011c .L13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:520    .text.startup.main:000000000000010e .L14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:457    .text.startup.main:00000000000000b0 .L15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:3289   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4894   .debug_str:000000000000058e .LASF174
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4754   .debug_str:00000000000002eb .LASF175
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4898   .debug_str:000000000000061f .LASF176
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4570   .debug_ranges:0000000000000000 .Ldebug_ranges0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4606   .debug_line:0000000000000000 .Ldebug_line0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4880   .debug_str:000000000000054b .LASF0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4652   .debug_str:00000000000000ea .LASF1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4620   .debug_str:0000000000000039 .LASF6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4812   .debug_str:0000000000000416 .LASF2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4610   .debug_str:000000000000000c .LASF3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4902   .debug_str:000000000000066e .LASF4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4624   .debug_str:000000000000004c .LASF5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4702   .debug_str:00000000000001ef .LASF7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4726   .debug_str:0000000000000258 .LASF8
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4684   .debug_str:000000000000017e .LASF9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4632   .debug_str:0000000000000080 .LASF10
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4884   .debug_str:000000000000055f .LASF11
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4918   .debug_str:00000000000006cd .LASF12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4720   .debug_str:0000000000000238 .LASF122
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:562    .rodata.initSensorReading.str1.4:0000000000000000 .LC0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:555    .rodata.initPlant.part.0.str1.4:0000000000000000 .LC1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:558    .rodata.initPlant.part.0.str1.4:0000000000000010 .LC2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:193    .text.initPlant:0000000000000010 .L5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:581    .rodata.renderLCD.str1.4:0000000000000000 .LC3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:282    .text.renderLCD:0000000000000040 .L9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:251    .text.renderLCD:0000000000000026 .L8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:571    .rodata.main.str1.4:0000000000000000 .LC4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:574    .rodata.main.str1.4:0000000000000008 .LC5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:577    .rodata.main.str1.4:0000000000000010 .LC6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:566    .rodata.main.cst8:0000000000000000 .LC7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:462    .text.startup.main:00000000000000ae .L12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:537    .text.startup.main:0000000000000130 .L13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:525    .text.startup.main:0000000000000122 .L14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:457    .text.startup.main:00000000000000ac .L15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:3205   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4803   .debug_str:0000000000000563 .LASF169
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4665   .debug_str:00000000000002c6 .LASF170
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4807   .debug_str:00000000000005f4 .LASF171
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4483   .debug_ranges:0000000000000000 .Ldebug_ranges0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4521   .debug_line:0000000000000000 .Ldebug_line0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4789   .debug_str:0000000000000520 .LASF0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4565   .debug_str:00000000000000e5 .LASF1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4535   .debug_str:0000000000000039 .LASF6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4721   .debug_str:00000000000003eb .LASF2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4525   .debug_str:000000000000000c .LASF3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4811   .debug_str:0000000000000643 .LASF4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4539   .debug_str:000000000000004c .LASF5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4617   .debug_str:00000000000001f2 .LASF7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4639   .debug_str:0000000000000251 .LASF8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4599   .debug_str:0000000000000181 .LASF9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4547   .debug_str:0000000000000080 .LASF10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4793   .debug_str:0000000000000534 .LASF11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4827   .debug_str:00000000000006a2 .LASF12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4633   .debug_str:0000000000000231 .LASF122
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4779   .debug_str:00000000000004f9 .LASF13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4705   .debug_str:00000000000003a0 .LASF14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4561   .debug_str:00000000000000d7 .LASF15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4527   .debug_str:0000000000000016 .LASF16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4837   .debug_str:00000000000006d3 .LASF17
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 19
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4870   .debug_str:0000000000000524 .LASF13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4794   .debug_str:00000000000003c5 .LASF14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4648   .debug_str:00000000000000dc .LASF15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4612   .debug_str:0000000000000016 .LASF16
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4928   .debug_str:00000000000006fe .LASF17
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4750   .debug_str:00000000000002de .LASF18
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4718   .debug_str:0000000000000231 .LASF19
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4860   .debug_str:00000000000004fb .LASF20
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4862   .debug_str:0000000000000503 .LASF21
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4802   .debug_str:00000000000003e5 .LASF22
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4908   .debug_str:000000000000068d .LASF23
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4806   .debug_str:00000000000003f6 .LASF24
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4818   .debug_str:0000000000000433 .LASF25
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4710   .debug_str:0000000000000214 .LASF30
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4890   .debug_str:000000000000057b .LASF26
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4852   .debug_str:00000000000004dc .LASF27
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4704   .debug_str:00000000000001fa .LASF28
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4924   .debug_str:00000000000006f3 .LASF29
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4716   .debug_str:000000000000022c .LASF31
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4644   .debug_str:00000000000000cc .LASF32
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4948   .debug_str:000000000000075b .LASF33
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4658   .debug_str:0000000000000104 .LASF34
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4964   .debug_str:00000000000007a7 .LASF35
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4782   .debug_str:000000000000037b .LASF36
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4770   .debug_str:0000000000000343 .LASF37
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4866   .debug_str:0000000000000511 .LASF38
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4820   .debug_str:000000000000043c .LASF39
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4944   .debug_str:0000000000000741 .LASF40
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4662   .debug_str:0000000000000113 .LASF41
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4614   .debug_str:000000000000001e .LASF42
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4608   .debug_str:0000000000000000 .LASF43
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4896   .debug_str:0000000000000616 .LASF44
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4888   .debug_str:0000000000000573 .LASF45
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4936   .debug_str:0000000000000725 .LASF46
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4842   .debug_str:00000000000004a2 .LASF47
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4700   .debug_str:00000000000001ea .LASF48
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4822   .debug_str:0000000000000446 .LASF49
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4810   .debug_str:0000000000000410 .LASF50
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4878   .debug_str:0000000000000545 .LASF51
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4830   .debug_str:0000000000000463 .LASF52
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4678   .debug_str:000000000000015f .LASF53
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4728   .debug_str:000000000000026a .LASF54
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4962   .debug_str:000000000000079e .LASF55
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4668   .debug_str:0000000000000133 .LASF56
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4712   .debug_str:000000000000021c .LASF57
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4768   .debug_str:000000000000033c .LASF58
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4864   .debug_str:000000000000050b .LASF59
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4650   .debug_str:00000000000000e3 .LASF60
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4654   .debug_str:00000000000000f6 .LASF61
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4938   .debug_str:000000000000072d .LASF62
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4876   .debug_str:000000000000053c .LASF63
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4688   .debug_str:0000000000000194 .LASF64
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4734   .debug_str:000000000000027c .LASF65
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4762   .debug_str:0000000000000326 .LASF66
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4832   .debug_str:000000000000046b .LASF67
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4824   .debug_str:000000000000044d .LASF68
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4854   .debug_str:00000000000004e4 .LASF69
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4661   .debug_str:00000000000002b9 .LASF18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4631   .debug_str:000000000000022a .LASF19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4769   .debug_str:00000000000004d0 .LASF20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4771   .debug_str:00000000000004d8 .LASF21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4713   .debug_str:00000000000003c0 .LASF22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4817   .debug_str:0000000000000662 .LASF23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4717   .debug_str:00000000000003d1 .LASF24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4727   .debug_str:0000000000000408 .LASF25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4625   .debug_str:0000000000000217 .LASF30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4799   .debug_str:0000000000000550 .LASF26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4761   .debug_str:00000000000004b1 .LASF27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4619   .debug_str:00000000000001fd .LASF28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4833   .debug_str:00000000000006c8 .LASF29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4629   .debug_str:0000000000000225 .LASF31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4557   .debug_str:00000000000000c7 .LASF32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4855   .debug_str:000000000000072a .LASF33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4571   .debug_str:00000000000000fd .LASF34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4869   .debug_str:000000000000076c .LASF35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4693   .debug_str:0000000000000356 .LASF36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4681   .debug_str:000000000000031e .LASF37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4775   .debug_str:00000000000004e6 .LASF38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4729   .debug_str:0000000000000411 .LASF39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4851   .debug_str:0000000000000710 .LASF40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4575   .debug_str:000000000000010c .LASF41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4529   .debug_str:000000000000001e .LASF42
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4523   .debug_str:0000000000000000 .LASF43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4805   .debug_str:00000000000005eb .LASF44
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4797   .debug_str:0000000000000548 .LASF45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4845   .debug_str:00000000000006fa .LASF46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4751   .debug_str:0000000000000477 .LASF47
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4615   .debug_str:00000000000001ed .LASF48
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4731   .debug_str:000000000000041b .LASF49
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4569   .debug_str:00000000000000f7 .LASF50
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4787   .debug_str:000000000000051a .LASF51
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4739   .debug_str:0000000000000438 .LASF52
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4591   .debug_str:0000000000000158 .LASF53
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4641   .debug_str:0000000000000263 .LASF54
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4867   .debug_str:0000000000000763 .LASF55
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4581   .debug_str:000000000000012c .LASF56
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4627   .debug_str:000000000000021f .LASF57
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4679   .debug_str:0000000000000317 .LASF58
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4773   .debug_str:00000000000004e0 .LASF59
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4563   .debug_str:00000000000000de .LASF60
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4567   .debug_str:00000000000000f1 .LASF61
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4847   .debug_str:0000000000000702 .LASF62
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4785   .debug_str:0000000000000511 .LASF63
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4603   .debug_str:0000000000000197 .LASF64
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4647   .debug_str:0000000000000275 .LASF65
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4673   .debug_str:0000000000000301 .LASF66
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4741   .debug_str:0000000000000440 .LASF67
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4733   .debug_str:0000000000000422 .LASF68
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4763   .debug_str:00000000000004b9 .LASF69
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4781   .debug_str:0000000000000505 .LASF70
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4595   .debug_str:0000000000000170 .LASF71
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4635   .debug_str:0000000000000241 .LASF72
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4623   .debug_str:000000000000020f .LASF73
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4749   .debug_str:0000000000000472 .LASF74
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 20
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4872   .debug_str:0000000000000530 .LASF70
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4682   .debug_str:0000000000000177 .LASF71
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4722   .debug_str:0000000000000248 .LASF72
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4708   .debug_str:000000000000020c .LASF73
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4840   .debug_str:000000000000049d .LASF74
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4618   .debug_str:000000000000002e .LASF75
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4850   .debug_str:00000000000004c3 .LASF76
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4846   .debug_str:00000000000004b1 .LASF77
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4790   .debug_str:00000000000003ab .LASF78
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4848   .debug_str:00000000000004b9 .LASF79
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4748   .debug_str:00000000000002d6 .LASF80
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4714   .debug_str:0000000000000222 .LASF81
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4958   .debug_str:0000000000000794 .LASF82
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4800   .debug_str:00000000000003db .LASF83
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4724   .debug_str:0000000000000250 .LASF84
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4686   .debug_str:000000000000018c .LASF85
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4676   .debug_str:000000000000015a .LASF86
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4622   .debug_str:0000000000000043 .LASF87
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4932   .debug_str:0000000000000711 .LASF88
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4670   .debug_str:000000000000013b .LASF89
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4660   .debug_str:000000000000010e .LASF90
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4874   .debug_str:0000000000000537 .LASF91
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4828   .debug_str:000000000000045c .LASF92
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4926   .debug_str:00000000000006f8 .LASF93
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4736   .debug_str:0000000000000282 .LASF94
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4814   .debug_str:0000000000000424 .LASF95
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4616   .debug_str:0000000000000026 .LASF96
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4856   .debug_str:00000000000004eb .LASF97
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4764   .debug_str:000000000000032c .LASF98
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4904   .debug_str:0000000000000681 .LASF99
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4920   .debug_str:00000000000006d6 .LASF100
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4892   .debug_str:0000000000000581 .LASF101
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4746   .debug_str:00000000000002c9 .LASF102
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4946   .debug_str:000000000000074c .LASF103
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4792   .debug_str:00000000000003b6 .LASF104
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4742   .debug_str:00000000000002b2 .LASF105
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4778   .debug_str:0000000000000364 .LASF106
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4788   .debug_str:000000000000039e .LASF107
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4956   .debug_str:0000000000000786 .LASF108
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4642   .debug_str:00000000000000be .LASF109
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4930   .debug_str:0000000000000707 .LASF110
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4744   .debug_str:00000000000002bd .LASF111
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4910   .debug_str:0000000000000695 .LASF112
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4694   .debug_str:00000000000001bb .LASF113
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4640   .debug_str:00000000000000af .LASF114
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4692   .debug_str:00000000000001aa .LASF115
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4626   .debug_str:0000000000000055 .LASF116
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4628   .debug_str:0000000000000064 .LASF117
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4816   .debug_str:000000000000042a .LASF118
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4776   .debug_str:000000000000035d .LASF119
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4772   .debug_str:000000000000034d .LASF120
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4940   .debug_str:0000000000000733 .LASF121
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4636   .debug_str:000000000000009f .LASF177
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4706   .debug_str:0000000000000200 .LASF123
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4916   .debug_str:00000000000006ba .LASF124
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4786   .debug_str:0000000000000394 .LASF125
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4630   .debug_str:0000000000000075 .LASF126
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4533   .debug_str:000000000000002e .LASF75
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4759   .debug_str:0000000000000498 .LASF76
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4755   .debug_str:0000000000000486 .LASF77
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4701   .debug_str:0000000000000386 .LASF78
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4757   .debug_str:000000000000048e .LASF79
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4659   .debug_str:00000000000002b1 .LASF80
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4597   .debug_str:0000000000000177 .LASF81
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4863   .debug_str:0000000000000759 .LASF82
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4711   .debug_str:00000000000003b6 .LASF83
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4637   .debug_str:0000000000000249 .LASF84
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4601   .debug_str:000000000000018f .LASF85
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4589   .debug_str:0000000000000153 .LASF86
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4537   .debug_str:0000000000000043 .LASF87
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4841   .debug_str:00000000000006e6 .LASF88
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4583   .debug_str:0000000000000134 .LASF89
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4573   .debug_str:0000000000000107 .LASF90
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4783   .debug_str:000000000000050c .LASF91
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4737   .debug_str:0000000000000431 .LASF92
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4835   .debug_str:00000000000006cd .LASF93
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4649   .debug_str:000000000000027b .LASF94
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4723   .debug_str:00000000000003f9 .LASF95
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4531   .debug_str:0000000000000026 .LASF96
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4765   .debug_str:00000000000004c0 .LASF97
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4675   .debug_str:0000000000000307 .LASF98
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4813   .debug_str:0000000000000656 .LASF99
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4829   .debug_str:00000000000006ab .LASF100
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4801   .debug_str:0000000000000556 .LASF101
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4657   .debug_str:00000000000002a4 .LASF102
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4853   .debug_str:000000000000071b .LASF103
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4703   .debug_str:0000000000000391 .LASF104
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4653   .debug_str:000000000000028d .LASF105
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4689   .debug_str:000000000000033f .LASF106
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4699   .debug_str:0000000000000379 .LASF107
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4861   .debug_str:000000000000074b .LASF108
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4555   .debug_str:00000000000000b9 .LASF109
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4839   .debug_str:00000000000006dc .LASF110
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4655   .debug_str:0000000000000298 .LASF111
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4819   .debug_str:000000000000066a .LASF112
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4609   .debug_str:00000000000001be .LASF113
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4553   .debug_str:00000000000000aa .LASF114
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4607   .debug_str:00000000000001ad .LASF115
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4541   .debug_str:0000000000000055 .LASF116
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4543   .debug_str:0000000000000064 .LASF117
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4725   .debug_str:00000000000003ff .LASF118
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4687   .debug_str:0000000000000338 .LASF119
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4683   .debug_str:0000000000000328 .LASF120
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4849   .debug_str:0000000000000708 .LASF121
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4551   .debug_str:000000000000009f .LASF172
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4621   .debug_str:0000000000000203 .LASF123
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4825   .debug_str:000000000000068f .LASF124
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4697   .debug_str:000000000000036f .LASF125
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4545   .debug_str:0000000000000075 .LASF126
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4753   .debug_str:000000000000047c .LASF127
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4549   .debug_str:0000000000000097 .LASF128
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4745   .debug_str:0000000000000458 .LASF129
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4645   .debug_str:0000000000000270 .LASF130
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4695   .debug_str:000000000000035f .LASF131
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 21
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4844   .debug_str:00000000000004a7 .LASF127
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4634   .debug_str:0000000000000097 .LASF128
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4836   .debug_str:0000000000000483 .LASF129
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4732   .debug_str:0000000000000277 .LASF130
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4784   .debug_str:0000000000000384 .LASF131
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4738   .debug_str:0000000000000289 .LASF132
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4690   .debug_str:000000000000019c .LASF133
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4804   .debug_str:00000000000003f0 .LASF134
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4960   .debug_str:0000000000000799 .LASF145
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:351    .text.startup.main:0000000000000000 .LFB5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:546    .text.startup.main:0000000000000138 .LFE5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4179   .debug_loc:0000000000000000 .LLST14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4192   .debug_loc:0000000000000021 .LLST15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4638   .debug_str:00000000000000aa .LASF135
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4798   .debug_str:00000000000003d6 .LASF136
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4218   .debug_loc:0000000000000063 .LLST16
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4952   .debug_str:0000000000000773 .LASF137
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4942   .debug_str:000000000000073b .LASF138
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4766   .debug_str:0000000000000332 .LASF139
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4834   .debug_str:0000000000000474 .LASF140
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4666   .debug_str:0000000000000129 .LASF141
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4235   .debug_loc:000000000000008e .LLST20
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:500    .text.startup.main:00000000000000ec .LVL57
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:514    .text.startup.main:0000000000000102 .LVL59
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:519    .text.startup.main:000000000000010e .LVL60
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:409    .text.startup.main:000000000000005e .LBB9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4250   .debug_loc:00000000000000ab .LLST17
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4263   .debug_loc:00000000000000cc .LLST18
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4276   .debug_loc:00000000000000ed .LLST19
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:425    .text.startup.main:0000000000000074 .LVL46
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:379    .text.startup.main:0000000000000018 .LVL36
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:382    .text.startup.main:0000000000000020 .LVL37
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:385    .text.startup.main:0000000000000028 .LVL38
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:388    .text.startup.main:0000000000000030 .LVL39
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:392    .text.startup.main:000000000000003a .LVL40
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:396    .text.startup.main:0000000000000044 .LVL41
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:399    .text.startup.main:000000000000004c .LVL42
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:403    .text.startup.main:0000000000000056 .LVL43
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:406    .text.startup.main:000000000000005e .LVL44
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:434    .text.startup.main:0000000000000088 .LVL47
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:444    .text.startup.main:00000000000000a0 .LVL48
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:471    .text.startup.main:00000000000000bc .LVL52
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:476    .text.startup.main:00000000000000c6 .LVL53
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:482    .text.startup.main:00000000000000d0 .LVL55
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:492    .text.startup.main:00000000000000e0 .LVL56
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:530    .text.startup.main:000000000000011c .LVL62
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:537    .text.startup.main:000000000000012a .LVL63
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:542    .text.startup.main:0000000000000136 .LVL64
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4858   .debug_str:00000000000004f1 .LASF178
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:204    .text.renderLCD:0000000000000000 .LFB4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:344    .text.renderLCD:00000000000000ca .LFE4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4285   .debug_loc:0000000000000105 .LLST10
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4308   .debug_loc:000000000000013d .LLST11
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4322   .debug_loc:000000000000015e .LLST12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4344   .debug_loc:0000000000000195 .LLST13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:298    .text.renderLCD:0000000000000058 .LVL29
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:306    .text.renderLCD:000000000000006a .LVL30
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4651   .debug_str:0000000000000282 .LASF132
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4605   .debug_str:000000000000019f .LASF133
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4715   .debug_str:00000000000003cb .LASF134
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4865   .debug_str:000000000000075e .LASF142
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:354    .text.startup.main:0000000000000000 .LFB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:551    .text.startup.main:000000000000014c .LFE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4092   .debug_loc:0000000000000000 .LLST14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4105   .debug_loc:0000000000000021 .LLST15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4709   .debug_str:00000000000003b1 .LASF135
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4131   .debug_loc:0000000000000063 .LLST16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4677   .debug_str:000000000000030d .LASF136
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4743   .debug_str:0000000000000449 .LASF137
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4579   .debug_str:0000000000000122 .LASF138
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4148   .debug_loc:000000000000008e .LLST20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:500    .text.startup.main:00000000000000e8 .LVL55
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:519    .text.startup.main:0000000000000116 .LVL60
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:524    .text.startup.main:0000000000000122 .LVL61
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:406    .text.startup.main:0000000000000050 .LBB9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4163   .debug_loc:00000000000000ab .LLST17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4176   .debug_loc:00000000000000cc .LLST18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4189   .debug_loc:00000000000000ed .LLST19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:422    .text.startup.main:0000000000000066 .LVL44
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:382    .text.startup.main:000000000000001a .LVL36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:385    .text.startup.main:0000000000000022 .LVL37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:388    .text.startup.main:000000000000002a .LVL38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:392    .text.startup.main:0000000000000034 .LVL39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:396    .text.startup.main:000000000000003e .LVL40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:399    .text.startup.main:0000000000000046 .LVL41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:403    .text.startup.main:0000000000000050 .LVL42
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:431    .text.startup.main:000000000000007a .LVL45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:438    .text.startup.main:000000000000008e .LVL46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:471    .text.startup.main:00000000000000b8 .LVL50
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:476    .text.startup.main:00000000000000c2 .LVL51
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:482    .text.startup.main:00000000000000cc .LVL53
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:492    .text.startup.main:00000000000000dc .LVL54
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:535    .text.startup.main:0000000000000130 .LVL63
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:542    .text.startup.main:000000000000013e .LVL64
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:547    .text.startup.main:000000000000014a .LVL65
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4767   .debug_str:00000000000004c6 .LASF173
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:204    .text.renderLCD:0000000000000000 .LFB4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:344    .text.renderLCD:00000000000000ca .LFE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4198   .debug_loc:0000000000000105 .LLST10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4221   .debug_loc:000000000000013d .LLST11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4235   .debug_loc:000000000000015e .LLST12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4257   .debug_loc:0000000000000195 .LLST13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:298    .text.renderLCD:0000000000000058 .LVL29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:306    .text.renderLCD:000000000000006a .LVL30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:315    .text.renderLCD:0000000000000082 .LVL31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:323    .text.renderLCD:0000000000000096 .LVL32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:331    .text.renderLCD:00000000000000ac .LVL33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:339    .text.renderLCD:00000000000000c4 .LVL34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4843   .debug_str:00000000000006f0 .LASF146
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4685   .debug_str:0000000000000331 .LASF139
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4777   .debug_str:00000000000004f0 .LASF140
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4823   .debug_str:0000000000000680 .LASF141
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4821   .debug_str:0000000000000677 .LASF147
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4691   .debug_str:0000000000000344 .LASF143
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 22
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:315    .text.renderLCD:0000000000000082 .LVL31
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:323    .text.renderLCD:0000000000000096 .LVL32
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:331    .text.renderLCD:00000000000000ac .LVL33
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:339    .text.renderLCD:00000000000000c4 .LVL34
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4934   .debug_str:000000000000071b .LASF149
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4774   .debug_str:0000000000000356 .LASF142
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4868   .debug_str:000000000000051b .LASF143
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4914   .debug_str:00000000000006ab .LASF144
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4912   .debug_str:00000000000006a2 .LASF150
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4780   .debug_str:0000000000000369 .LASF146
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:14     .text.initSensorReading:0000000000000000 .LFB2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:76     .text.initSensorReading:000000000000003e .LFE2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4370   .debug_loc:00000000000001d7 .LLST0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4388   .debug_loc:0000000000000203 .LLST1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4796   .debug_str:00000000000003cc .LASF147
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4406   .debug_loc:000000000000022f .LLST2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4696   .debug_str:00000000000001c9 .LASF148
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:49     .text.initSensorReading:0000000000000022 .LVL4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:60     .text.initSensorReading:0000000000000032 .LVL5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:82     .text.initPlant.part.0:0000000000000000 .LFB6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:175    .text.initPlant.part.0:000000000000008c .LFE6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4424   .debug_loc:000000000000025b .LLST3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4442   .debug_loc:0000000000000288 .LLST4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4459   .debug_loc:00000000000002b5 .LLST5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4477   .debug_loc:00000000000002e1 .LLST6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:114    .text.initPlant.part.0:0000000000000024 .LVL12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:122    .text.initPlant.part.0:000000000000003a .LVL13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:128    .text.initPlant.part.0:000000000000004c .LVL14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:135    .text.initPlant.part.0:000000000000005a .LVL15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:142    .text.initPlant.part.0:0000000000000068 .LVL16
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:152    .text.initPlant.part.0:000000000000007c .LVL17
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:182    .text.initPlant:0000000000000000 .LFB3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:197    .text.initPlant:0000000000000012 .LFE3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4495   .debug_loc:000000000000030d .LLST7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4513   .debug_loc:0000000000000339 .LLST8
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4531   .debug_loc:0000000000000365 .LLST9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:192    .text.initPlant:0000000000000010 .LVL22
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4698   .debug_str:00000000000001d4 .LASF151
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4950   .debug_str:0000000000000764 .LASF152
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4756   .debug_str:00000000000002f2 .LASF153
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4906   .debug_str:0000000000000686 .LASF154
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4664   .debug_str:0000000000000121 .LASF155
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4808   .debug_str:0000000000000408 .LASF156
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4656   .debug_str:00000000000000fc .LASF157
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4922   .debug_str:00000000000006e3 .LASF158
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4838   .debug_str:0000000000000491 .LASF159
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4954   .debug_str:000000000000077d .LASF160
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4672   .debug_str:0000000000000143 .LASF161
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4740   .debug_str:0000000000000294 .LASF162
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4826   .debug_str:0000000000000455 .LASF163
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4646   .debug_str:00000000000000d5 .LASF164
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4882   .debug_str:0000000000000558 .LASF165
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4674   .debug_str:000000000000014d .LASF166
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4730   .debug_str:0000000000000270 .LASF167
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4886   .debug_str:0000000000000567 .LASF168
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4900   .debug_str:0000000000000662 .LASF169
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4752   .debug_str:00000000000002e4 .LASF170
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:14     .text.initSensorReading:0000000000000000 .LFB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:76     .text.initSensorReading:000000000000003e .LFE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4283   .debug_loc:00000000000001d7 .LLST0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4301   .debug_loc:0000000000000203 .LLST1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4707   .debug_str:00000000000003a7 .LASF144
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4319   .debug_loc:000000000000022f .LLST2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4611   .debug_str:00000000000001cc .LASF145
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:49     .text.initSensorReading:0000000000000022 .LVL4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:60     .text.initSensorReading:0000000000000032 .LVL5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:82     .text.initPlant.part.0:0000000000000000 .LFB6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:175    .text.initPlant.part.0:000000000000008c .LFE6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4337   .debug_loc:000000000000025b .LLST3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4355   .debug_loc:0000000000000288 .LLST4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4372   .debug_loc:00000000000002b5 .LLST5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4390   .debug_loc:00000000000002e1 .LLST6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:114    .text.initPlant.part.0:0000000000000024 .LVL12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:122    .text.initPlant.part.0:000000000000003a .LVL13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:128    .text.initPlant.part.0:000000000000004c .LVL14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:135    .text.initPlant.part.0:000000000000005a .LVL15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:142    .text.initPlant.part.0:0000000000000068 .LVL16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:152    .text.initPlant.part.0:000000000000007c .LVL17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:182    .text.initPlant:0000000000000000 .LFB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:197    .text.initPlant:0000000000000012 .LFE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4408   .debug_loc:000000000000030d .LLST7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4426   .debug_loc:0000000000000339 .LLST8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4444   .debug_loc:0000000000000365 .LLST9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:192    .text.initPlant:0000000000000010 .LVL22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4613   .debug_str:00000000000001d7 .LASF148
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4857   .debug_str:0000000000000733 .LASF149
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4667   .debug_str:00000000000002cd .LASF150
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4815   .debug_str:000000000000065b .LASF151
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4577   .debug_str:000000000000011a .LASF152
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4719   .debug_str:00000000000003e3 .LASF153
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4831   .debug_str:00000000000006b8 .LASF154
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4747   .debug_str:0000000000000466 .LASF155
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4859   .debug_str:0000000000000742 .LASF156
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4585   .debug_str:000000000000013c .LASF157
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4735   .debug_str:000000000000042a .LASF158
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4559   .debug_str:00000000000000d0 .LASF159
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4791   .debug_str:000000000000052d .LASF160
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4587   .debug_str:0000000000000146 .LASF161
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4643   .debug_str:0000000000000269 .LASF162
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4795   .debug_str:000000000000053c .LASF163
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4809   .debug_str:0000000000000637 .LASF164
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4663   .debug_str:00000000000002bf .LASF165
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4671   .debug_str:00000000000002f0 .LASF166
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4669   .debug_str:00000000000002e9 .LASF167
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:4593   .debug_str:000000000000015f .LASF168
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:362    .text.startup.main:0000000000000002 .LCFI7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:358    .text.startup.main:0000000000000000 .LVL35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:456    .text.startup.main:00000000000000ac .LVL47
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:461    .text.startup.main:00000000000000ae .LVL48
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:479    .text.startup.main:00000000000000c4 .LVL52
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:532    .text.startup.main:0000000000000128 .LVL62
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:504    .text.startup.main:00000000000000ec .LVL56
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:417    .text.startup.main:000000000000005e .LVL43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:214    .text.renderLCD:0000000000000002 .LCFI4
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 23
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4760   .debug_str:0000000000000315 .LASF171
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4758   .debug_str:000000000000030e .LASF172
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:4680   .debug_str:0000000000000166 .LASF173
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:361    .text.startup.main:0000000000000002 .LCFI7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:355    .text.startup.main:0000000000000000 .LVL35
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:456    .text.startup.main:00000000000000b0 .LVL49
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:461    .text.startup.main:00000000000000b2 .LVL50
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:479    .text.startup.main:00000000000000c8 .LVL54
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:527    .text.startup.main:0000000000000114 .LVL61
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:504    .text.startup.main:00000000000000f0 .LVL58
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:420    .text.startup.main:000000000000006c .LVL45
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:214    .text.renderLCD:0000000000000002 .LCFI4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:278    .text.renderLCD:000000000000003e .LCFI5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:283    .text.renderLCD:0000000000000040 .LCFI6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:207    .text.renderLCD:0000000000000000 .LVL23
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:250    .text.renderLCD:0000000000000026 .LVL24
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:274    .text.renderLCD:000000000000003a .LVL26
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:281    .text.renderLCD:0000000000000040 .LVL27
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:267    .text.renderLCD:0000000000000034 .LVL25
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:294    .text.renderLCD:000000000000004e .LVL28
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:23     .text.initSensorReading:0000000000000002 .LCFI0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:72     .text.initSensorReading:000000000000003c .LCFI1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:18     .text.initSensorReading:0000000000000000 .LVL0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:41     .text.initSensorReading:0000000000000016 .LVL2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:30     .text.initSensorReading:000000000000000a .LVL1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:70     .text.initSensorReading:000000000000003a .LVL7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:90     .text.initPlant.part.0:0000000000000002 .LCFI2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:170    .text.initPlant.part.0:000000000000008a .LCFI3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:85     .text.initPlant.part.0:0000000000000000 .LVL8
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:105    .text.initPlant.part.0:0000000000000012 .LVL10
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:172    .text.initPlant.part.0:000000000000008a .LVL20
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:97     .text.initPlant.part.0:000000000000000a .LVL9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:168    .text.initPlant.part.0:0000000000000088 .LVL19
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:107    .text.initPlant.part.0:0000000000000016 .LVL11
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:161    .text.initPlant.part.0:0000000000000082 .LVL18
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:185    .text.initPlant:0000000000000000 .LVL21
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:590    .debug_info:0000000000000000 .Ldebug_info0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:209    .text.renderLCD:0000000000000000 .LBB2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:211    .text.renderLCD:0000000000000000 .LBE2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:218    .text.renderLCD:0000000000000004 .LBB3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:221    .text.renderLCD:0000000000000006 .LBE3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:242    .text.renderLCD:000000000000001a .LBB4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:254    .text.renderLCD:000000000000002a .LBE4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:285    .text.renderLCD:0000000000000040 .LBB5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:342    .text.renderLCD:00000000000000ca .LBE5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:416    .text.startup.main:000000000000006a .LBE9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:421    .text.startup.main:000000000000006c .LBB12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:427    .text.startup.main:0000000000000074 .LBE12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:451    .text.startup.main:00000000000000aa .LBB13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:458    .text.startup.main:00000000000000b0 .LBE13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:495    .text.startup.main:00000000000000e2 .LBB14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s:521    .text.startup.main:000000000000010e .LBE14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:278    .text.renderLCD:000000000000003e .LCFI5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:283    .text.renderLCD:0000000000000040 .LCFI6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:207    .text.renderLCD:0000000000000000 .LVL23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:250    .text.renderLCD:0000000000000026 .LVL24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:274    .text.renderLCD:000000000000003a .LVL26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:281    .text.renderLCD:0000000000000040 .LVL27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:267    .text.renderLCD:0000000000000034 .LVL25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:294    .text.renderLCD:000000000000004e .LVL28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:23     .text.initSensorReading:0000000000000002 .LCFI0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:72     .text.initSensorReading:000000000000003c .LCFI1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:18     .text.initSensorReading:0000000000000000 .LVL0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:41     .text.initSensorReading:0000000000000016 .LVL2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:30     .text.initSensorReading:000000000000000a .LVL1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:70     .text.initSensorReading:000000000000003a .LVL7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:90     .text.initPlant.part.0:0000000000000002 .LCFI2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:170    .text.initPlant.part.0:000000000000008a .LCFI3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:85     .text.initPlant.part.0:0000000000000000 .LVL8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:105    .text.initPlant.part.0:0000000000000012 .LVL10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:172    .text.initPlant.part.0:000000000000008a .LVL20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:97     .text.initPlant.part.0:000000000000000a .LVL9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:168    .text.initPlant.part.0:0000000000000088 .LVL19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:107    .text.initPlant.part.0:0000000000000016 .LVL11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:161    .text.initPlant.part.0:0000000000000082 .LVL18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:185    .text.initPlant:0000000000000000 .LVL21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:599    .debug_info:0000000000000000 .Ldebug_info0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:209    .text.renderLCD:0000000000000000 .LBB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:211    .text.renderLCD:0000000000000000 .LBE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:218    .text.renderLCD:0000000000000004 .LBB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:221    .text.renderLCD:0000000000000006 .LBE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:242    .text.renderLCD:000000000000001a .LBB4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:254    .text.renderLCD:000000000000002a .LBE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:285    .text.renderLCD:0000000000000040 .LBB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:342    .text.renderLCD:00000000000000ca .LBE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:413    .text.startup.main:000000000000005c .LBE9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:418    .text.startup.main:000000000000005e .LBB12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:424    .text.startup.main:0000000000000066 .LBE12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:439    .text.startup.main:000000000000008e .LBB13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:444    .text.startup.main:000000000000009a .LBE13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:453    .text.startup.main:00000000000000a8 .LBB14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:458    .text.startup.main:00000000000000ac .LBE14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:495    .text.startup.main:00000000000000de .LBB15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s:526    .text.startup.main:0000000000000122 .LBE15
 
 UNDEFINED SYMBOLS
 snprintf
 memcpy
 strcpy
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccMuKYcL.s 			page 24
-
-
 LCD_ShowStr
 LCD_ShowNum
+__floatsidf
+__divdf3
+__fixdfsi
 t5omsi
 colinit
 l88init
-keyinit
 ADC3powerUpInit
 Lcd_SetType
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cc2PkXGw.s 			page 24
+
+
 Lcd_Init
 LCD_Clear
-eclic_global_interrupt_enable
 t5expq
 colset
 l88row
