@@ -6,8 +6,8 @@ void ADC3powerUpInit(int tmp) {
     rcu_periph_clock_enable(RCU_ADC0);
     rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV8);
 
-    gpio_init(GPIOA, GPIO_MODE_AIN, GPIO_MODE_OUT_PP, GPIO_PIN_3);
-
+    gpio_init(GPIOA, GPIO_MODE_AIN, 0x00, GPIO_PIN_3);          // ÄNDRAD från weird default värde      
+    
     adc_deinit(ADC0);                                                   // Reset...
     adc_mode_config(ADC_MODE_FREE);                                     // ADC0 & ADC1 runs indep.
     adc_special_function_config(ADC0, ADC_CONTINUOUS_MODE, DISABLE);    // Trigger each sample
