@@ -21,6 +21,20 @@ void renderLCD(Plant allPlants[], int numberOfPlants)
   }
 }
 
+int fetchReading(uint32_t source, uint32_t EOC) {
+  adc_software_trigger_enable(source, ADC_REGULAR_CHANNEL);
+  int called = 0;
+  while (!adc_flag_get(source, EOC)) {  //blocking
+      if (!called) {
+        LCD_ShowStr(50, 4, "reads sensor", GREEN, TRANSPARENT);
+        called = 1;
+      }
+  }; 
+  int reading = adc_regular_data_read(source);
+  adc_flag_clear(source, EOC);
+  return reading;
+}
+
 int main(void)
 {
   int ms = 0, s = 0, idle = 0;
@@ -52,13 +66,8 @@ int main(void)
       ms++;             // ...One second heart beat
       if (ms == 1000)
       {
-        if (adc_flag_get(ADC0, ADC_FLAG_EOC))
-        {
-          int tempValue = 360 - adc_regular_data_read(ADC0); //360 verkar vara maxvärde i fullt mörker
-          allPlants[1].sun.reading = tempValue / 3.6; // i procent
-          adc_flag_clear(ADC0, ADC_FLAG_EOC);
-          adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
-        }
+        int tempValue = 360 - fetchReading(ADC0,ADC_FLAG_EOC); //360 verkar vara maxvärde i fullt mörker
+        allPlants[1].sun.reading = tempValue / 3.6; // i procent
         renderLCD(allPlants, numberOfPlants);
         ms = 0;
       }
