@@ -12,5 +12,11 @@ typedef struct
   char currentStatus[10];
 } Plant;
 
+typedef enum
+{
+  MOISTURE,
+  SUN
+} SensorType;
+
 SensorReading initSensorReading(char timeStamp[], int inReading);
 void initPlant(char inName[], int *numberOfPlants, Plant allPlants[]);

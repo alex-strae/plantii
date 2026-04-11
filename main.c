@@ -4,6 +4,7 @@
 #include "lcd.h"
 #include "usart.h"
 #include "plant.h"
+#include <string.h>
 #define EI 1
 #define DI 0
 #define STR_COPY(dest, src) \
@@ -33,6 +34,20 @@ int fetchReading(uint32_t source, uint32_t EOC) {
   int reading = adc_regular_data_read(source);
   adc_flag_clear(source, EOC);
   return reading;
+}
+
+void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type) {
+  for (int i = 0; i < numberOfPlants ; i++) {
+    if (strcmp(allPlants[i].name, name) == 0) {
+      if (type == SUN) {
+        int tempValue = 360 - fetchReading(ADC0, ADC_FLAG_EOC); //360 verkar vara maxvärde i fullt mörker
+        allPlants[i].sun.reading = tempValue / 3.6;   // i procent
+        return;
+      }
+    }
+  }
+  LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
+  return;
 }
 
 int main(void)
@@ -66,8 +81,7 @@ int main(void)
       ms++;             // ...One second heart beat
       if (ms == 1000)
       {
-        int tempValue = 360 - fetchReading(ADC0,ADC_FLAG_EOC); //360 verkar vara maxvärde i fullt mörker
-        allPlants[1].sun.reading = tempValue / 3.6; // i procent
+        updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
         renderLCD(allPlants, numberOfPlants);
         ms = 0;
       }
