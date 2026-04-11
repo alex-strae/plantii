@@ -88,3 +88,8 @@ Sätt flaggan 0
 Starta ny conversion
 Repeat
 
+
+lör 11 april kl 22:
+Flyttat ut plant structs och funktioner till egna filer och bytt namn på dess props. Byggt hjälpfunktioner för läs värden. inser att jag behöver timestamp av mer än historik-skäl, för det är ju timestamp som på ett snyggt sätt kan säga hur länge sedan jag läste av, och därför delge om det är dags att läsa av igen.
+
+
