@@ -15,8 +15,8 @@ void renderLCD(Plant allPlants[], int numberOfPlants)
   for (int i = 0; i < numberOfPlants; i++)
   {
     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 20, allPlants[i].moistureReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 20, "%", WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 40, allPlants[i].sunReading.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, "%", WHITE, TRANSPARENT);
+    LCD_ShowNum(i * 55, 20, allPlants[i].moisture.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 20, "%", WHITE, TRANSPARENT);
+    LCD_ShowNum(i * 55, 40, allPlants[i].sun.reading, 3, WHITE); LCD_ShowStr(i * 55+30, 40, "%", WHITE, TRANSPARENT);
     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
   }
 }
@@ -55,7 +55,7 @@ int main(void)
         if (adc_flag_get(ADC0, ADC_FLAG_EOC))
         {
           int tempValue = 360 - adc_regular_data_read(ADC0); //360 verkar vara maxvärde i fullt mörker
-          allPlants[1].sunReading.reading = tempValue / 3.6; // i procent
+          allPlants[1].sun.reading = tempValue / 3.6; // i procent
           adc_flag_clear(ADC0, ADC_FLAG_EOC);
           adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
         }

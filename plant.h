@@ -7,8 +7,8 @@ typedef struct
 typedef struct
 {
   char name[10];
-  SensorReading moistureReading;
-  SensorReading sunReading;
+  SensorReading moisture;
+  SensorReading sun;
   char currentStatus[10];
 } Plant;
 
