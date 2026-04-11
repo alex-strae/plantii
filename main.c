@@ -3,47 +3,12 @@
 #include "adc.h"
 #include "lcd.h"
 #include "usart.h"
+#include "plant.h"
 #define EI 1
 #define DI 0
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
-typedef struct
-{
-  char timeStamp[15];
-  int reading;
-} SensorReading;
-
-typedef struct
-{
-  char name[10];
-  SensorReading moistureReading;
-  SensorReading sunReading;
-  char currentStatus[10];
-} Plant;
-
-SensorReading initSensorReading(char timeStamp[], int inReading)
-{
-  SensorReading newReading;
-  STR_COPY(newReading.timeStamp, timeStamp);
-  newReading.reading = inReading;
-  return newReading;
-}
-
-void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
-{
-  if (*numberOfPlants > 2)
-    return;
-  Plant newPlant;
-  SensorReading defaultReading = initSensorReading("20250401-1200", 50);
-
-  STR_COPY(newPlant.name, inName);
-  STR_COPY(newPlant.currentStatus, "OK");
-  newPlant.moistureReading = defaultReading;
-  newPlant.sunReading = defaultReading;
-  allPlants[*numberOfPlants] = newPlant;
-  (*numberOfPlants)++;
-}
 
 void renderLCD(Plant allPlants[], int numberOfPlants)
 {
