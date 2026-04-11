@@ -1,4 +1,6 @@
 #include "plant.h"
+#define STR_COPY(dest, src) \
+  snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
 SensorReading initSensorReading(char timeStamp[], int inReading)
 {
