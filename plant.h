@@ -1,14 +1,14 @@
 typedef struct
 {
-  char timeStamp[15];
+  char timeStamp[15]; //Behöver fortfarande ett sätt för att spara detta
   int reading;
 } SensorReading;
 
 typedef struct
 {
   char name[10];
-  SensorReading moisture;
-  SensorReading sun;
+  SensorReading moisture[48]; // läsa av fukt en gång i halvtimman?
+  SensorReading sun[1440]; // läsa av en gång per minut
   char currentStatus[10];
 } Plant;
 
