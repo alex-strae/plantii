@@ -1,7 +1,17 @@
 # plantii
-Denna readme är ett lägsta-prio dokument kring hur utveckligen av koden för skolprojektet med utvecklingsnamnet Plantii gått. Systemet utgår från kursen HE1028 och lab5 där målet bland annat var att använda LCDn på IO-kortet. En del kod har skalats bort och antagligen kommer mer kunna skalas bort.
+Denna readme ska fungera som en logg av kodutvecklingen för Alex Stråe i projektarbetet i kursen HE1043.
+Att hålla denna loggen uppdaterad är inte högsta prio, se hellre commit meddelanden.
+Målet med readme är att förmedla vem som gjort vad av koden och eventuellt förmedla hur tankeprocessen kring systemets design har gått.
 
-Om kod saknar markering med annan persons namn eller källa, och inte uppenbart är kvarvarande kod från HE1028, så är koden sannolikt skriven av mig.
+Systemet utgår från lab5 och kursen HE1028 där målet bland annat var att använda LCDn. En del kod har skalats bort, och antagligen kommer mer kunna skalas bort.
+
+Kod som skrivs av mig Alex, kommer inte markeras som skriven av mig. Undantag om jag behöver göra komplicerad kod där man kanske kan tro att jag fick färdig kod från KTHs exempel bibliotek.
+Kod som tas från KTH kommer markeras om jag tycker att det inte framgår tydligt att det inte är jag som skrivit den.
+Kod som tas från andra externa källor (ej AI) kommer markeras.
+Kod som tagits från AI eller bearbetats av AI kommer markeras. Generellt sett har jag inget emot att sno syntax-tips från AI medans jag vill skriva all logik själv. 
+Kod från andra teammedlemmar i mitt projekt kommer införlivas i detta projekt och markeras med respektives namn.
+
+Det vill säga: om kod saknar markering, och inte uppenbart är från färdiga libs vi fick från KTH, så är den sannolikt skriven av mig.
 
 En sent på kvällen skriven fundering under ca 10 min kring systemarkitekturen av projektet:
     
@@ -81,4 +91,5 @@ Repeat
 
 lör 11 april kl 22:
 Flyttat ut plant structs och funktioner till egna filer och bytt namn på dess props. Byggt hjälpfunktioner för läs värden. inser att jag behöver timestamp av mer än historik-skäl, för det är ju timestamp som på ett snyggt sätt kan säga hur länge sedan jag läste av, och därför delge om det är dags att läsa av igen.
+
 
