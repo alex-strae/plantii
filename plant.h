@@ -1,6 +1,6 @@
 typedef struct
 {
-  char timeStamp[15]; //Behöver fortfarande ett sätt för att spara detta
+  char timeStamp[12]; //Behöver fortfarande ett sätt för att spara detta
   int reading;
 } SensorReading;
 
