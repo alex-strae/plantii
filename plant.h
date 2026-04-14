@@ -8,7 +8,7 @@ typedef struct
 {
   char name[10];
   SensorReading moisture[48]; // läsa av fukt en gång i halvtimman?
-  SensorReading sun[1440]; // läsa av en gång per minut
+  SensorReading sun[48]; // läsa av en gång per minut
   char currentStatus[10];
 } Plant;
 

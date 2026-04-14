@@ -1,4 +1,4 @@
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 1
 
 
    1              		.file	"gd32vf103_exmc.c"
@@ -58,7 +58,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
   41:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** 
   42:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** /* EXMC register bit offset */
   43:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** #define SNCTL_NRMUX_OFFSET                ((uint32_t)1U)
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 2
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 2
 
 
   44:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** #define SNCTL_WREN_OFFSET                 ((uint32_t)12U)
@@ -118,7 +118,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
   48              	exmc_norsram_struct_para_init:
   49              	.LFB3:
   68:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 3
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 3
 
 
   69:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** /*!
@@ -178,7 +178,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
   83:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c ****     exmc_norsram_init_struct->nwait_signal = ENABLE;
   76              		.loc 1 83 5 is_stmt 1
   84:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c ****     exmc_norsram_init_struct->asyn_wait = DISABLE;
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 4
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 4
 
 
   77              		.loc 1 84 5
@@ -238,7 +238,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  109:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** void exmc_norsram_init(exmc_norsram_parameter_struct* exmc_norsram_init_struct)
  110:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** {
  108              		.loc 1 110 1 is_stmt 1
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 5
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 5
 
 
  109              		.cfi_startproc
@@ -298,7 +298,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  140 0020 D58F     		or	a5,a5,a3
  120:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c ****                         exmc_norsram_init_struct->memory_type |
  141              		.loc 1 120 14
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 6
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 6
 
 
  142 0022 544D     		lw	a3,28(a0)
@@ -358,7 +358,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  181              		.loc 1 130 123
  182 0050 B3F61601 		and	a3,a3,a7
  129:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c ****                        (((exmc_norsram_init_struct->read_write_timing->asyn_data_setuptime - 1U ) <
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 7
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 7
 
 
  183              		.loc 1 129 125
@@ -418,7 +418,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  222 0084 B70600A0 		li	a3,-1610612736
  223 0088 9106     		addi	a3,a3,4
  224 008a 8E07     		slli	a5,a5,3
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 8
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 8
 
 
  225 008c B697     		add	a5,a5,a3
@@ -478,7 +478,7 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  160:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c ****     \retval     none
  161:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** */
  162:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** void exmc_norsram_disable(uint32_t norsram_region)
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 9
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 9
 
 
  163:../../firmware/GD32VF103_standard_peripheral/Source/gd32vf103_exmc.c **** {
@@ -508,217 +508,217 @@ GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page
  286              		.file 4 "../../firmware/GD32VF103_standard_peripheral/gd32vf103.h"
  287              		.file 5 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_exmc.h"
  288              		.file 6 "../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h"
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 10
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gd32vf103_exmc.c
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:13     .text.exmc_norsram_deinit:0000000000000000 exmc_norsram_deinit
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:17     .text.exmc_norsram_deinit:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:19     .text.exmc_norsram_deinit:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:20     .text.exmc_norsram_deinit:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:21     .text.exmc_norsram_deinit:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:23     .text.exmc_norsram_deinit:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:24     .text.exmc_norsram_deinit:0000000000000002 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:30     .text.exmc_norsram_deinit:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:36     .text.exmc_norsram_deinit:0000000000000018 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:40     .text.exmc_norsram_deinit:0000000000000020 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:41     .text.exmc_norsram_deinit:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:48     .text.exmc_norsram_struct_para_init:0000000000000000 exmc_norsram_struct_para_init
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:51     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:53     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:54     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:55     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:58     .text.exmc_norsram_struct_para_init:0000000000000004 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:60     .text.exmc_norsram_struct_para_init:0000000000000006 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:62     .text.exmc_norsram_struct_para_init:0000000000000008 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:64     .text.exmc_norsram_struct_para_init:000000000000000a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:67     .text.exmc_norsram_struct_para_init:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:69     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:70     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:71     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:73     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:74     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:75     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:77     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:78     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:79     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:80     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:82     .text.exmc_norsram_struct_para_init:000000000000001e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:83     .text.exmc_norsram_struct_para_init:000000000000001e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:85     .text.exmc_norsram_struct_para_init:0000000000000020 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:87     .text.exmc_norsram_struct_para_init:0000000000000024 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:89     .text.exmc_norsram_struct_para_init:0000000000000026 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:90     .text.exmc_norsram_struct_para_init:0000000000000026 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:92     .text.exmc_norsram_struct_para_init:0000000000000028 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:93     .text.exmc_norsram_struct_para_init:0000000000000028 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:95     .text.exmc_norsram_struct_para_init:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:96     .text.exmc_norsram_struct_para_init:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:98     .text.exmc_norsram_struct_para_init:000000000000002c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:99     .text.exmc_norsram_struct_para_init:000000000000002e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:106    .text.exmc_norsram_init:0000000000000000 exmc_norsram_init
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:109    .text.exmc_norsram_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:111    .text.exmc_norsram_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:112    .text.exmc_norsram_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:113    .text.exmc_norsram_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:114    .text.exmc_norsram_init:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:117    .text.exmc_norsram_init:0000000000000006 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:119    .text.exmc_norsram_init:0000000000000008 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:122    .text.exmc_norsram_init:000000000000000c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:125    .text.exmc_norsram_init:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:126    .text.exmc_norsram_init:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:128    .text.exmc_norsram_init:0000000000000012 .L0 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:13     .text.exmc_norsram_deinit:0000000000000000 exmc_norsram_deinit
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:17     .text.exmc_norsram_deinit:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:19     .text.exmc_norsram_deinit:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:20     .text.exmc_norsram_deinit:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:21     .text.exmc_norsram_deinit:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:23     .text.exmc_norsram_deinit:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:24     .text.exmc_norsram_deinit:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:30     .text.exmc_norsram_deinit:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:36     .text.exmc_norsram_deinit:0000000000000018 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:40     .text.exmc_norsram_deinit:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:41     .text.exmc_norsram_deinit:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:48     .text.exmc_norsram_struct_para_init:0000000000000000 exmc_norsram_struct_para_init
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:51     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:53     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:54     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:55     .text.exmc_norsram_struct_para_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:58     .text.exmc_norsram_struct_para_init:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:60     .text.exmc_norsram_struct_para_init:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:62     .text.exmc_norsram_struct_para_init:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:64     .text.exmc_norsram_struct_para_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:67     .text.exmc_norsram_struct_para_init:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:69     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:70     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:71     .text.exmc_norsram_struct_para_init:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:73     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:74     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:75     .text.exmc_norsram_struct_para_init:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:77     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:78     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:79     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:80     .text.exmc_norsram_struct_para_init:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:82     .text.exmc_norsram_struct_para_init:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:83     .text.exmc_norsram_struct_para_init:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:85     .text.exmc_norsram_struct_para_init:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:87     .text.exmc_norsram_struct_para_init:0000000000000024 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:89     .text.exmc_norsram_struct_para_init:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:90     .text.exmc_norsram_struct_para_init:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:92     .text.exmc_norsram_struct_para_init:0000000000000028 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:93     .text.exmc_norsram_struct_para_init:0000000000000028 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:95     .text.exmc_norsram_struct_para_init:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:96     .text.exmc_norsram_struct_para_init:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:98     .text.exmc_norsram_struct_para_init:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:99     .text.exmc_norsram_struct_para_init:000000000000002e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:106    .text.exmc_norsram_init:0000000000000000 exmc_norsram_init
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:109    .text.exmc_norsram_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:111    .text.exmc_norsram_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:112    .text.exmc_norsram_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:113    .text.exmc_norsram_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:114    .text.exmc_norsram_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:117    .text.exmc_norsram_init:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:119    .text.exmc_norsram_init:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:122    .text.exmc_norsram_init:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:125    .text.exmc_norsram_init:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:126    .text.exmc_norsram_init:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:128    .text.exmc_norsram_init:0000000000000012 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 11
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:130    .text.exmc_norsram_init:0000000000000014 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:133    .text.exmc_norsram_init:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:134    .text.exmc_norsram_init:0000000000000016 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:137    .text.exmc_norsram_init:000000000000001a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:139    .text.exmc_norsram_init:000000000000001e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:142    .text.exmc_norsram_init:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:144    .text.exmc_norsram_init:0000000000000024 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:147    .text.exmc_norsram_init:0000000000000028 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:149    .text.exmc_norsram_init:000000000000002a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:151    .text.exmc_norsram_init:000000000000002c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:154    .text.exmc_norsram_init:0000000000000030 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:156    .text.exmc_norsram_init:0000000000000032 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:159    .text.exmc_norsram_init:0000000000000036 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:161    .text.exmc_norsram_init:0000000000000038 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:164    .text.exmc_norsram_init:000000000000003c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:166    .text.exmc_norsram_init:000000000000003e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:169    .text.exmc_norsram_init:0000000000000040 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:170    .text.exmc_norsram_init:0000000000000040 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:172    .text.exmc_norsram_init:0000000000000044 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:174    .text.exmc_norsram_init:0000000000000048 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:176    .text.exmc_norsram_init:000000000000004a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:178    .text.exmc_norsram_init:000000000000004c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:180    .text.exmc_norsram_init:000000000000004e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:182    .text.exmc_norsram_init:0000000000000050 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:184    .text.exmc_norsram_init:0000000000000054 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:186    .text.exmc_norsram_init:0000000000000058 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:188    .text.exmc_norsram_init:000000000000005a .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:191    .text.exmc_norsram_init:0000000000000060 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:193    .text.exmc_norsram_init:0000000000000062 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:195    .text.exmc_norsram_init:0000000000000064 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:197    .text.exmc_norsram_init:0000000000000068 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:199    .text.exmc_norsram_init:000000000000006c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:201    .text.exmc_norsram_init:000000000000006e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:203    .text.exmc_norsram_init:0000000000000070 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:205    .text.exmc_norsram_init:0000000000000074 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:208    .text.exmc_norsram_init:0000000000000076 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:209    .text.exmc_norsram_init:0000000000000076 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:212    .text.exmc_norsram_init:000000000000007c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:213    .text.exmc_norsram_init:000000000000007c .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:217    .text.exmc_norsram_init:0000000000000080 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:218    .text.exmc_norsram_init:0000000000000080 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:220    .text.exmc_norsram_init:0000000000000082 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:227    .text.exmc_norsram_init:000000000000008e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:230    .text.exmc_norsram_init:0000000000000090 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:231    .text.exmc_norsram_init:0000000000000092 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:238    .text.exmc_norsram_enable:0000000000000000 exmc_norsram_enable
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:241    .text.exmc_norsram_enable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:243    .text.exmc_norsram_enable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:244    .text.exmc_norsram_enable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:245    .text.exmc_norsram_enable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:254    .text.exmc_norsram_enable:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:255    .text.exmc_norsram_enable:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:262    .text.exmc_norsram_disable:0000000000000000 exmc_norsram_disable
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:265    .text.exmc_norsram_disable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:267    .text.exmc_norsram_disable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:268    .text.exmc_norsram_disable:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:269    .text.exmc_norsram_disable:0000000000000000 .L0 
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:130    .text.exmc_norsram_init:0000000000000014 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:133    .text.exmc_norsram_init:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:134    .text.exmc_norsram_init:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:137    .text.exmc_norsram_init:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:139    .text.exmc_norsram_init:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:142    .text.exmc_norsram_init:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:144    .text.exmc_norsram_init:0000000000000024 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:147    .text.exmc_norsram_init:0000000000000028 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:149    .text.exmc_norsram_init:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:151    .text.exmc_norsram_init:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:154    .text.exmc_norsram_init:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:156    .text.exmc_norsram_init:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:159    .text.exmc_norsram_init:0000000000000036 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:161    .text.exmc_norsram_init:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:164    .text.exmc_norsram_init:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:166    .text.exmc_norsram_init:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:169    .text.exmc_norsram_init:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:170    .text.exmc_norsram_init:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:172    .text.exmc_norsram_init:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:174    .text.exmc_norsram_init:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:176    .text.exmc_norsram_init:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:178    .text.exmc_norsram_init:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:180    .text.exmc_norsram_init:000000000000004e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:182    .text.exmc_norsram_init:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:184    .text.exmc_norsram_init:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:186    .text.exmc_norsram_init:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:188    .text.exmc_norsram_init:000000000000005a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:191    .text.exmc_norsram_init:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:193    .text.exmc_norsram_init:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:195    .text.exmc_norsram_init:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:197    .text.exmc_norsram_init:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:199    .text.exmc_norsram_init:000000000000006c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:201    .text.exmc_norsram_init:000000000000006e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:203    .text.exmc_norsram_init:0000000000000070 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:205    .text.exmc_norsram_init:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:208    .text.exmc_norsram_init:0000000000000076 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:209    .text.exmc_norsram_init:0000000000000076 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:212    .text.exmc_norsram_init:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:213    .text.exmc_norsram_init:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:217    .text.exmc_norsram_init:0000000000000080 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:218    .text.exmc_norsram_init:0000000000000080 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:220    .text.exmc_norsram_init:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:227    .text.exmc_norsram_init:000000000000008e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:230    .text.exmc_norsram_init:0000000000000090 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:231    .text.exmc_norsram_init:0000000000000092 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:238    .text.exmc_norsram_enable:0000000000000000 exmc_norsram_enable
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:241    .text.exmc_norsram_enable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:243    .text.exmc_norsram_enable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:244    .text.exmc_norsram_enable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:245    .text.exmc_norsram_enable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:254    .text.exmc_norsram_enable:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:255    .text.exmc_norsram_enable:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:262    .text.exmc_norsram_disable:0000000000000000 exmc_norsram_disable
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:265    .text.exmc_norsram_disable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:267    .text.exmc_norsram_disable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:268    .text.exmc_norsram_disable:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:269    .text.exmc_norsram_disable:0000000000000000 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 12
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:278    .text.exmc_norsram_disable:000000000000000e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:279    .text.exmc_norsram_disable:0000000000000010 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:44     .text.exmc_norsram_deinit:0000000000000022 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:102    .text.exmc_norsram_struct_para_init:000000000000002e .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:234    .text.exmc_norsram_init:0000000000000092 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:258    .text.exmc_norsram_enable:0000000000000012 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:282    .text.exmc_norsram_disable:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:278    .text.exmc_norsram_disable:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:279    .text.exmc_norsram_disable:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:44     .text.exmc_norsram_deinit:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:102    .text.exmc_norsram_struct_para_init:000000000000002e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:234    .text.exmc_norsram_init:0000000000000092 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:258    .text.exmc_norsram_enable:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:282    .text.exmc_norsram_disable:0000000000000010 .L0 
                      .debug_frame:0000000000000000 .L0 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:28     .text.exmc_norsram_deinit:000000000000000e .L2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:215    .text.exmc_norsram_init:0000000000000080 .L5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:665    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1110   .debug_str:000000000000025f .LASF37
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1074   .debug_str:00000000000000e2 .LASF38
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1124   .debug_str:0000000000000325 .LASF39
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1030   .debug_ranges:0000000000000000 .Ldebug_ranges0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1044   .debug_line:0000000000000000 .Ldebug_line0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1084   .debug_str:000000000000015e .LASF0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1060   .debug_str:0000000000000071 .LASF1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1062   .debug_str:000000000000007d .LASF2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1106   .debug_str:000000000000023e .LASF3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1068   .debug_str:00000000000000b1 .LASF4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1114   .debug_str:00000000000002f0 .LASF5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1078   .debug_str:0000000000000140 .LASF9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1064   .debug_str:000000000000008b .LASF6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1046   .debug_str:0000000000000000 .LASF7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1086   .debug_str:000000000000016b .LASF8
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1112   .debug_str:00000000000002e7 .LASF10
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1100   .debug_str:00000000000001fa .LASF40
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1122   .debug_str:000000000000031d .LASF11
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1058   .debug_str:000000000000006a .LASF12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1126   .debug_str:0000000000000360 .LASF13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1120   .debug_str:0000000000000311 .LASF14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1088   .debug_str:0000000000000182 .LASF15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1096   .debug_str:00000000000001da .LASF16
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1104   .debug_str:0000000000000228 .LASF17
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1108   .debug_str:0000000000000248 .LASF18
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1092   .debug_str:00000000000001a3 .LASF19
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1056   .debug_str:000000000000005b .LASF20
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1072   .debug_str:00000000000000d8 .LASF21
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1080   .debug_str:000000000000014b .LASF22
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1128   .debug_str:000000000000036e .LASF23
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1050   .debug_str:000000000000002c .LASF24
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1054   .debug_str:000000000000004d .LASF25
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1098   .debug_str:00000000000001ee .LASF26
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1118   .debug_str:0000000000000300 .LASF27
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1052   .debug_str:000000000000003b .LASF28
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1102   .debug_str:000000000000020a .LASF29
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1090   .debug_str:000000000000018e .LASF30
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:263    .text.exmc_norsram_disable:0000000000000000 .LFB6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:280    .text.exmc_norsram_disable:0000000000000010 .LFE6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:918    .debug_loc:0000000000000000 .LLST4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1070   .debug_str:00000000000000c4 .LASF31
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:239    .text.exmc_norsram_enable:0000000000000000 .LFB5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:256    .text.exmc_norsram_enable:0000000000000012 .LFE5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:938    .debug_loc:0000000000000032 .LLST3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1094   .debug_str:00000000000001c8 .LASF32
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:107    .text.exmc_norsram_init:0000000000000000 .LFB4
-GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s 			page 13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:28     .text.exmc_norsram_deinit:000000000000000e .L2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:215    .text.exmc_norsram_init:0000000000000080 .L5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:665    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1112   .debug_str:00000000000002a2 .LASF37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1076   .debug_str:0000000000000125 .LASF38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1072   .debug_str:00000000000000d8 .LASF39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1030   .debug_ranges:0000000000000000 .Ldebug_ranges0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1044   .debug_line:0000000000000000 .Ldebug_line0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1086   .debug_str:00000000000001a1 .LASF0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1060   .debug_str:0000000000000071 .LASF1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1062   .debug_str:000000000000007d .LASF2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1108   .debug_str:0000000000000281 .LASF3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1068   .debug_str:00000000000000b1 .LASF4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1116   .debug_str:0000000000000333 .LASF5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1080   .debug_str:0000000000000183 .LASF9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1064   .debug_str:000000000000008b .LASF6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1046   .debug_str:0000000000000000 .LASF7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1088   .debug_str:00000000000001ae .LASF8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1114   .debug_str:000000000000032a .LASF10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1102   .debug_str:000000000000023d .LASF40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1124   .debug_str:0000000000000360 .LASF11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1058   .debug_str:000000000000006a .LASF12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1126   .debug_str:0000000000000368 .LASF13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1122   .debug_str:0000000000000354 .LASF14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1090   .debug_str:00000000000001c5 .LASF15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1098   .debug_str:000000000000021d .LASF16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1106   .debug_str:000000000000026b .LASF17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1110   .debug_str:000000000000028b .LASF18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1094   .debug_str:00000000000001e6 .LASF19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1056   .debug_str:000000000000005b .LASF20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1074   .debug_str:000000000000011b .LASF21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1082   .debug_str:000000000000018e .LASF22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1128   .debug_str:0000000000000376 .LASF23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1050   .debug_str:000000000000002c .LASF24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1054   .debug_str:000000000000004d .LASF25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1100   .debug_str:0000000000000231 .LASF26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1120   .debug_str:0000000000000343 .LASF27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1052   .debug_str:000000000000003b .LASF28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1104   .debug_str:000000000000024d .LASF29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1092   .debug_str:00000000000001d1 .LASF30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:263    .text.exmc_norsram_disable:0000000000000000 .LFB6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:280    .text.exmc_norsram_disable:0000000000000010 .LFE6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:918    .debug_loc:0000000000000000 .LLST4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1070   .debug_str:00000000000000c4 .LASF31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:239    .text.exmc_norsram_enable:0000000000000000 .LFB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:256    .text.exmc_norsram_enable:0000000000000012 .LFE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:938    .debug_loc:0000000000000032 .LLST3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1096   .debug_str:000000000000020b .LASF32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:107    .text.exmc_norsram_init:0000000000000000 .LFB4
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s 			page 13
 
 
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:232    .text.exmc_norsram_init:0000000000000092 .LFE4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1076   .debug_str:0000000000000127 .LASF33
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1082   .debug_str:0000000000000158 .LASF34
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:958    .debug_loc:0000000000000064 .LLST1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1116   .debug_str:00000000000002f9 .LASF35
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:983    .debug_loc:00000000000000a5 .LLST2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1048   .debug_str:000000000000000e .LASF36
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:49     .text.exmc_norsram_struct_para_init:0000000000000000 .LFB3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:100    .text.exmc_norsram_struct_para_init:000000000000002e .LFE3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:1066   .debug_str:000000000000009d .LASF41
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:14     .text.exmc_norsram_deinit:0000000000000000 .LFB2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:42     .text.exmc_norsram_deinit:0000000000000022 .LFE2
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:995    .debug_loc:00000000000000c4 .LLST0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:266    .text.exmc_norsram_disable:0000000000000000 .LVL14
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:271    .text.exmc_norsram_disable:0000000000000006 .LVL15
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:273    .text.exmc_norsram_disable:0000000000000008 .LVL16
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:242    .text.exmc_norsram_enable:0000000000000000 .LVL11
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:247    .text.exmc_norsram_enable:0000000000000006 .LVL12
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:249    .text.exmc_norsram_enable:0000000000000008 .LVL13
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:110    .text.exmc_norsram_init:0000000000000000 .LVL3
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:123    .text.exmc_norsram_init:000000000000000e .LVL4
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:131    .text.exmc_norsram_init:0000000000000016 .LVL5
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:167    .text.exmc_norsram_init:0000000000000040 .LVL6
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:221    .text.exmc_norsram_init:0000000000000084 .LVL9
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:228    .text.exmc_norsram_init:0000000000000090 .LVL10
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:206    .text.exmc_norsram_init:0000000000000076 .LVL7
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:18     .text.exmc_norsram_deinit:0000000000000000 .LVL0
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:33     .text.exmc_norsram_deinit:0000000000000016 .LVL1
-/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccTsGlnV.s:290    .debug_info:0000000000000000 .Ldebug_info0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:232    .text.exmc_norsram_init:0000000000000092 .LFE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1078   .debug_str:000000000000016a .LASF33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1084   .debug_str:000000000000019b .LASF34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:958    .debug_loc:0000000000000064 .LLST1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1118   .debug_str:000000000000033c .LASF35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:983    .debug_loc:00000000000000a5 .LLST2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1048   .debug_str:000000000000000e .LASF36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:49     .text.exmc_norsram_struct_para_init:0000000000000000 .LFB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:100    .text.exmc_norsram_struct_para_init:000000000000002e .LFE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:1066   .debug_str:000000000000009d .LASF41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:14     .text.exmc_norsram_deinit:0000000000000000 .LFB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:42     .text.exmc_norsram_deinit:0000000000000022 .LFE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:995    .debug_loc:00000000000000c4 .LLST0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:266    .text.exmc_norsram_disable:0000000000000000 .LVL14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:271    .text.exmc_norsram_disable:0000000000000006 .LVL15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:273    .text.exmc_norsram_disable:0000000000000008 .LVL16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:242    .text.exmc_norsram_enable:0000000000000000 .LVL11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:247    .text.exmc_norsram_enable:0000000000000006 .LVL12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:249    .text.exmc_norsram_enable:0000000000000008 .LVL13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:110    .text.exmc_norsram_init:0000000000000000 .LVL3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:123    .text.exmc_norsram_init:000000000000000e .LVL4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:131    .text.exmc_norsram_init:0000000000000016 .LVL5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:167    .text.exmc_norsram_init:0000000000000040 .LVL6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:221    .text.exmc_norsram_init:0000000000000084 .LVL9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:228    .text.exmc_norsram_init:0000000000000090 .LVL10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:206    .text.exmc_norsram_init:0000000000000076 .LVL7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:18     .text.exmc_norsram_deinit:0000000000000000 .LVL0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:33     .text.exmc_norsram_deinit:0000000000000016 .LVL1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccUcfKKZ.s:290    .debug_info:0000000000000000 .Ldebug_info0
 
 NO UNDEFINED SYMBOLS
