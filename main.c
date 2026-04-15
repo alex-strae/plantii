@@ -46,6 +46,10 @@ void renderOnePlant(Plant allPlants[], int numberOfPlants, char name[])
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
+void updatePlantStatus(Plant plantToUpdate) {
+ // WIP : LOOPA IGENOM TIDIGARE READINGS, GÖR EN AVERAGE, TA REDA PÅ STATUS. BEHÖVER LJUS? BEHÖVER VATTEN?
+}
+
 void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type)
 {
   for (int i = 0; i < numberOfPlants; i++)
@@ -63,14 +67,14 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
         STR_COPY(allPlants[i].sun[allPlants[i].numberOfSunReadings].timeStamp, fillWithTimeStamp);
         (allPlants[i].numberOfSunReadings)++;
         } else {
-          LCD_Clear(BLACK);
+          LCD_Fill(0, 0, 160, 80, BLACK);
           LCD_ShowStr(0, 10, "SUN READINGS FULL", RED, TRANSPARENT);
         }
         return;
       }
     }
   }
-  LCD_Clear(BLACK);
+  LCD_Fill(0, 0, 160, 80, BLACK);
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
@@ -90,7 +94,7 @@ int main(void)
 
   Lcd_SetType(LCD_INVERTED);
   Lcd_Init();
-  LCD_Clear(BLACK);
+  LCD_Fill(0, 0, 160, 80, BLACK);
 
   Plant allPlants[3];
   int numberOfPlants = 0;
