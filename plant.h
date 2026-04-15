@@ -1,6 +1,6 @@
 typedef struct
 {
-  char timeStamp[12]; //Behöver fortfarande ett sätt för att spara detta
+  char timeStamp[9]; //Behöver fortfarande ett sätt för att spara detta
   int reading;
 } SensorReading;
 
@@ -8,7 +8,7 @@ typedef struct
 {
   char name[10];
   SensorReading moisture[48]; // läsa av fukt en gång i halvtimman?
-  SensorReading sun[48]; // läsa av en gång per minut
+  SensorReading sun[48]; // läsa av en gång per minut, just nu en gång i halvtimman pga brist på utrymme
   char currentStatus[10];
 } Plant;
 

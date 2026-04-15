@@ -72,6 +72,7 @@ void renderOnePlant(Plant allPlants[], int numberOfPlants, char name[])
       LCD_ShowStr(50, 20, allPlants[i].moisture[0].timeStamp, WHITE, TRANSPARENT);
       LCD_ShowNum(0, 40, allPlants[i].sun[0].reading, 3, WHITE);
       LCD_ShowStr(0 + 30, 40, "%", WHITE, TRANSPARENT);
+      LCD_Fill(50, 40, 160, 53, BLACK); //Black out old reading before writing new
       LCD_ShowStr(50, 40, allPlants[i].sun[0].timeStamp, WHITE, TRANSPARENT);
       LCD_ShowStr(0, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
       return;
@@ -105,18 +106,18 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
     {
       if (type == SUN)
       {
-        int tempValue = 300 - fetchReading(ADC0, ADC_FLAG_EOC); // 300 ger hyfsat välkalibrerat ljus.
+        int tempValue = fetchReading(ADC0, ADC_FLAG_EOC); // 300 ger hyfsat välkalibrerat ljus.
         if (tempValue < 0) tempValue = 0; // guard för inkommande värde över 300
         uint32_t currentTime = rtc_counter_get();
         int hours = currentTime / 3600;
         int min = (currentTime % 3600) / 60;
         int sec = currentTime % 60;
-        char placeholder[12];
-        snprintf(placeholder, sizeof(placeholder), "%02dH:%02dM:%02dS", hours, min, sec);
+        char timeToString[9];
+        snprintf(timeToString, sizeof(timeToString), "%02d:%02d:%02d", hours, min, sec);
 
         // I framtiden måste alla befintliga värden flyttas fram innan läggs på i [0], så att arrayen blir sorterad nyast -> äldst
-        allPlants[i].sun[0].reading = tempValue / 3; // i procent.
-        STR_COPY(allPlants[i].sun[0].timeStamp, placeholder);
+        allPlants[i].sun[0].reading = tempValue; // i procent.
+        STR_COPY(allPlants[i].sun[0].timeStamp, timeToString);
         return;
       }
     }
@@ -158,7 +159,7 @@ int main(void)
       ms++;             // ...One second heart beat
       if (ms == 1000)
       {
-        LCD_Clear(BLACK);
+        //LCD_Clear(BLACK);
         updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
         //renderAllPlants(allPlants, numberOfPlants);
         renderOnePlant(allPlants, numberOfPlants, "Tomat");

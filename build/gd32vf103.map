@@ -1383,8 +1383,6 @@ Discarded input sections
                 0x0000000000000000        0x8 build/lcd.o
  .text.LCD_ShowChinese
                 0x0000000000000000       0x98 build/lcd.o
- .text.LCD_Fill
-                0x0000000000000000       0x50 build/lcd.o
  .text.LCD_DrawPoint_big
                 0x0000000000000000       0x16 build/lcd.o
  .text.LCD_DrawLine
@@ -1646,7 +1644,7 @@ END GROUP
 .ialign         0x0000000008000254        0x0
                 [!provide]                        PROVIDE (_ilm = .)
 
-.text           0x0000000008000280     0x4234
+.text           0x0000000008000280     0x4274
  *(.rodata .rodata.*)
  .rodata._exit.str1.4
                 0x0000000008000280       0x1f build/_exit.o
@@ -1700,407 +1698,410 @@ END GROUP
  *(.text.unlikely .text.unlikely.*)
  *(.text.startup .text.startup.*)
  .text.startup.main
-                0x0000000008000ad8      0x150 build/main.o
+                0x0000000008000ad8      0x146 build/main.o
                 0x0000000008000ad8                main
  *(.text .text.*)
  .text.adc_deinit
-                0x0000000008000c28       0x50 build/gd32vf103_adc.o
-                0x0000000008000c28                adc_deinit
+                0x0000000008000c1e       0x50 build/gd32vf103_adc.o
+                0x0000000008000c1e                adc_deinit
  .text.adc_mode_config
-                0x0000000008000c78       0x20 build/gd32vf103_adc.o
-                0x0000000008000c78                adc_mode_config
+                0x0000000008000c6e       0x20 build/gd32vf103_adc.o
+                0x0000000008000c6e                adc_mode_config
  .text.adc_special_function_config
-                0x0000000008000c98       0x48 build/gd32vf103_adc.o
-                0x0000000008000c98                adc_special_function_config
+                0x0000000008000c8e       0x48 build/gd32vf103_adc.o
+                0x0000000008000c8e                adc_special_function_config
  .text.adc_data_alignment_config
-                0x0000000008000ce0       0x1a build/gd32vf103_adc.o
-                0x0000000008000ce0                adc_data_alignment_config
+                0x0000000008000cd6       0x1a build/gd32vf103_adc.o
+                0x0000000008000cd6                adc_data_alignment_config
  .text.adc_enable
-                0x0000000008000cfa       0x10 build/gd32vf103_adc.o
-                0x0000000008000cfa                adc_enable
+                0x0000000008000cf0       0x10 build/gd32vf103_adc.o
+                0x0000000008000cf0                adc_enable
  .text.adc_calibration_enable
-                0x0000000008000d0a       0x22 build/gd32vf103_adc.o
-                0x0000000008000d0a                adc_calibration_enable
+                0x0000000008000d00       0x22 build/gd32vf103_adc.o
+                0x0000000008000d00                adc_calibration_enable
  .text.adc_tempsensor_vrefint_enable
-                0x0000000008000d2c       0x14 build/gd32vf103_adc.o
-                0x0000000008000d2c                adc_tempsensor_vrefint_enable
+                0x0000000008000d22       0x14 build/gd32vf103_adc.o
+                0x0000000008000d22                adc_tempsensor_vrefint_enable
  .text.adc_channel_length_config
-                0x0000000008000d40       0x4a build/gd32vf103_adc.o
-                0x0000000008000d40                adc_channel_length_config
+                0x0000000008000d36       0x4a build/gd32vf103_adc.o
+                0x0000000008000d36                adc_channel_length_config
  .text.adc_regular_channel_config
-                0x0000000008000d8a       0xbe build/gd32vf103_adc.o
-                0x0000000008000d8a                adc_regular_channel_config
+                0x0000000008000d80       0xbe build/gd32vf103_adc.o
+                0x0000000008000d80                adc_regular_channel_config
  .text.adc_inserted_channel_config
-                0x0000000008000e48       0x76 build/gd32vf103_adc.o
-                0x0000000008000e48                adc_inserted_channel_config
+                0x0000000008000e3e       0x76 build/gd32vf103_adc.o
+                0x0000000008000e3e                adc_inserted_channel_config
  .text.adc_external_trigger_source_config
-                0x0000000008000ebe       0x34 build/gd32vf103_adc.o
-                0x0000000008000ebe                adc_external_trigger_source_config
+                0x0000000008000eb4       0x34 build/gd32vf103_adc.o
+                0x0000000008000eb4                adc_external_trigger_source_config
  .text.adc_external_trigger_config
-                0x0000000008000ef2       0x3a build/gd32vf103_adc.o
-                0x0000000008000ef2                adc_external_trigger_config
+                0x0000000008000ee8       0x3a build/gd32vf103_adc.o
+                0x0000000008000ee8                adc_external_trigger_config
  .text.adc_software_trigger_enable
-                0x0000000008000f2c       0x20 build/gd32vf103_adc.o
-                0x0000000008000f2c                adc_software_trigger_enable
+                0x0000000008000f22       0x20 build/gd32vf103_adc.o
+                0x0000000008000f22                adc_software_trigger_enable
  .text.adc_regular_data_read
-                0x0000000008000f4c        0x8 build/gd32vf103_adc.o
-                0x0000000008000f4c                adc_regular_data_read
+                0x0000000008000f42        0x8 build/gd32vf103_adc.o
+                0x0000000008000f42                adc_regular_data_read
  .text.adc_flag_get
-                0x0000000008000f54        0xa build/gd32vf103_adc.o
-                0x0000000008000f54                adc_flag_get
+                0x0000000008000f4a        0xa build/gd32vf103_adc.o
+                0x0000000008000f4a                adc_flag_get
  .text.adc_flag_clear
-                0x0000000008000f5e        0xc build/gd32vf103_adc.o
-                0x0000000008000f5e                adc_flag_clear
+                0x0000000008000f54        0xc build/gd32vf103_adc.o
+                0x0000000008000f54                adc_flag_clear
  .text.bkp_deinit
-                0x0000000008000f6a       0x18 build/gd32vf103_bkp.o
-                0x0000000008000f6a                bkp_deinit
+                0x0000000008000f60       0x18 build/gd32vf103_bkp.o
+                0x0000000008000f60                bkp_deinit
  .text.gpio_init
-                0x0000000008000f82       0xa4 build/gd32vf103_gpio.o
-                0x0000000008000f82                gpio_init
+                0x0000000008000f78       0xa4 build/gd32vf103_gpio.o
+                0x0000000008000f78                gpio_init
  .text.gpio_bit_set
-                0x0000000008001026        0x4 build/gd32vf103_gpio.o
-                0x0000000008001026                gpio_bit_set
+                0x000000000800101c        0x4 build/gd32vf103_gpio.o
+                0x000000000800101c                gpio_bit_set
  .text.gpio_bit_reset
-                0x000000000800102a        0x4 build/gd32vf103_gpio.o
-                0x000000000800102a                gpio_bit_reset
+                0x0000000008001020        0x4 build/gd32vf103_gpio.o
+                0x0000000008001020                gpio_bit_reset
  .text.pmu_backup_write_enable
-                0x000000000800102e        0xe build/gd32vf103_pmu.o
-                0x000000000800102e                pmu_backup_write_enable
+                0x0000000008001024        0xe build/gd32vf103_pmu.o
+                0x0000000008001024                pmu_backup_write_enable
  .text.rcu_periph_clock_enable
-                0x000000000800103c       0x18 build/gd32vf103_rcu.o
-                0x000000000800103c                rcu_periph_clock_enable
+                0x0000000008001032       0x18 build/gd32vf103_rcu.o
+                0x0000000008001032                rcu_periph_clock_enable
  .text.rcu_periph_reset_enable
-                0x0000000008001054       0x18 build/gd32vf103_rcu.o
-                0x0000000008001054                rcu_periph_reset_enable
+                0x000000000800104a       0x18 build/gd32vf103_rcu.o
+                0x000000000800104a                rcu_periph_reset_enable
  .text.rcu_periph_reset_disable
-                0x000000000800106c       0x1c build/gd32vf103_rcu.o
-                0x000000000800106c                rcu_periph_reset_disable
+                0x0000000008001062       0x1c build/gd32vf103_rcu.o
+                0x0000000008001062                rcu_periph_reset_disable
  .text.rcu_bkp_reset_enable
-                0x0000000008001088        0xe build/gd32vf103_rcu.o
-                0x0000000008001088                rcu_bkp_reset_enable
+                0x000000000800107e        0xe build/gd32vf103_rcu.o
+                0x000000000800107e                rcu_bkp_reset_enable
  .text.rcu_bkp_reset_disable
-                0x0000000008001096       0x10 build/gd32vf103_rcu.o
-                0x0000000008001096                rcu_bkp_reset_disable
+                0x000000000800108c       0x10 build/gd32vf103_rcu.o
+                0x000000000800108c                rcu_bkp_reset_disable
  .text.rcu_adc_clock_config
-                0x00000000080010a6       0x40 build/gd32vf103_rcu.o
-                0x00000000080010a6                rcu_adc_clock_config
+                0x000000000800109c       0x40 build/gd32vf103_rcu.o
+                0x000000000800109c                rcu_adc_clock_config
  .text.rcu_rtc_clock_config
-                0x00000000080010e6       0x10 build/gd32vf103_rcu.o
-                0x00000000080010e6                rcu_rtc_clock_config
+                0x00000000080010dc       0x10 build/gd32vf103_rcu.o
+                0x00000000080010dc                rcu_rtc_clock_config
  .text.rcu_flag_get
-                0x00000000080010f6       0x14 build/gd32vf103_rcu.o
-                0x00000000080010f6                rcu_flag_get
+                0x00000000080010ec       0x14 build/gd32vf103_rcu.o
+                0x00000000080010ec                rcu_flag_get
  .text.rcu_osci_stab_wait
-                0x000000000800110a      0x112 build/gd32vf103_rcu.o
-                0x000000000800110a                rcu_osci_stab_wait
+                0x0000000008001100      0x112 build/gd32vf103_rcu.o
+                0x0000000008001100                rcu_osci_stab_wait
  .text.rcu_osci_on
-                0x000000000800121c       0x18 build/gd32vf103_rcu.o
-                0x000000000800121c                rcu_osci_on
+                0x0000000008001212       0x18 build/gd32vf103_rcu.o
+                0x0000000008001212                rcu_osci_on
  .text.rtc_configuration_mode_enter
-                0x0000000008001234       0x12 build/gd32vf103_rtc.o
-                0x0000000008001234                rtc_configuration_mode_enter
+                0x000000000800122a       0x12 build/gd32vf103_rtc.o
+                0x000000000800122a                rtc_configuration_mode_enter
  .text.rtc_configuration_mode_exit
-                0x0000000008001246       0x10 build/gd32vf103_rtc.o
-                0x0000000008001246                rtc_configuration_mode_exit
+                0x000000000800123c       0x10 build/gd32vf103_rtc.o
+                0x000000000800123c                rtc_configuration_mode_exit
  .text.rtc_counter_set
-                0x0000000008001256       0x30 build/gd32vf103_rtc.o
-                0x0000000008001256                rtc_counter_set
+                0x000000000800124c       0x30 build/gd32vf103_rtc.o
+                0x000000000800124c                rtc_counter_set
  .text.rtc_prescaler_set
-                0x0000000008001286       0x32 build/gd32vf103_rtc.o
-                0x0000000008001286                rtc_prescaler_set
+                0x000000000800127c       0x32 build/gd32vf103_rtc.o
+                0x000000000800127c                rtc_prescaler_set
  .text.rtc_lwoff_wait
-                0x00000000080012b8       0x10 build/gd32vf103_rtc.o
-                0x00000000080012b8                rtc_lwoff_wait
+                0x00000000080012ae       0x10 build/gd32vf103_rtc.o
+                0x00000000080012ae                rtc_lwoff_wait
  .text.rtc_register_sync_wait
-                0x00000000080012c8       0x18 build/gd32vf103_rtc.o
-                0x00000000080012c8                rtc_register_sync_wait
+                0x00000000080012be       0x18 build/gd32vf103_rtc.o
+                0x00000000080012be                rtc_register_sync_wait
  .text.rtc_counter_get
-                0x00000000080012e0       0x22 build/gd32vf103_rtc.o
-                0x00000000080012e0                rtc_counter_get
+                0x00000000080012d6       0x22 build/gd32vf103_rtc.o
+                0x00000000080012d6                rtc_counter_get
  .text.rtc_flag_clear
-                0x0000000008001302       0x14 build/gd32vf103_rtc.o
-                0x0000000008001302                rtc_flag_clear
+                0x00000000080012f8       0x14 build/gd32vf103_rtc.o
+                0x00000000080012f8                rtc_flag_clear
  .text.spi_struct_para_init
-                0x0000000008001316       0x1a build/gd32vf103_spi.o
-                0x0000000008001316                spi_struct_para_init
+                0x000000000800130c       0x1a build/gd32vf103_spi.o
+                0x000000000800130c                spi_struct_para_init
  .text.spi_init
-                0x0000000008001330       0x36 build/gd32vf103_spi.o
-                0x0000000008001330                spi_init
+                0x0000000008001326       0x36 build/gd32vf103_spi.o
+                0x0000000008001326                spi_init
  .text.spi_enable
-                0x0000000008001366        0xa build/gd32vf103_spi.o
-                0x0000000008001366                spi_enable
+                0x000000000800135c        0xa build/gd32vf103_spi.o
+                0x000000000800135c                spi_enable
  .text.spi_i2s_data_transmit
-                0x0000000008001370        0x4 build/gd32vf103_spi.o
-                0x0000000008001370                spi_i2s_data_transmit
+                0x0000000008001366        0x4 build/gd32vf103_spi.o
+                0x0000000008001366                spi_i2s_data_transmit
  .text.spi_crc_polynomial_set
-                0x0000000008001374        0xc build/gd32vf103_spi.o
-                0x0000000008001374                spi_crc_polynomial_set
+                0x000000000800136a        0xc build/gd32vf103_spi.o
+                0x000000000800136a                spi_crc_polynomial_set
  .text.spi_i2s_flag_get
-                0x0000000008001380        0xa build/gd32vf103_spi.o
-                0x0000000008001380                spi_i2s_flag_get
+                0x0000000008001376        0xa build/gd32vf103_spi.o
+                0x0000000008001376                spi_i2s_flag_get
  .text.SystemInit
-                0x000000000800138a      0x11c build/system_gd32vf103.o
-                0x000000000800138a                SystemInit
- .text._exit    0x00000000080014a6       0x4c build/_exit.o
-                0x00000000080014a6                _exit
- .text._sbrk    0x00000000080014f2       0x2e build/sbrk.o
-                0x00000000080014f2                _sbrk
+                0x0000000008001380      0x11c build/system_gd32vf103.o
+                0x0000000008001380                SystemInit
+ .text._exit    0x000000000800149c       0x4c build/_exit.o
+                0x000000000800149c                _exit
+ .text._sbrk    0x00000000080014e8       0x2e build/sbrk.o
+                0x00000000080014e8                _sbrk
  .text.write_hex
-                0x0000000008001520       0x7c build/write_hex.o
-                0x0000000008001520                write_hex
+                0x0000000008001516       0x7c build/write_hex.o
+                0x0000000008001516                write_hex
  .text.get_timer_value
-                0x000000000800159c       0x10 build/n200_func.o
-                0x000000000800159c                get_timer_value
+                0x0000000008001592       0x10 build/n200_func.o
+                0x0000000008001592                get_timer_value
  .text.eclic_init
-                0x00000000080015ac       0x22 build/n200_func.o
-                0x00000000080015ac                eclic_init
+                0x00000000080015a2       0x22 build/n200_func.o
+                0x00000000080015a2                eclic_init
  .text.eclic_mode_enable
-                0x00000000080015ce       0x12 build/n200_func.o
-                0x00000000080015ce                eclic_mode_enable
+                0x00000000080015c4       0x12 build/n200_func.o
+                0x00000000080015c4                eclic_mode_enable
  .text.handle_nmi
-                0x00000000080015e0       0x22 build/handlers.o
-                0x00000000080015e0                handle_nmi
+                0x00000000080015d6       0x22 build/handlers.o
+                0x00000000080015d6                handle_nmi
  .text.handle_trap
-                0x0000000008001602       0x38 build/handlers.o
-                0x0000000008001602                handle_trap
- .text._init    0x000000000800163a       0x2c build/init.o
-                0x000000000800163a                _init
- .text._fini    0x0000000008001666        0x2 build/init.o
-                0x0000000008001666                _fini
+                0x00000000080015f8       0x38 build/handlers.o
+                0x00000000080015f8                handle_trap
+ .text._init    0x0000000008001630       0x2c build/init.o
+                0x0000000008001630                _init
+ .text._fini    0x000000000800165c        0x2 build/init.o
+                0x000000000800165c                _fini
  .text.ADC3powerUpInit
-                0x0000000008001668      0x140 build/adc.o
-                0x0000000008001668                ADC3powerUpInit
+                0x000000000800165e      0x140 build/adc.o
+                0x000000000800165e                ADC3powerUpInit
  .text.eclic_mtip_handler
-                0x00000000080017a8       0x54 build/eclicw.o
-                0x00000000080017a8                eclic_mtip_handler
+                0x000000000800179e       0x54 build/eclicw.o
+                0x000000000800179e                eclic_mtip_handler
  .text.USART0_IRQHandler
-                0x00000000080017fc       0x56 build/eclicw.o
-                0x00000000080017fc                USART0_IRQHandler
+                0x00000000080017f2       0x56 build/eclicw.o
+                0x00000000080017f2                USART0_IRQHandler
  .text.TIMER4_IRQHandler
-                0x0000000008001852       0x56 build/eclicw.o
-                0x0000000008001852                TIMER4_IRQHandler
+                0x0000000008001848       0x56 build/eclicw.o
+                0x0000000008001848                TIMER4_IRQHandler
  .text.lcd_delay_1ms
-                0x00000000080018a8       0xce build/lcd.o
-                0x00000000080018a8                lcd_delay_1ms
+                0x000000000800189e       0xce build/lcd.o
+                0x000000000800189e                lcd_delay_1ms
  .text.LCD_WR_Queue
-                0x0000000008001976       0xc2 build/lcd.o
-                0x0000000008001976                LCD_WR_Queue
+                0x000000000800196c       0xc2 build/lcd.o
+                0x000000000800196c                LCD_WR_Queue
  .text.LCD_Wait_On_Queue
-                0x0000000008001a38       0x30 build/lcd.o
-                0x0000000008001a38                LCD_Wait_On_Queue
+                0x0000000008001a2e       0x30 build/lcd.o
+                0x0000000008001a2e                LCD_Wait_On_Queue
  .text.LCD_Write_Bus
-                0x0000000008001a68       0x58 build/lcd.o
-                0x0000000008001a68                LCD_Write_Bus
+                0x0000000008001a5e       0x58 build/lcd.o
+                0x0000000008001a5e                LCD_Write_Bus
  .text.LCD_WR_DATA
-                0x0000000008001ac0       0x2c build/lcd.o
-                0x0000000008001ac0                LCD_WR_DATA
+                0x0000000008001ab6       0x2c build/lcd.o
+                0x0000000008001ab6                LCD_WR_DATA
  .text.LCD_Address_Set
-                0x0000000008001aec       0x82 build/lcd.o
-                0x0000000008001aec                LCD_Address_Set
+                0x0000000008001ae2       0x82 build/lcd.o
+                0x0000000008001ae2                LCD_Address_Set
  .text.spi_config
-                0x0000000008001b6e       0x6c build/lcd.o
-                0x0000000008001b6e                spi_config
+                0x0000000008001b64       0x6c build/lcd.o
+                0x0000000008001b64                spi_config
  .text.Lcd_SetType
-                0x0000000008001bda       0x26 build/lcd.o
-                0x0000000008001bda                Lcd_SetType
+                0x0000000008001bd0       0x26 build/lcd.o
+                0x0000000008001bd0                Lcd_SetType
  .text.Lcd_Init
-                0x0000000008001c00      0x464 build/lcd.o
-                0x0000000008001c00                Lcd_Init
+                0x0000000008001bf6      0x464 build/lcd.o
+                0x0000000008001bf6                Lcd_Init
  .text.LCD_Clear
-                0x0000000008002064       0x46 build/lcd.o
-                0x0000000008002064                LCD_Clear
+                0x000000000800205a       0x46 build/lcd.o
+                0x000000000800205a                LCD_Clear
  .text.LCD_DrawPoint
-                0x00000000080020aa       0x24 build/lcd.o
-                0x00000000080020aa                LCD_DrawPoint
+                0x00000000080020a0       0x24 build/lcd.o
+                0x00000000080020a0                LCD_DrawPoint
+ .text.LCD_Fill
+                0x00000000080020c4       0x50 build/lcd.o
+                0x00000000080020c4                LCD_Fill
  .text.LCD_ShowChar
-                0x00000000080020ce       0xde build/lcd.o
-                0x00000000080020ce                LCD_ShowChar
+                0x0000000008002114       0xde build/lcd.o
+                0x0000000008002114                LCD_ShowChar
  .text.LCD_ShowStr
-                0x00000000080021ac       0x60 build/lcd.o
-                0x00000000080021ac                LCD_ShowStr
+                0x00000000080021f2       0x60 build/lcd.o
+                0x00000000080021f2                LCD_ShowStr
  .text.LCD_ShowNum
-                0x000000000800220c       0xa8 build/lcd.o
-                0x000000000800220c                LCD_ShowNum
- .text.rtcInit  0x00000000080022b4       0x9e build/main.o
-                0x00000000080022b4                rtcInit
+                0x0000000008002252       0xa8 build/lcd.o
+                0x0000000008002252                LCD_ShowNum
+ .text.rtcInit  0x00000000080022fa       0x9e build/main.o
+                0x00000000080022fa                rtcInit
  .text.renderOnePlant
-                0x0000000008002352      0x112 build/main.o
-                0x0000000008002352                renderOnePlant
+                0x0000000008002398      0x12c build/main.o
+                0x0000000008002398                renderOnePlant
  .text.fetchReading
-                0x0000000008002464       0x76 build/main.o
-                0x0000000008002464                fetchReading
+                0x00000000080024c4       0x76 build/main.o
+                0x00000000080024c4                fetchReading
  .text.updatePlantReading
-                0x00000000080024da       0xe0 build/main.o
-                0x00000000080024da                updatePlantReading
+                0x000000000800253a       0xd6 build/main.o
+                0x000000000800253a                updatePlantReading
  .text.initSensorReading
-                0x00000000080025ba       0x3e build/plant.o
-                0x00000000080025ba                initSensorReading
+                0x0000000008002610       0x3e build/plant.o
+                0x0000000008002610                initSensorReading
  .text.initPlant
-                0x00000000080025f8       0xae build/plant.o
-                0x00000000080025f8                initPlant
- *fill*         0x00000000080026a6       0x1a 
- .text.trap     0x00000000080026c0       0x82 build/entry.o
-                0x00000000080026c0                trap_entry
- *fill*         0x0000000008002742        0x2 
- .text.irq      0x0000000008002744       0x72 build/entry.o
-                0x0000000008002744                irq_entry
- .text          0x00000000080027b6      0x2e4 build/drivers.o
-                0x0000000008002828                t5omsi
-                0x000000000800285a                t5expq
-                0x000000000800286a                colinit
-                0x00000000080028aa                colset
-                0x00000000080028e2                l88init
-                0x0000000008002914                l88row
-                0x000000000800294a                l88mem
-                0x000000000800295e                keyinit
-                0x0000000008002990                keyscan
- .text          0x0000000008002a9a      0x546 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
-                0x0000000008002a9a                __divdf3
- .text          0x0000000008002fe0       0xa4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
-                0x0000000008002fe0                __ltdf2
-                0x0000000008002fe0                __ledf2
- .text          0x0000000008003084      0x44c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
-                0x0000000008003084                __muldf3
- .text          0x00000000080034d0       0x56 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
-                0x00000000080034d0                __floatunsidf
- .text          0x0000000008003526      0x166 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
-                0x0000000008003526                __floatundidf
- .text          0x000000000800368c       0x2a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
-                0x000000000800368c                __lshrdi3
- .text          0x00000000080036b6       0x2a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
-                0x00000000080036b6                __ashldi3
- .text          0x00000000080036e0       0x3c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
-                0x00000000080036e0                __clzsi2
- .text.atexit   0x000000000800371c       0x10 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-atexit.o)
-                0x000000000800371c                atexit
- .text.exit     0x000000000800372c       0x36 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-exit.o)
-                0x000000000800372c                exit
+                0x000000000800264e       0xae build/plant.o
+                0x000000000800264e                initPlant
+ *fill*         0x00000000080026fc        0x4 
+ .text.trap     0x0000000008002700       0x82 build/entry.o
+                0x0000000008002700                trap_entry
+ *fill*         0x0000000008002782        0x2 
+ .text.irq      0x0000000008002784       0x72 build/entry.o
+                0x0000000008002784                irq_entry
+ .text          0x00000000080027f6      0x2e4 build/drivers.o
+                0x0000000008002868                t5omsi
+                0x000000000800289a                t5expq
+                0x00000000080028aa                colinit
+                0x00000000080028ea                colset
+                0x0000000008002922                l88init
+                0x0000000008002954                l88row
+                0x000000000800298a                l88mem
+                0x000000000800299e                keyinit
+                0x00000000080029d0                keyscan
+ .text          0x0000000008002ada      0x546 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
+                0x0000000008002ada                __divdf3
+ .text          0x0000000008003020       0xa4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
+                0x0000000008003020                __ltdf2
+                0x0000000008003020                __ledf2
+ .text          0x00000000080030c4      0x44c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
+                0x00000000080030c4                __muldf3
+ .text          0x0000000008003510       0x56 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
+                0x0000000008003510                __floatunsidf
+ .text          0x0000000008003566      0x166 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
+                0x0000000008003566                __floatundidf
+ .text          0x00000000080036cc       0x2a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
+                0x00000000080036cc                __lshrdi3
+ .text          0x00000000080036f6       0x2a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
+                0x00000000080036f6                __ashldi3
+ .text          0x0000000008003720       0x3c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
+                0x0000000008003720                __clzsi2
+ .text.atexit   0x000000000800375c       0x10 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-atexit.o)
+                0x000000000800375c                atexit
+ .text.exit     0x000000000800376c       0x36 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-exit.o)
+                0x000000000800376c                exit
  .text.__libc_fini_array
-                0x0000000008003762       0x38 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-fini.o)
-                0x0000000008003762                __libc_fini_array
+                0x00000000080037a2       0x38 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-fini.o)
+                0x00000000080037a2                __libc_fini_array
  .text.__libc_init_array
-                0x000000000800379a       0x6a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-init.o)
-                0x000000000800379a                __libc_init_array
- .text          0x0000000008003804       0x16 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memcpy-asm.o)
-                0x0000000008003804                memcpy
- .text._free_r  0x000000000800381a       0xb8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-freer.o)
-                0x000000000800381a                _free_r
+                0x00000000080037da       0x6a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-init.o)
+                0x00000000080037da                __libc_init_array
+ .text          0x0000000008003844       0x16 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memcpy-asm.o)
+                0x0000000008003844                memcpy
+ .text._free_r  0x000000000800385a       0xb8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-freer.o)
+                0x000000000800385a                _free_r
  .text._malloc_r
-                0x00000000080038d2      0x102 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000080038d2                _malloc_r
- .text._sbrk_r  0x00000000080039d4       0x36 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-sbrkr.o)
-                0x00000000080039d4                _sbrk_r
+                0x0000000008003912      0x102 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008003912                _malloc_r
+ .text._sbrk_r  0x0000000008003a14       0x36 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-sbrkr.o)
+                0x0000000008003a14                _sbrk_r
  .text.snprintf
-                0x0000000008003a0a       0x7a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-snprintf.o)
-                0x0000000008003a0a                snprintf
-                0x0000000008003a0a                sniprintf
- .text          0x0000000008003a84       0x18 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-strcmp.o)
-                0x0000000008003a84                strcmp
- .text.strcpy   0x0000000008003a9c       0x12 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-strcpy.o)
-                0x0000000008003a9c                strcpy
- .text.write    0x0000000008003aae       0x18 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-syswrite.o)
-                0x0000000008003aae                write
+                0x0000000008003a4a       0x7a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-snprintf.o)
+                0x0000000008003a4a                snprintf
+                0x0000000008003a4a                sniprintf
+ .text          0x0000000008003ac4       0x18 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-strcmp.o)
+                0x0000000008003ac4                strcmp
+ .text.strcpy   0x0000000008003adc       0x12 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-strcpy.o)
+                0x0000000008003adc                strcpy
+ .text.write    0x0000000008003aee       0x18 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-syswrite.o)
+                0x0000000008003aee                write
  .text._write_r
-                0x0000000008003ac6       0x3a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-writer.o)
-                0x0000000008003ac6                _write_r
+                0x0000000008003b06       0x3a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-writer.o)
+                0x0000000008003b06                _write_r
  .text.__register_exitproc
-                0x0000000008003b00       0x8c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-__atexit.o)
-                0x0000000008003b00                __register_exitproc
+                0x0000000008003b40       0x8c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-__atexit.o)
+                0x0000000008003b40                __register_exitproc
  .text.__call_exitprocs
-                0x0000000008003b8c       0xc8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-__call_atexit.o)
-                0x0000000008003b8c                __call_exitprocs
+                0x0000000008003bcc       0xc8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-__call_atexit.o)
+                0x0000000008003bcc                __call_exitprocs
  .text.__malloc_lock
-                0x0000000008003c54        0x2 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-mlock.o)
-                0x0000000008003c54                __malloc_lock
+                0x0000000008003c94        0x2 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-mlock.o)
+                0x0000000008003c94                __malloc_lock
  .text.__malloc_unlock
-                0x0000000008003c56        0x2 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-mlock.o)
-                0x0000000008003c56                __malloc_unlock
+                0x0000000008003c96        0x2 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-mlock.o)
+                0x0000000008003c96                __malloc_unlock
  .text.__ssputs_r
-                0x0000000008003c58      0x102 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000008003c58                __ssputs_r
+                0x0000000008003c98      0x102 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000008003c98                __ssputs_r
  .text._svfprintf_r
-                0x0000000008003d5a      0x29a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x0000000008003d5a                _svfprintf_r
-                0x0000000008003d5a                _svfiprintf_r
+                0x0000000008003d9a      0x29a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000008003d9a                _svfprintf_r
+                0x0000000008003d9a                _svfiprintf_r
  .text._printf_common
-                0x0000000008003ff4      0x10c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000008003ff4                _printf_common
+                0x0000000008004034      0x10c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008004034                _printf_common
  .text._printf_i
-                0x0000000008004100      0x2ae /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000008004100                _printf_i
- .text.memchr   0x00000000080043ae       0x1a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memchr.o)
-                0x00000000080043ae                memchr
- .text          0x00000000080043c8       0x26 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memmove.o)
-                0x00000000080043c8                memmove
+                0x0000000008004140      0x2ae /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008004140                _printf_i
+ .text.memchr   0x00000000080043ee       0x1a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memchr.o)
+                0x00000000080043ee                memchr
+ .text          0x0000000008004408       0x26 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-memmove.o)
+                0x0000000008004408                memmove
  .text._realloc_r
-                0x00000000080043ee       0x72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-reallocr.o)
-                0x00000000080043ee                _realloc_r
+                0x000000000800442e       0x72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-reallocr.o)
+                0x000000000800442e                _realloc_r
  .text._malloc_usable_size_r
-                0x0000000008004460       0x14 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-msizer.o)
-                0x0000000008004460                _malloc_usable_size_r
- .text._write   0x0000000008004474       0x34 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libgloss_nano.a(sys_write.o)
-                0x0000000008004474                _write
- .text.__errno  0x00000000080044a8        0xc /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-errno.o)
-                0x00000000080044a8                __errno
+                0x00000000080044a0       0x14 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-nano-msizer.o)
+                0x00000000080044a0                _malloc_usable_size_r
+ .text._write   0x00000000080044b4       0x34 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libgloss_nano.a(sys_write.o)
+                0x00000000080044b4                _write
+ .text.__errno  0x00000000080044e8        0xc /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-errno.o)
+                0x00000000080044e8                __errno
  *(.gnu.linkonce.t.*)
 
 .sdata2._global_impure_ptr
-                0x00000000080044b4        0x4
+                0x00000000080044f4        0x4
  .sdata2._global_impure_ptr
-                0x00000000080044b4        0x4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-impure.o)
-                0x00000000080044b4                _global_impure_ptr
+                0x00000000080044f4        0x4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-impure.o)
+                0x00000000080044f4                _global_impure_ptr
 
-.rela.dyn       0x00000000080044b8        0x0
+.rela.dyn       0x00000000080044f8        0x0
  .rela.text._sbrk
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.sdata.curbrk.1524
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.handle_trap
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.LCD_ShowChar
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
- .rela.init     0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
+ .rela.init     0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.trap
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.__libc_fini_array
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.data.impure_data
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.__libc_init_array
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text._sbrk_r
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text._write_r
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text.__register_exitproc
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
  .rela.text._svfprintf_r
-                0x00000000080044b8        0x0 build/gd32vf103_adc.o
+                0x00000000080044f8        0x0 build/gd32vf103_adc.o
 
 .fini
  *(SORT_NONE(.fini))
-                0x00000000080044b8                . = ALIGN (0x4)
+                0x00000000080044f8                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__etext = .)
                 [!provide]                        PROVIDE (_etext = .)
                 [!provide]                        PROVIDE (etext = .)
                 [!provide]                        PROVIDE (_eilm = .)
 
-.preinit_array  0x00000000080044b8        0x0
-                0x00000000080044b8                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x00000000080044f8        0x0
+                0x00000000080044f8                PROVIDE (__preinit_array_start = .)
  *(.preinit_array)
-                0x00000000080044b8                PROVIDE (__preinit_array_end = .)
+                0x00000000080044f8                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x00000000080044b8        0x0
-                0x00000000080044b8                PROVIDE (__init_array_start = .)
+.init_array     0x00000000080044f8        0x0
+                0x00000000080044f8                PROVIDE (__init_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
-                0x00000000080044b8                PROVIDE (__init_array_end = .)
+                0x00000000080044f8                PROVIDE (__init_array_end = .)
 
-.fini_array     0x00000000080044b8        0x0
-                0x00000000080044b8                PROVIDE (__fini_array_start = .)
+.fini_array     0x00000000080044f8        0x0
+                0x00000000080044f8                PROVIDE (__fini_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
-                0x00000000080044b8                PROVIDE (__fini_array_end = .)
+                0x00000000080044f8                PROVIDE (__fini_array_end = .)
 
 .ctors
  *crtbegin.o(.ctors)
@@ -2115,18 +2116,18 @@ END GROUP
  *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
-                0x00000000080044b8                . = ALIGN (0x4)
+                0x00000000080044f8                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_eilm = .)
 
-.lalign         0x00000000080044b8        0x0
-                0x00000000080044b8                . = ALIGN (0x4)
-                0x00000000080044b8                PROVIDE (_data_lma = .)
+.lalign         0x00000000080044f8        0x0
+                0x00000000080044f8                . = ALIGN (0x4)
+                0x00000000080044f8                PROVIDE (_data_lma = .)
 
-.dalign         0x0000000020000000        0x0 load address 0x00000000080044b8
+.dalign         0x0000000020000000        0x0 load address 0x00000000080044f8
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                PROVIDE (_data = .)
 
-.data           0x0000000020000000       0x90 load address 0x00000000080044b8
+.data           0x0000000020000000       0x90 load address 0x00000000080044f8
  *(.rdata)
  *(.gnu.linkonce.r.*)
  *(.data .data.*)
@@ -2205,7 +2206,7 @@ END GROUP
                 [!provide]                        PROVIDE (_dbg_sp = .)
 OUTPUT(build/gd32vf103.elf elf32-littleriscv)
 
-.debug_info     0x0000000000000000    0x11e62
+.debug_info     0x0000000000000000    0x11e88
  .debug_info    0x0000000000000000      0xb98 build/gd32vf103_adc.o
  .debug_info    0x0000000000000b98      0x494 build/gd32vf103_bkp.o
  .debug_info    0x000000000000102c      0x6f6 build/gd32vf103_gpio.o
@@ -2223,20 +2224,20 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .debug_info    0x0000000000007116      0x537 build/adc.o
  .debug_info    0x000000000000764d      0xdb1 build/eclicw.o
  .debug_info    0x00000000000083fe     0x2fa5 build/lcd.o
- .debug_info    0x000000000000b3a3     0x16c3 build/main.o
- .debug_info    0x000000000000ca66      0xcac build/plant.o
- .debug_info    0x000000000000d712       0x26 build/start.o
- .debug_info    0x000000000000d738       0x22 build/entry.o
- .debug_info    0x000000000000d75a       0x26 build/drivers.o
- .debug_info    0x000000000000d780      0x734 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
- .debug_info    0x000000000000deb4      0x286 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
- .debug_info    0x000000000000e13a      0x76c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
- .debug_info    0x000000000000e8a6      0x2af /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
- .debug_info    0x000000000000eb55      0x2e8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
- .debug_info    0x000000000000ee3d      0xc72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
- .debug_info    0x000000000000faaf      0xc72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
- .debug_info    0x0000000000010721      0xbd7 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
- .debug_info    0x00000000000112f8      0xb6a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clz.o)
+ .debug_info    0x000000000000b3a3     0x16e9 build/main.o
+ .debug_info    0x000000000000ca8c      0xcac build/plant.o
+ .debug_info    0x000000000000d738       0x26 build/start.o
+ .debug_info    0x000000000000d75e       0x22 build/entry.o
+ .debug_info    0x000000000000d780       0x26 build/drivers.o
+ .debug_info    0x000000000000d7a6      0x734 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
+ .debug_info    0x000000000000deda      0x286 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
+ .debug_info    0x000000000000e160      0x76c /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
+ .debug_info    0x000000000000e8cc      0x2af /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
+ .debug_info    0x000000000000eb7b      0x2e8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
+ .debug_info    0x000000000000ee63      0xc72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
+ .debug_info    0x000000000000fad5      0xc72 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
+ .debug_info    0x0000000000010747      0xbd7 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
+ .debug_info    0x000000000001131e      0xb6a /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clz.o)
 
 .debug_abbrev   0x0000000000000000     0x3a04
  .debug_abbrev  0x0000000000000000      0x216 build/gd32vf103_adc.o
@@ -2392,7 +2393,7 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .debug_ranges  0x0000000000000fa0       0x68 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
  .debug_ranges  0x0000000000001008       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
 
-.debug_line     0x0000000000000000     0xe7b2
+.debug_line     0x0000000000000000     0xe7aa
  .debug_line    0x0000000000000000     0x147b build/gd32vf103_adc.o
  .debug_line    0x000000000000147b      0x6af build/gd32vf103_bkp.o
  .debug_line    0x0000000000001b2a      0xb0a build/gd32vf103_gpio.o
@@ -2410,20 +2411,20 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .debug_line    0x0000000000007aef      0x2b3 build/adc.o
  .debug_line    0x0000000000007da2      0x47d build/eclicw.o
  .debug_line    0x000000000000821f     0x1e45 build/lcd.o
- .debug_line    0x000000000000a064      0x886 build/main.o
- .debug_line    0x000000000000a8ea      0x2e0 build/plant.o
- .debug_line    0x000000000000abca      0x187 build/start.o
- .debug_line    0x000000000000ad51       0xe3 build/entry.o
- .debug_line    0x000000000000ae34      0x526 build/drivers.o
- .debug_line    0x000000000000b35a      0xe35 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
- .debug_line    0x000000000000c18f      0x303 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
- .debug_line    0x000000000000c492      0xbf8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
- .debug_line    0x000000000000d08a      0x239 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
- .debug_line    0x000000000000d2c3      0x3f5 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
- .debug_line    0x000000000000d6b8      0x488 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
- .debug_line    0x000000000000db40      0x488 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
- .debug_line    0x000000000000dfc8      0x436 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
- .debug_line    0x000000000000e3fe      0x3b4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clz.o)
+ .debug_line    0x000000000000a064      0x87e build/main.o
+ .debug_line    0x000000000000a8e2      0x2e0 build/plant.o
+ .debug_line    0x000000000000abc2      0x187 build/start.o
+ .debug_line    0x000000000000ad49       0xe3 build/entry.o
+ .debug_line    0x000000000000ae2c      0x526 build/drivers.o
+ .debug_line    0x000000000000b352      0xe35 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
+ .debug_line    0x000000000000c187      0x303 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
+ .debug_line    0x000000000000c48a      0xbf8 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
+ .debug_line    0x000000000000d082      0x239 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
+ .debug_line    0x000000000000d2bb      0x3f5 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
+ .debug_line    0x000000000000d6b0      0x488 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
+ .debug_line    0x000000000000db38      0x488 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
+ .debug_line    0x000000000000dfc0      0x436 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
+ .debug_line    0x000000000000e3f6      0x3b4 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clz.o)
 
 .debug_str      0x0000000000000000     0x3a7c
  .debug_str     0x0000000000000000      0x849 build/gd32vf103_adc.o
@@ -2461,7 +2462,7 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .debug_str     0x0000000000002d2b      0x24f build/lcd.o
                                         0xaba (size before relaxing)
  .debug_str     0x0000000000002f7a      0x12a build/main.o
-                                        0x9fd (size before relaxing)
+                                        0xa06 (size before relaxing)
  .debug_str     0x00000000000030a4       0x5f build/plant.o
                                         0x634 (size before relaxing)
  .debug_str     0x0000000000003103       0x35 build/start.o
@@ -2659,7 +2660,7 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .riscv.attributes
                 0x000000000000095c       0x2b /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/../../../../riscv64-unknown-elf/lib/rv32imac/ilp32/libc_nano.a(lib_a-errno.o)
 
-.debug_frame    0x0000000000000000     0x1ae0
+.debug_frame    0x0000000000000000     0x1ae4
  .debug_frame   0x0000000000000000      0x288 build/gd32vf103_adc.o
  .debug_frame   0x0000000000000288      0x13c build/gd32vf103_bkp.o
  .debug_frame   0x00000000000003c4      0x144 build/gd32vf103_gpio.o
@@ -2677,16 +2678,16 @@ OUTPUT(build/gd32vf103.elf elf32-littleriscv)
  .debug_frame   0x0000000000001078       0x38 build/adc.o
  .debug_frame   0x00000000000010b0      0x184 build/eclicw.o
  .debug_frame   0x0000000000001234      0x560 build/lcd.o
- .debug_frame   0x0000000000001794      0x14c build/main.o
- .debug_frame   0x00000000000018e0       0x60 build/plant.o
- .debug_frame   0x0000000000001940       0x54 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
- .debug_frame   0x0000000000001994       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
- .debug_frame   0x00000000000019b4       0x54 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
- .debug_frame   0x0000000000001a08       0x34 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
- .debug_frame   0x0000000000001a3c       0x44 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
- .debug_frame   0x0000000000001a80       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
- .debug_frame   0x0000000000001aa0       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
- .debug_frame   0x0000000000001ac0       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
+ .debug_frame   0x0000000000001794      0x150 build/main.o
+ .debug_frame   0x00000000000018e4       0x60 build/plant.o
+ .debug_frame   0x0000000000001944       0x54 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(divdf3.o)
+ .debug_frame   0x0000000000001998       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(ledf2.o)
+ .debug_frame   0x00000000000019b8       0x54 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(muldf3.o)
+ .debug_frame   0x0000000000001a0c       0x34 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatunsidf.o)
+ .debug_frame   0x0000000000001a40       0x44 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(floatundidf.o)
+ .debug_frame   0x0000000000001a84       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_lshrdi3.o)
+ .debug_frame   0x0000000000001aa4       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_ashldi3.o)
+ .debug_frame   0x0000000000001ac4       0x20 /Users/alexstrae/toolchain-gd32v-v202-osx/compiler/bin/../lib/gcc/riscv64-unknown-elf/8.3.0/rv32imac/ilp32/libgcc.a(_clzsi2.o)
 
 Cross Reference Table
 
@@ -2739,6 +2740,7 @@ LCD_DrawPoint                                     build/lcd.o
 LCD_DrawPoint_big                                 build/lcd.o
 LCD_DrawRectangle                                 build/lcd.o
 LCD_Fill                                          build/lcd.o
+                                                  build/main.o
 LCD_ShowChar                                      build/lcd.o
 LCD_ShowChinese                                   build/lcd.o
 LCD_ShowNum                                       build/lcd.o

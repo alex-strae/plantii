@@ -16,7 +16,7 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
   if (*numberOfPlants > 2)
     return;
   Plant newPlant;
-  SensorReading defaultReading = initSensorReading("00H:00M:00S", 50);
+  SensorReading defaultReading = initSensorReading("00:00:00", 50);
 
   STR_COPY(newPlant.name, inName);
   STR_COPY(newPlant.currentStatus, "OK");
