@@ -1,3 +1,6 @@
+#define MAX_SUN_READINGS 48
+#define MAX_MOISTURE_READINGS 48
+
 typedef struct
 {
   char timeStamp[9]; //Behöver fortfarande ett sätt för att spara detta
@@ -7,9 +10,11 @@ typedef struct
 typedef struct
 {
   char name[10];
-  SensorReading moisture[48]; // läsa av fukt en gång i halvtimman?
-  SensorReading sun[48]; // läsa av en gång per minut, just nu en gång i halvtimman pga brist på utrymme
   char currentStatus[10];
+  SensorReading moisture[MAX_MOISTURE_READINGS]; // läsa av fukt en gång i halvtimman?
+  SensorReading sun[MAX_SUN_READINGS]; // läsa av en gång per minut, just nu en gång i halvtimman pga brist på utrymme
+  int numberOfSunReadings;
+  int numberOfMoistureReadings;
 } Plant;
 
 typedef enum

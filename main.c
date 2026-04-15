@@ -3,6 +3,7 @@
 #include "adc.h"
 #include "lcd.h"
 #include "plant.h"
+#include "utilities.h"
 #include <string.h>
 #include <stdio.h>
 #define STR_COPY(dest, src) \
@@ -11,50 +12,14 @@
 #define EI 1
 #define DI 0
 
-// KTH code was from: https://gms.tf/riscv-gd32vf103.html#realtime-clock-rtc
-void rtcInit(void)
-{
-  rcu_periph_clock_enable(RCU_PMU); // enable power managemenet unit - perhaps enabled by default
-  // enable write access to the registers in the backup domain
-  pmu_backup_write_enable();
-  // enable backup domain
-  rcu_periph_clock_enable(RCU_BKPI);
-  // reset backup domain registers
-  bkp_deinit();
-  // set the results of a previous calibration procedure
-  // bkp_rtc_calibration_value_set(x);
-
-  // setup RTC
-  // enable external low speed XO
-  rcu_osci_on(RCU_HXTAL);
-  if (rcu_osci_stab_wait(RCU_HXTAL))
-  {
-    // use external low speed oscillaotr, i.e. 32.768 kHz
-    rcu_rtc_clock_config(RCU_RTCSRC_HXTAL_DIV_128);
-    rcu_periph_clock_enable(RCU_RTC);
-    // wait until shadow registers are synced from the backup domain
-    // over the APB bus
-    rtc_register_sync_wait();
-    // wait until shadow register changes are synced over APB
-    // to the backup doamin
-    rtc_lwoff_wait();
-    // prescale to 1 second
-    rtc_prescaler_set(62500 - 1);
-    rtc_lwoff_wait();
-    rtc_flag_clear(RTC_INT_FLAG_SECOND);
-    // rtc_interrupt_enable(RTC_INT_SECOND);
-    rtc_lwoff_wait();
-  }
-}
-
 void renderAllPlants(Plant allPlants[], int numberOfPlants)
 {
   for (int i = 0; i < numberOfPlants; i++)
   {
     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 20, allPlants[i].moisture[0].reading, 3, WHITE);
+    LCD_ShowNum(i * 55, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings].reading, 3, WHITE);
     LCD_ShowStr(i * 55 + 30, 20, "%", WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 40, allPlants[i].sun[0].reading, 3, WHITE);
+    LCD_ShowNum(i * 55, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings].reading, 3, WHITE);
     LCD_ShowStr(i * 55 + 30, 40, "%", WHITE, TRANSPARENT);
     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
   }
@@ -67,35 +32,18 @@ void renderOnePlant(Plant allPlants[], int numberOfPlants, char name[])
     if (strcmp(allPlants[i].name, name) == 0)
     {
       LCD_ShowStr(0, 0, allPlants[i].name, WHITE, TRANSPARENT);
-      LCD_ShowNum(0, 20, allPlants[i].moisture[0].reading, 3, WHITE);
+      LCD_ShowNum(0, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings-1].reading, 3, WHITE);
       LCD_ShowStr(0 + 30, 20, "%", WHITE, TRANSPARENT);
-      LCD_ShowStr(50, 20, allPlants[i].moisture[0].timeStamp, WHITE, TRANSPARENT);
-      LCD_ShowNum(0, 40, allPlants[i].sun[0].reading, 3, WHITE);
+      LCD_ShowStr(50, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings-1].timeStamp, WHITE, TRANSPARENT);
+      LCD_ShowNum(0, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings-1].reading, 3, WHITE);
       LCD_ShowStr(0 + 30, 40, "%", WHITE, TRANSPARENT);
-      LCD_Fill(50, 40, 160, 53, BLACK); //Black out old reading before writing new
-      LCD_ShowStr(50, 40, allPlants[i].sun[0].timeStamp, WHITE, TRANSPARENT);
+      LCD_Fill(50, 40, 160, 53, BLACK); // Black out old reading before writing new
+      LCD_ShowStr(50, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings-1].timeStamp, WHITE, TRANSPARENT);
       LCD_ShowStr(0, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
       return;
     }
   }
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
-}
-
-int fetchReading(uint32_t source, uint32_t EOC)
-{
-  adc_software_trigger_enable(source, ADC_REGULAR_CHANNEL);
-  int called = 0;
-  while (!adc_flag_get(source, EOC))
-  { // blocking
-    if (!called)
-    {
-      LCD_ShowStr(50, 4, "reads sensor", GREEN, TRANSPARENT);
-      called = 1;
-    }
-  }
-  int reading = adc_regular_data_read(source);
-  adc_flag_clear(source, EOC);
-  return reading;
 }
 
 void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type)
@@ -106,22 +54,23 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
     {
       if (type == SUN)
       {
-        int tempValue = fetchReading(ADC0, ADC_FLAG_EOC); // 300 ger hyfsat välkalibrerat ljus.
-        if (tempValue < 0) tempValue = 0; // guard för inkommande värde över 300
-        uint32_t currentTime = rtc_counter_get();
-        int hours = currentTime / 3600;
-        int min = (currentTime % 3600) / 60;
-        int sec = currentTime % 60;
-        char timeToString[9];
-        snprintf(timeToString, sizeof(timeToString), "%02d:%02d:%02d", hours, min, sec);
-
-        // I framtiden måste alla befintliga värden flyttas fram innan läggs på i [0], så att arrayen blir sorterad nyast -> äldst
-        allPlants[i].sun[0].reading = tempValue; // i procent.
-        STR_COPY(allPlants[i].sun[0].timeStamp, timeToString);
+        char fillWithTimeStamp[9];
+        generateTimeStamp(fillWithTimeStamp);
+        int currentValue = readSensor(ADC0, ADC_FLAG_EOC);
+        if (currentValue < 0) currentValue = 0;
+        if (allPlants[i].numberOfSunReadings < MAX_SUN_READINGS) {
+        allPlants[i].sun[allPlants[i].numberOfSunReadings].reading = currentValue;
+        STR_COPY(allPlants[i].sun[allPlants[i].numberOfSunReadings].timeStamp, fillWithTimeStamp);
+        (allPlants[i].numberOfSunReadings)++;
+        } else {
+          LCD_Clear(BLACK);
+          LCD_ShowStr(0, 10, "SUN READINGS FULL", RED, TRANSPARENT);
+        }
         return;
       }
     }
   }
+  LCD_Clear(BLACK);
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
@@ -131,10 +80,10 @@ int main(void)
   // int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
 
   t5omsi();  // Initialize timer5 1kHz
-  colinit(); // Initialize column toolbox
-  l88init(); // Initialize 8*8 led toolbox
+  colinit(); 
+  l88init(); 
   // keyinit();          // Initialize keyboard toolbox
-  rtcInit(); // Initialize RTC
+  rtcInit(); 
   rtc_counter_set(0);
   // eclic_global_interrupt_enable();
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
@@ -151,20 +100,17 @@ int main(void)
 
   while (1)
   {
-    idle++; // Manage Async events
+    idle++; 
 
     if (t5expq())
-    {                   // Manage periodic tasks
-      l88row(colset()); // ...8*8LED and Keyboard
-      ms++;             // ...One second heart beat
+    {                   
+      l88row(colset()); 
+      ms++;             
       if (ms == 1000)
       {
-        //LCD_Clear(BLACK);
         updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
-        //renderAllPlants(allPlants, numberOfPlants);
+        // renderAllPlants(allPlants, numberOfPlants);
         renderOnePlant(allPlants, numberOfPlants, "Tomat");
-        //LCD_ShowNum(55, 40, rtc_counter_get(), 4, WHITE);
-
         ms = 0;
       }
       l88mem(0, idle >> 8); // ...Performance monitor

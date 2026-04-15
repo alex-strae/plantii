@@ -20,8 +20,12 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
 
   STR_COPY(newPlant.name, inName);
   STR_COPY(newPlant.currentStatus, "OK");
+
   newPlant.moisture[0] = defaultReading;
+  newPlant.numberOfMoistureReadings = 1;
   newPlant.sun[0] = defaultReading;
+  newPlant.numberOfSunReadings = 1;
+
   allPlants[*numberOfPlants] = newPlant;
   (*numberOfPlants)++;
 }
