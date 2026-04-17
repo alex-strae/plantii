@@ -48,4 +48,8 @@ uint32_t rtc_counter_get(void)
 ## För att komma igång:
 1) Ladda ner samtliga filer du inte redan har (plant och utilities .c resp .h). Lägg i samma dir som main.c.
 2) Gör förändringarna ovan i adc.c och gd32vf103_rtc.c
+3) Gör de förändringar du behöver göra i main.c. Här kan det bli lite stökigt men jag tror att om du tar de imports och defines jag använder som du inte redan har, och de funktioner som finns som är utanför main loop, och sen får du klipp klista ihop det som behövs till din main c.
+
 Nu bör du kunna compilea.
+
+Kom ihåg att koden här inte ska bli nån slags master. Jag kommer vilja ha er kod också och stoppa in i det som finns här. Så snart ni är redo att skicka över något!
