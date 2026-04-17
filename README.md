@@ -1,6 +1,6 @@
 Loggen har flyttat till log.txt
 
-### Readme plantii / leaf me alone / HE1043 KTH
+# Readme plantii / leaf me alone / HE1043 KTH
 
 ## Kodbas
 Koden bygger på lab5. Utgå från lab5s root dir.
@@ -9,17 +9,17 @@ En del filer har tagits bort från lab5. Fler kan komma att tas bort.
 
 main ligger i main.c. Resterande filer har skapats för att separera koden och få main så städat som möjligt.
 
-# plant.c samt .h
+### plant.c samt .h
 Håller structs för plantor och sensorvärden samt initieringsfunktioner. Om fler structs för systemet behövs i framtiden bör vi antingen döpa om plant.c till ett samlingsnamn, eller placera dessa structs i en annan fil, eftersom namnet plant.c redan nu inte är representativt (det innehåller redan nu sensor-structen också)
 
-# utilities.c samt .h
+### utilities.c samt .h
 Innehåller hjälpfunktioner. Dessa kan i framtiden behöva separeras i fler filer än en samlingsfil så som den är i dagsläget. I skrivande stund ligger dessa i utilities:
 
 void generateTimeStamp(char buffer[]);
 int readSensor(uint32_t source, uint32_t EOC);
 void rtcInit(void);
 
-# VIKTIGT
+### VIKTIGT
 Förändringar har gjorts i följande filer från lab5:
 Inuti adc.c: 
 {
