@@ -4,6 +4,7 @@
 #include "lcd.h"
 #include "plant.h"
 #include "utilities.h"
+#include "usart.h"
 #include <string.h>
 #include <stdio.h>
 #define STR_COPY(dest, src) \
@@ -32,13 +33,13 @@ void renderOnePlant(Plant allPlants[], int numberOfPlants, char name[])
     if (strcmp(allPlants[i].name, name) == 0)
     {
       LCD_ShowStr(0, 0, allPlants[i].name, WHITE, TRANSPARENT);
-      LCD_ShowNum(0, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings-1].reading, 3, WHITE);
+      LCD_ShowNum(0, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].reading, 3, WHITE);
       LCD_ShowStr(0 + 30, 20, "%", WHITE, TRANSPARENT);
-      LCD_ShowStr(50, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings-1].timeStamp, WHITE, TRANSPARENT);
-      LCD_ShowNum(0, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings-1].reading, 3, WHITE);
+      LCD_ShowStr(50, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp, WHITE, TRANSPARENT);
+      LCD_ShowNum(0, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].reading, 3, WHITE);
       LCD_ShowStr(0 + 30, 40, "%", WHITE, TRANSPARENT);
       LCD_Fill(50, 40, 160, 53, BLACK); // Black out old reading before writing new
-      LCD_ShowStr(50, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings-1].timeStamp, WHITE, TRANSPARENT);
+      LCD_ShowStr(50, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp, WHITE, TRANSPARENT);
       LCD_ShowStr(0, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
       return;
     }
@@ -46,8 +47,9 @@ void renderOnePlant(Plant allPlants[], int numberOfPlants, char name[])
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
-void updatePlantStatus(Plant plantToUpdate) {
- // WIP : LOOPA IGENOM TIDIGARE READINGS, GÖR EN AVERAGE, TA REDA PÅ STATUS. BEHÖVER LJUS? BEHÖVER VATTEN?
+void updatePlantStatus(Plant plantToUpdate)
+{
+  // WIP : LOOPA IGENOM TIDIGARE READINGS, GÖR EN AVERAGE, TA REDA PÅ STATUS. BEHÖVER LJUS? BEHÖVER VATTEN?
 }
 
 void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type)
@@ -61,12 +63,16 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
         char fillWithTimeStamp[9];
         generateTimeStamp(fillWithTimeStamp);
         int currentValue = readSensor(ADC0, ADC_FLAG_EOC);
-        if (currentValue < 0) currentValue = 0;
-        if (allPlants[i].numberOfSunReadings < MAX_SUN_READINGS) {
-        allPlants[i].sun[allPlants[i].numberOfSunReadings].reading = currentValue;
-        STR_COPY(allPlants[i].sun[allPlants[i].numberOfSunReadings].timeStamp, fillWithTimeStamp);
-        (allPlants[i].numberOfSunReadings)++;
-        } else {
+        if (currentValue < 0)
+          currentValue = 0;
+        if (allPlants[i].numberOfSunReadings < MAX_SUN_READINGS)
+        {
+          allPlants[i].sun[allPlants[i].numberOfSunReadings].reading = currentValue;
+          STR_COPY(allPlants[i].sun[allPlants[i].numberOfSunReadings].timeStamp, fillWithTimeStamp);
+          (allPlants[i].numberOfSunReadings)++;
+        }
+        else
+        {
           LCD_Fill(0, 0, 160, 80, BLACK);
           LCD_ShowStr(0, 10, "SUN READINGS FULL", RED, TRANSPARENT);
         }
@@ -81,15 +87,15 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
 int main(void)
 {
   int ms = 0, s = 0, idle = 0;
-  // int lookUpTbl[16] = {1, 4, 7, 14, 2, 5, 8, 0, 3, 6, 9, 15, 10, 11, 12, 13};
 
-  t5omsi();  // Initialize timer5 1kHz
-  colinit(); 
-  l88init(); 
+  t5omsi(); // Initialize timer5 1kHz
+  colinit();
+  l88init();
   // keyinit();          // Initialize keyboard toolbox
-  rtcInit(); 
+  rtcInit();
   rtc_counter_set(0);
-  // eclic_global_interrupt_enable();
+  u0init(EI);           // Init WiFi över UART
+  eclic_global_interrupt_enable();
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
 
   Lcd_SetType(LCD_INVERTED);
@@ -104,22 +110,21 @@ int main(void)
 
   while (1)
   {
-    idle++; 
-
+    idle++;
     if (t5expq())
-    {                   
-      l88row(colset()); 
-      ms++;             
+    {
+      l88row(colset());
+      ms++;
       if (ms == 1000)
       {
-        updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
-        // renderAllPlants(allPlants, numberOfPlants);
-        renderOnePlant(allPlants, numberOfPlants, "Tomat");
-        ms = 0;
+        // updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
+        //  renderAllPlants(allPlants, numberOfPlants);
+        // renderOnePlant(allPlants, numberOfPlants, "Tomat");
+       
+        l88mem(0, idle >> 8); // ...Performance monitor
+        l88mem(1, idle);
+        idle = 0;
       }
-      l88mem(0, idle >> 8); // ...Performance monitor
-      l88mem(1, idle);
-      idle = 0;
     }
   }
 }

@@ -26,7 +26,8 @@ build/usart.o: usart.c \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h usart.h eclicw.h
+ ../../firmware/RISCV/drivers/riscv_const.h usart.h eclicw.h drivers.h \
+ lcd.h
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 
@@ -87,3 +88,7 @@ build/usart.o: usart.c \
 usart.h:
 
 eclicw.h:
+
+drivers.h:
+
+lcd.h:
