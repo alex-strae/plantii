@@ -4,6 +4,7 @@
 #include "lcd.h"
 #include "plant.h"
 #include "utilities.h"
+#include "jsmn.h"
 #include "usart.h"
 #include <string.h>
 #include <stdio.h>
@@ -18,9 +19,9 @@ void renderAllPlants(Plant allPlants[], int numberOfPlants)
   for (int i = 0; i < numberOfPlants; i++)
   {
     LCD_ShowStr(i * 55, 0, allPlants[i].name, WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings].reading, 3, WHITE);
+    LCD_ShowNum(i * 55, 20, allPlants[i].moisture[allPlants[i].numberOfMoistureReadings-1].reading, 3, WHITE);
     LCD_ShowStr(i * 55 + 30, 20, "%", WHITE, TRANSPARENT);
-    LCD_ShowNum(i * 55, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings].reading, 3, WHITE);
+    LCD_ShowNum(i * 55, 40, allPlants[i].sun[allPlants[i].numberOfSunReadings-1].reading, 3, WHITE);
     LCD_ShowStr(i * 55 + 30, 40, "%", WHITE, TRANSPARENT);
     LCD_ShowStr(i * 55, 60, allPlants[i].currentStatus, GBLUE, TRANSPARENT);
   }
@@ -84,23 +85,46 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
+void build_json(char *out, int led_state, int adc) {
+    sprintf(out,
+        "{\"led\":%d,\"adc\":%d}",
+        led_state,
+        adc
+    );
+}
+
+void receiveCommands(Plant allPlants[], int *numberOfPlants)
+{
+  LCD_Clear(BLACK);
+  LCD_ShowStr(0, 0, "in receive commands", WHITE, TRANSPARENT);
+  for (int j = 0; j < commandBufferIndex; j++)
+  {
+    if (commandBuffer[j] == '\n')
+    {
+      commandBuffer[j] = '\0';
+      if (!strcmp((char *)commandBuffer, "getAllPlants"))
+      {
+        LCD_Clear(BLACK);
+        renderAllPlants(allPlants, *numberOfPlants);
+      } else if (!strcmp((char *)commandBuffer, "returnMessage")){
+        LCD_Clear(BLACK);
+        LCD_ShowStr(0, 0, "transmit in session", WHITE, TRANSPARENT);
+        putstr("i helvete\n");
+      } 
+      else {
+        LCD_Clear(BLACK);
+        LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
+        LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
+      }
+      commandBufferIndex = 0;
+      break;
+    }
+  }
+}
+
 int main(void)
 {
   int ms = 0, s = 0, idle = 0;
-
-  t5omsi(); // Initialize timer5 1kHz
-  colinit();
-  l88init();
-  // keyinit();          // Initialize keyboard toolbox
-  rtcInit();
-  rtc_counter_set(0);
-  u0init(EI);           // Init WiFi över UART
-  eclic_global_interrupt_enable();
-  ADC3powerUpInit(0); // Initialize ADC0, Ch3
-
-  Lcd_SetType(LCD_INVERTED);
-  Lcd_Init();
-  LCD_Fill(0, 0, 160, 80, BLACK);
 
   Plant allPlants[3];
   int numberOfPlants = 0;
@@ -108,9 +132,28 @@ int main(void)
   initPlant("Tomat", &numberOfPlants, allPlants);
   initPlant("Chili", &numberOfPlants, allPlants);
 
+  t5omsi(); // Initialize timer5 1kHz
+  colinit();
+  l88init();
+  // keyinit();          // Initialize keyboard toolbox
+  rtcInit();
+  rtc_counter_set(0);
+  u0init(EI); // Init WiFi över UART
+  eclic_global_interrupt_enable();
+  ADC3powerUpInit(0); // Initialize ADC0, Ch3
+
+  Lcd_SetType(LCD_INVERTED);
+  Lcd_Init();
+  LCD_Fill(0, 0, 160, 80, BLACK);
+
+  
+
   while (1)
   {
     idle++;
+    if (commandBufferIndex > 0)
+      receiveCommands(allPlants, &numberOfPlants);
+
     if (t5expq())
     {
       l88row(colset());
@@ -120,7 +163,7 @@ int main(void)
         // updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
         //  renderAllPlants(allPlants, numberOfPlants);
         // renderOnePlant(allPlants, numberOfPlants, "Tomat");
-       
+
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);
         idle = 0;

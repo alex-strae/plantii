@@ -5,3 +5,5 @@ void u0_TX_Queue(void);
 
 void putch(char ch);
 void putstr(char str[]);
+extern volatile char commandBuffer[100];
+extern volatile int commandBufferIndex;

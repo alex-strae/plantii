@@ -3,18 +3,20 @@
 #include "eclicw.h"
 #include "drivers.h"
 #include "lcd.h"
+#define BUF_SIZE 100
 
 int txr = 0, txw = 0, txq[256] = {0}; // 256 Byte wr queue
-char buf[100];
-int i = 0;
+volatile char commandBuffer[BUF_SIZE];
+volatile int commandBufferIndex = 0;
 
 void wifiIsrHandler(void)
 {
+  // TRANSMIT
   if (usart_interrupt_flag_get(USART0, USART_INT_FLAG_TBE))
   {
     if (txr != txw)
-    {            
-      l88mem(3, 9);                              // ...no! Device redy?
+    {
+      l88mem(4, 1);                            // ...no! Device redy?
       usart_data_transmit(USART0, txq[txr++]); //        Yes Write!
       txr %= 256;                              //            wrap around.
     }
@@ -22,31 +24,17 @@ void wifiIsrHandler(void)
       usart_interrupt_disable(USART0, USART_INT_TBE);
   }
 
+  // RECEIVE
   if (usart_interrupt_flag_get(USART0, USART_INT_FLAG_RBNE))
   {
-    l88mem(4, 10);
- 
+    while (usart_flag_get(USART0, USART_FLAG_RBNE))
+    {
       char c = usart_data_receive(USART0);
-
-      if (i < sizeof(buf) - 1)
+      if (commandBufferIndex < BUF_SIZE)
       {
-        buf[i++] = c;
+        commandBuffer[commandBufferIndex++] = c;
       }
-
-      if (c == '\n') // slut på frame
-      {
-        buf[i - 1] = '\0';
-        LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, buf, WHITE, TRANSPARENT);
-
-        i = 0;
-      }
-      else if (i == sizeof(buf))
-      {
-        LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, "TRANSMIT ERROR, RESETTING", WHITE, TRANSPARENT);
-        i = 0;
-      }
+    }
   }
 }
 
