@@ -85,11 +85,25 @@ void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], Sens
   LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
 }
 
-void build_json(char *out, int led_state, int adc) {
+void jsonAllPlants(char *out, Plant allPlants[], int numberOfPlants) {
     sprintf(out,
-        "{\"led\":%d,\"adc\":%d}",
-        led_state,
-        adc
+        "["
+        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d},"
+        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d},"
+        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d}"
+        "]\n",
+        allPlants[0].name,
+        allPlants[0].currentStatus,
+        allPlants[0].sun[allPlants[0].numberOfSunReadings-1].reading,
+        allPlants[0].moisture[allPlants[0].numberOfMoistureReadings-1].reading,
+        allPlants[1].name,
+        allPlants[1].currentStatus,
+        allPlants[1].sun[allPlants[1].numberOfSunReadings-1].reading,
+        allPlants[1].moisture[allPlants[1].numberOfMoistureReadings-1].reading,
+        allPlants[2].name,
+        allPlants[2].currentStatus,
+        allPlants[2].sun[allPlants[2].numberOfSunReadings-1].reading,
+        allPlants[2].moisture[allPlants[2].numberOfMoistureReadings-1].reading
     );
 }
 
@@ -102,19 +116,27 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
     if (commandBuffer[j] == '\n')
     {
       commandBuffer[j] = '\0';
-      if (!strcmp((char *)commandBuffer, "getAllPlants"))
+      if (!strcmp((char *)commandBuffer, "renderAllPlants"))
       {
         LCD_Clear(BLACK);
         renderAllPlants(allPlants, *numberOfPlants);
-      } else if (!strcmp((char *)commandBuffer, "returnMessage")){
+      } 
+      
+      
+      else if (!strcmp((char *)commandBuffer, "getAllPlants")){
         LCD_Clear(BLACK);
         LCD_ShowStr(0, 0, "transmit in session", WHITE, TRANSPARENT);
-        putstr("i helvete\n");
+
+        char data[512];
+        jsonAllPlants(data, allPlants, *numberOfPlants);
+        putstr(data);
       } 
+
       else {
         LCD_Clear(BLACK);
         LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
         LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
+        putstr((char *)commandBuffer);
       }
       commandBufferIndex = 0;
       break;

@@ -27,7 +27,7 @@ build/main.o: main.c \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
  ../../firmware/RISCV/drivers/riscv_const.h drivers.h adc.h lcd.h plant.h \
- utilities.h usart.h
+ utilities.h jsmn.h usart.h
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 
@@ -94,5 +94,7 @@ lcd.h:
 plant.h:
 
 utilities.h:
+
+jsmn.h:
 
 usart.h:

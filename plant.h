@@ -3,9 +3,16 @@
 
 typedef struct
 {
-  char timeStamp[9]; //Behöver fortfarande ett sätt för att spara detta
+  char timeStamp[9]; 
   int reading;
 } SensorReading;
+
+typedef struct
+{
+  char dateStamp[9]; 
+  int averageReading;
+} HistoryOfAverages;
+
 
 typedef struct
 {
