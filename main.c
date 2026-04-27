@@ -16,11 +16,34 @@
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
+int applyGreenFingers(Plant allPlants[], int numberOfPlants)
+{
+  uint32_t currentTime = rtc_counter_get();
+  for (int i = 0; i < numberOfPlants; i++)
+  {
+    if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
+    {
+      updatePlantReading(&allPlants[i], SUN);
+    }
+
+    if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
+    {
+      updatePlantReading(&allPlants[i], MOISTURE);
+    }
+
+    if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
+    {
+      updatePlantReading(&allPlants[i], TEMPERATURE);
+    }
+  }
+}
 
 int main(void)
 {
 
   int ms = 0, s = 0, idle = 0;
+  int currentMin = 0;
+
   Plant allPlants[3];
   int numberOfPlants = 0;
   /*
@@ -30,15 +53,15 @@ int main(void)
   RAD 3 GER IDEAL, MIN, MAX VÄRDE FÖR FUKT
   RAD 4 SAMMA FÖR SOL
   RAD 5 SAMMA FÖR TEMP, se nedan
-  
+
   initPlant("Gurka", &numberOfPlants, allPlants,
     1800, 60, 1800,
     70, 20, 90,
     50, 20, 70,
     23, 19, 28);
 */
-    // STANDARD-KOD INITIERINGAR. RTCINIT har några förändringar
-  t5omsi();               // Initialize timer5 1kHz
+  // STANDARD-KOD INITIERINGAR. RTCINIT har några förändringar
+  t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
   rtcInit();
@@ -49,12 +72,12 @@ int main(void)
   // keyinit();          // Initialize keyboard toolbox
 
   // VÅRA INITIERINGAR
-  MAX31865_Init();      // Init Jocke temp-sensor
+  MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
-  //u0init(EI); // Init WiFi över UART
+  // u0init(EI); // Init WiFi över UART
 
   eclic_global_interrupt_enable();
-  
+
   while (1)
   {
     idle++;
@@ -67,11 +90,27 @@ int main(void)
       ms++;
       if (ms == 1000)
       {
-        // updatePlantReading(allPlants, numberOfPlants, "Tomat", SUN);
-        //  renderAllPlants(allPlants, numberOfPlants);
-        renderOnePlant(allPlants, numberOfPlants, "Gurka");
+        ms = 0;
+        if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
+        {
+          if (applyGreenFingers(allPlants, numberOfPlants))
+          {
+            LCD_Clear(BLACK);
+            LCD_ShowStr(0, 0, "VALUES JUST UPDATED", GREEN, TRANSPARENT);
+          }
+          else
+          {
+            LCD_Clear(BLACK);
+            LCD_ShowStr(0, 0, "GREEN FINGERS STANDBY", GREEN, TRANSPARENT);
+          }
+        }
+        else
+        {
+          LCD_Clear(BLACK);
+          LCD_ShowStr(0, 0, "STANDBY OR NO PLANTS REGISTERED", YELLOW, TRANSPARENT);
+        }
         read_temp(); // DENNA BEHÖVER SPARA VÄRDE OCKSÅ
-        
+
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);
         idle = 0;

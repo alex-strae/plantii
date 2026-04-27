@@ -8,7 +8,7 @@
 
 typedef struct
 {
-  char timeStamp[STAMP_LENGTH]; 
+  uint32_t timeStamp; 
   int reading;
 } SensorReading;
 
@@ -58,7 +58,7 @@ typedef enum
   // KAN LÄGGA TILL FLER
 } SensorType;
 
-SensorReading initSensorReading(char timeStamp[], int inReading);
+SensorReading initSensorReading(int timeStamp, int inReading);
 
 void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
   int moistInterval, int sunInterval, int tempInterval, 
@@ -66,4 +66,4 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
    int idealSun, int lowSun, int highSun,
    int idealTemp, int lowTemp, int highTemp);
 
-void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type);
+void updatePlantReading(Plant *plant, SensorType type);

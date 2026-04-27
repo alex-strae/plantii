@@ -38,6 +38,24 @@ void ADC3powerUpInit(int tmp) {
     adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);             // ...trigger 1:st conv!
 }
 
+int readLightSensor(uint32_t source, uint32_t EOC)
+{
+  adc_software_trigger_enable(source, ADC_REGULAR_CHANNEL);
+  int called = 0;
+  while (!adc_flag_get(source, EOC))
+  { // blocking
+    if (!called)
+    {
+      LCD_Clear(BLACK);
+      LCD_ShowStr(50, 4, "reads sensor", GREEN, TRANSPARENT);
+      called = 1;
+    }
+  }
+  int reading = adc_regular_data_read(source);
+  adc_flag_clear(source, EOC);
+  return reading;
+}
+
 // JOCKE TEMP-SENSOR ÖVER SPI
 
 /*  MAX31865 är resistans-till-digital-konverteraren (RTD) som sitter kopplad till tempsensorn.

@@ -1,8 +1,6 @@
 #include "gd32vf103.h"
-#include "adc.h"
 #include "lcd.h"
 #include <stdio.h>
-
 
 // KTH code was from: https://gms.tf/riscv-gd32vf103.html#realtime-clock-rtc
 void rtcInit(void)
@@ -49,20 +47,12 @@ void generateTimeStamp(char buffer[])
   snprintf(buffer, 9, "%02d:%02d:%02d", hours, min, sec);
 }
 
-int readSensor(uint32_t source, uint32_t EOC)
-{
-  adc_software_trigger_enable(source, ADC_REGULAR_CHANNEL);
-  int called = 0;
-  while (!adc_flag_get(source, EOC))
-  { // blocking
-    if (!called)
-    {
-      LCD_Clear(BLACK);
-      LCD_ShowStr(50, 4, "reads sensor", GREEN, TRANSPARENT);
-      called = 1;
-    }
+int oneMinuteHasPassed(int *currentMin) {
+  uint32_t currentTime = rtc_counter_get();
+  int min = (currentTime % 3600) / 60;
+  if (min <= currentMin) return 0;
+  else {
+    *currentMin = min;
+    return 1;
   }
-  int reading = adc_regular_data_read(source);
-  adc_flag_clear(source, EOC);
-  return reading;
 }
