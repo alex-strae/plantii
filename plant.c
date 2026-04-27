@@ -1,5 +1,7 @@
 #include "plant.h"
 #include <stdio.h>
+#include "lcd.h"
+#include "adc.h"
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
@@ -11,7 +13,11 @@ SensorReading initSensorReading(char timeStamp[], int inReading)
   return newReading;
 }
 
-void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
+void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
+  int moistInterval, int sunInterval, int tempInterval, 
+   int idealMoist, int lowMoist, int highMoist,
+   int idealSun, int lowSun, int highSun,
+   int idealTemp, int lowTemp, int highTemp)
 {
   if (*numberOfPlants > 2)
     return;
@@ -22,32 +28,73 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[])
   STR_COPY(newPlant.currentStatus, "OK");
 
   newPlant.moisture[0] = defaultReading;
-  newPlant.numberOfMoistureReadings = 1;
   newPlant.sun[0] = defaultReading;
+  newPlant.temp[0] = defaultReading;
+  newPlant.numberOfMoistureReadings = 1;
   newPlant.numberOfSunReadings = 1;
+  newPlant.numberOfTempReadings = 1;
+
+  newPlant.moistHistory[0] = 0;
+  newPlant.sunHistory[0] = 0;
+  newPlant.tempHistory[0] = 0;
+  newPlant.numberOfMoistureHistory = 1;
+  newPlant.numberOfSunHistory = 1;
+  newPlant.numberOfTempHistory = 1;
+
+  newPlant.moistInterval = moistInterval;
+  newPlant.sunInterval = sunInterval;
+  newPlant.tempInterval = tempInterval;
+
+  newPlant.idealMoist = idealMoist;
+  newPlant.lowMoist = lowMoist;
+  newPlant.highMoist = highMoist;
+  
+  newPlant.idealSun = idealSun;
+  newPlant.lowSun = lowSun;
+  newPlant.highSun = highSun;
+
+  newPlant.idealTemp = idealTemp;
+  newPlant.lowTemp = lowTemp;
+  newPlant.highTemp = highTemp;
 
   allPlants[*numberOfPlants] = newPlant;
   (*numberOfPlants)++;
 }
 
-//NEDAN GÄLLER JSMN
-/*Copyright (c) 2010 Serge A. Zaitsev
+void updatePlantReading(Plant allPlants[], int numberOfPlants, char name[], SensorType type)
+{
+  for (int i = 0; i < numberOfPlants; i++)
+  {
+    if (strcmp(allPlants[i].name, name) == 0)
+    {
+      if (type == SUN)
+      {
+        char fillWithTimeStamp[9];
+        generateTimeStamp(fillWithTimeStamp);
+        int currentValue = readSensor(ADC0, ADC_FLAG_EOC);
+        if (currentValue < 0)
+          currentValue = 0;
+        if (allPlants[i].numberOfSunReadings < MAX_SUN_READINGS)
+        {
+          allPlants[i].sun[allPlants[i].numberOfSunReadings].reading = currentValue;
+          STR_COPY(allPlants[i].sun[allPlants[i].numberOfSunReadings].timeStamp, fillWithTimeStamp);
+          (allPlants[i].numberOfSunReadings)++;
+        }
+        else
+        {
+          LCD_Fill(0, 0, 160, 80, BLACK);
+          LCD_ShowStr(0, 10, "SUN READINGS FULL", RED, TRANSPARENT);
+        }
+        return;
+      }
+    }
+  }
+  LCD_Fill(0, 0, 160, 80, BLACK);
+  LCD_ShowStr(50, 4, "NO SUCH PLANT", RED, TRANSPARENT);
+}
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+void updatePlantStatus(Plant plantToUpdate)
+{
+  // WIP : LOOPA IGENOM TIDIGARE READINGS, GÖR EN AVERAGE, TA REDA PÅ STATUS. BEHÖVER LJUS? BEHÖVER VATTEN?
+}
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
