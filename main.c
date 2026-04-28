@@ -23,17 +23,17 @@ int applyGreenFingers(Plant allPlants[], int numberOfPlants)
   {
     if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
     {
-      updatePlantReading(&allPlants[i], SUN);
+      updatePlantReading(&allPlants[i], SUN, i);
     }
 
     if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
     {
-      updatePlantReading(&allPlants[i], MOISTURE);
+      updatePlantReading(&allPlants[i], MOISTURE, i);
     }
 
     if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
     {
-      updatePlantReading(&allPlants[i], TEMPERATURE);
+      updatePlantReading(&allPlants[i], TEMPERATURE, i);
     }
   }
 }
@@ -60,7 +60,7 @@ int main(void)
     50, 20, 70,
     23, 19, 28);
 */
-  // STANDARD-KOD INITIERINGAR. RTCINIT har några förändringar
+  // STANDARD-KOD INITIERINGAR. RTCINIT har några förändringar vs original
   t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
@@ -89,6 +89,7 @@ int main(void)
       l88row(colset());
       ms++;
       if (ms == 1000)
+      //// LCD_KOD EJ NÖDVÄNDIG, ENDAST FÖR ATT VISA ATT EN STATUS-CHECK HAR KÖRTS
       {
         ms = 0;
         if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
@@ -109,7 +110,7 @@ int main(void)
           LCD_Clear(BLACK);
           LCD_ShowStr(0, 0, "STANDBY OR NO PLANTS REGISTERED", YELLOW, TRANSPARENT);
         }
-        read_temp(); // DENNA BEHÖVER SPARA VÄRDE OCKSÅ
+        /// SLUT
 
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);

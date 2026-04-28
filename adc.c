@@ -118,7 +118,7 @@ uint16_t MAX31865_ReadADC(void) {
     return adc_code >> 1; 
 }
 
-void read_temp(void) {
+int read_temp(void) {
     static int ms_counter=0; 
     static int sample_count = 0;
     static float temp_sum = 0;
@@ -147,3 +147,46 @@ void read_temp(void) {
 }
 
 // JOCKE TEMP-SENSOR ÖVER SPI -- SLUT
+
+// DAVE MOISTURE SENSOR ÖVER ADC START
+
+uint16_t ADC_read(void) {
+    adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
+
+    while(!adc_flag_get(ADC0, ADC_FLAG_EOC));
+
+    return adc_regular_data_read(ADC0);
+}
+float an_average(float average_array[])
+{
+  int the_average = 0;
+
+  for(int i=0; i<10;i++)
+  {
+    the_average += average_array[i];
+  }
+  the_average = the_average / 10;
+  return the_average;
+}
+void Fukt_this_sample(float av_array[], float moist_array[], int *Pcount, int *PS_sample, int *Pmoist )
+{
+  int adc_fukt;
+
+  if(*Pcount < 10)
+  {
+                      
+    adc_fukt = ADC_read();
+    av_array[*Pcount] = adc_fukt;
+    (*Pcount)++;
+  }
+                                
+  else
+  {
+    moist_array[(*Pmoist)++%48] = an_average(av_array);
+    (*Pcount) = 0; 
+    (*PS_sample) = 0;
+
+  }
+
+}
+// DAVE FUKT SENSOR SLUT

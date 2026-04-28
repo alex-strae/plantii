@@ -66,4 +66,4 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
    int idealSun, int lowSun, int highSun,
    int idealTemp, int lowTemp, int highTemp);
 
-void updatePlantReading(Plant *plant, SensorType type);
+void updatePlantReadings(Plant plant, SensorType type, int plantID);
