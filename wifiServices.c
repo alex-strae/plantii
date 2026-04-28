@@ -2,26 +2,31 @@
 #include "plant.h"
 #include "usart.h"
 
-void jsonAllPlants(char *out, Plant allPlants[], int numberOfPlants) {
-    sprintf(out,
-        "["
-        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d},"
-        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d},"
-        "{\"name\":\"%s\",\"status\":\"%s\",\"currentSun\":%d,\"currentMoisture\":%d}"
-        "]\n",
-        allPlants[0].name,
-        allPlants[0].currentStatus,
-        allPlants[0].sun[allPlants[0].numberOfSunReadings-1].reading,
-        allPlants[0].moisture[allPlants[0].numberOfMoistureReadings-1].reading,
-        allPlants[1].name,
-        allPlants[1].currentStatus,
-        allPlants[1].sun[allPlants[1].numberOfSunReadings-1].reading,
-        allPlants[1].moisture[allPlants[1].numberOfMoistureReadings-1].reading,
-        allPlants[2].name,
-        allPlants[2].currentStatus,
-        allPlants[2].sun[allPlants[2].numberOfSunReadings-1].reading,
-        allPlants[2].moisture[allPlants[2].numberOfMoistureReadings-1].reading
+void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPlants)
+{
+  int currentIndex = 0;
+  currentIndex += snprintf(out + currentIndex, outSize - currentIndex, "[");
+  for (int i = 0; i < numberOfPlants; i++)
+  {
+    if (i > 0)
+    {
+      currentIndex += snprintf(out + currentIndex, outSize - currentIndex, ",");
+    }
+
+    currentIndex += snprintf(out + currentIndex, outSize - currentIndex,
+                             "{\"name\":\"%s\","
+                             "\"status\":\"%s\","
+                             "\"currentSun\":%d,"
+                             "\"currentMoisture\":%d",
+                             "\"currentTemp\":%d}",
+                             allPlants[i].name,
+                             allPlants[i].currentStatus,
+                             allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].reading,
+                             allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].reading,
+                              allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].reading
     );
+  }
+  snprintf(out + currentIndex, outSize - currentIndex, "]\n");
 }
 
 void receiveCommands(Plant allPlants[], int *numberOfPlants)
@@ -37,19 +42,20 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
       {
         LCD_Clear(BLACK);
         renderAllPlants(allPlants, *numberOfPlants);
-      } 
-      
-      
-      else if (!strcmp((char *)commandBuffer, "getAllPlants")){
+      }
+
+      else if (!strcmp((char *)commandBuffer, "getAllPlants"))
+      {
         LCD_Clear(BLACK);
         LCD_ShowStr(0, 0, "transmit in session", WHITE, TRANSPARENT);
 
         char data[512];
-        jsonAllPlants(data, allPlants, *numberOfPlants);
+        jsonAllPlants(data, sizeof(data), allPlants, *numberOfPlants);
         putstr(data);
-      } 
+      }
 
-      else {
+      else
+      {
         LCD_Clear(BLACK);
         LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
         LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
