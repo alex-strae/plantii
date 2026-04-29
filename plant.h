@@ -1,3 +1,6 @@
+#ifndef PLANT_H
+#define PLANT_H
+
 #define MAX_SUN_READINGS 48   // SOLLJUS LÄSES AV OFTA, MEN AVG-VÄRDE FÖR VARJE HALVTIMMA SPARAS
 #define MAX_MOISTURE_READINGS 24
 #define MAX_TEMP_READINGS 24  //TEMP OCH FUKT LÄSES 1 GÅNG i TIMMAN
@@ -66,4 +69,7 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
    int idealSun, int lowSun, int highSun,
    int idealTemp, int lowTemp, int highTemp);
 
-void updatePlantReadings(Plant plant, SensorType type, int plantID);
+void updatePlantReadings(Plant *plant, SensorType type, int plantID);
+void updatePlantStatus(Plant *plant);
+
+#endif

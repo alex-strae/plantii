@@ -18,24 +18,29 @@
 
 int applyGreenFingers(Plant allPlants[], int numberOfPlants)
 {
+  int updateDone = 0;
   uint32_t currentTime = rtc_counter_get();
   for (int i = 0; i < numberOfPlants; i++)
   {
     if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
     {
-      updatePlantReading(&allPlants[i], SUN, i);
+      updatePlantReadings(&allPlants[i], SUN, i);
+      updateDone = 1;
     }
 
     if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
     {
-      updatePlantReading(&allPlants[i], MOISTURE, i);
+      updatePlantReadings(&allPlants[i], MOISTURE, i);
+      updateDone = 1;
     }
 
     if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
     {
-      updatePlantReading(&allPlants[i], TEMPERATURE, i);
+      updatePlantReadings(&allPlants[i], TEMPERATURE, i);
+      updateDone = 1;
     }
   }
+  return updateDone;
 }
 
 int main(void)

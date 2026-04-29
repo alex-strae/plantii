@@ -26,7 +26,7 @@ build/adc.o: adc.c adc.h \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h
+ ../../firmware/RISCV/drivers/riscv_const.h lcd.h
 
 adc.h:
 
@@ -85,3 +85,5 @@ adc.h:
 ../../firmware/RISCV/drivers/n200_eclic.h:
 
 ../../firmware/RISCV/drivers/riscv_const.h:
+
+lcd.h:

@@ -23,7 +23,7 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
   if (*numberOfPlants > 2)
     return;
   Plant newPlant;
-  SensorReading defaultReading = initSensorReading("00:00:00", 50);
+  SensorReading defaultReading = initSensorReading(0, 50);
 
   STR_COPY(newPlant.name, inName);
   STR_COPY(newPlant.currentStatus, "OK");
@@ -63,51 +63,51 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
 }
 
 // plantID används inte förräns vi löst MUX osv. När det är gjort kommer värdet vidarebefodras till respektive läs-sensor metod.
-void updatePlantReadings(Plant plant, SensorType type, int plantID)
+void updatePlantReadings(Plant *plant, SensorType type, int plantID)
 {
   if (type == SUN)
   {
     int currentValue = readLightSensor(ADC0, ADC_FLAG_EOC);
     if (currentValue < 0)
       currentValue = 0;
-    if (plant.numberOfSunReadings <= MAX_SUN_READINGS)
+    if (plant->numberOfSunReadings <= MAX_SUN_READINGS)
     {
       // vi ska ta averagevärde för sol för att undvika för många värden. delar på 30 eftersom värde tas varje minut för sol
       // och vi vill uppnå ett värde som representerar hela minutens genomsnitt. Detta är dock problematiskt eftersom sub30% blir mindre än 1 och därmed inte räknas som ljus alls denna minut
-      plant.sun[plant.numberOfSunReadings - 1].reading += currentValue / 30;
+      plant->sun[plant->numberOfSunReadings - 1].reading += currentValue / 30;
       int32_t currentTime = rtc_counter_get();
-      plant.sun[plant.numberOfSunReadings - 1].timeStamp = currentTime;
+      plant->sun[plant->numberOfSunReadings - 1].timeStamp = currentTime;
       // Special för ljus. Om detta är första värdet som tas så har vi precis bootat. Isåfall finns inget tidigare värde. Vi incrementar till ny 30min reading om 30 min gått
-      if (plant.numberOfSunReadings == 1)
+      if (plant->numberOfSunReadings == 1)
       {
         if (currentTime >= 1800)
-          (plant.numberOfSunReadings)++;
+          (plant->numberOfSunReadings)++;
       }
       // Om det inte är första värdet så kan vi bara jämföra med timeStampen innan
-      else if (plant.sun[plant.numberOfSunReadings - 1].timeStamp - plant.sun[plant.numberOfSunReadings - 2].timeStamp >= 1800)
-        (plant.numberOfSunReadings)++;
+      else if (plant->sun[plant->numberOfSunReadings - 1].timeStamp - plant->sun[plant->numberOfSunReadings - 2].timeStamp >= 1800)
+        (plant->numberOfSunReadings)++;
     }
 
-    if (plant.numberOfSunReadings = MAX_SUN_READINGS)
+    if (plant->numberOfSunReadings == MAX_SUN_READINGS)
     {
       // Dags för reset: 48 värden för dygnet har uppnåtts.
       int averageValueThisDay = 0;
       for (int i = 0; i < MAX_SUN_READINGS; i++)
       {
-        averageValueThisDay += plant.sun[i].reading;
+        averageValueThisDay += plant->sun[i].reading;
       }
-      plant.numberOfSunReadings = 1;
+      plant->numberOfSunReadings = 1;
 
       averageValueThisDay /= MAX_SUN_READINGS;
       // Flytta nuvarande värden så att senaste värde ligger först
-      for (int i = AVG_HISTORY_DAYS; i > 0; i--)
+      for (int i = AVG_HISTORY_DAYS-1; i > 0; i--)
       {
-        plant.sunHistory[i] = plant.sunHistory[i - 1];
+        plant->sunHistory[i] = plant->sunHistory[i - 1];
       }
-      plant.sunHistory[0] = averageValueThisDay;
+      plant->sunHistory[0] = averageValueThisDay;
       // Öka antal sparade värden om de inte redan är max
-      if (plant.numberOfSunHistory < AVG_HISTORY_DAYS)
-        (plant.numberOfSunHistory)++;
+      if (plant->numberOfSunHistory < AVG_HISTORY_DAYS)
+        (plant->numberOfSunHistory)++;
     }
   }
    // SE KOMMENTARER FÖR SOL-SENSOR OVAN FÖR BESKRIVNING - SNARLIK PROCEDUR!
@@ -122,42 +122,42 @@ void updatePlantReadings(Plant plant, SensorType type, int plantID)
     if (currentValue < 0)
       currentValue = 0;
 
-    if (plant.numberOfTempReadings <= MAX_TEMP_READINGS)
+    if (plant->numberOfTempReadings <= MAX_TEMP_READINGS)
     {
-      plant.temp[plant.numberOfTempReadings - 1].reading += currentValue;
+      plant->temp[plant->numberOfTempReadings - 1].reading += currentValue;
       int32_t currentTime = rtc_counter_get();
-      plant.temp[plant.numberOfTempReadings - 1].timeStamp = currentTime;
+      plant->temp[plant->numberOfTempReadings - 1].timeStamp = currentTime;
     }
 
-    if (plant.numberOfTempReadings = MAX_TEMP_READINGS)
+    if (plant->numberOfTempReadings == MAX_TEMP_READINGS)
     {
       int averageValueThisDay = 0;
       for (int i = 0; i < MAX_TEMP_READINGS; i++)
       {
-        averageValueThisDay += plant.temp[i].reading;
+        averageValueThisDay += plant->temp[i].reading;
       }
-      plant.numberOfTempReadings = 1;
+      plant->numberOfTempReadings = 1;
       averageValueThisDay /= MAX_TEMP_READINGS;
-      for (int i = AVG_HISTORY_DAYS; i > 0; i--)
+      for (int i = AVG_HISTORY_DAYS -1; i > 0; i--)
       {
-        plant.tempHistory[i] = plant.tempHistory[i - 1];
+        plant->tempHistory[i] = plant->tempHistory[i - 1];
       }
-      plant.tempHistory[0] = averageValueThisDay;
-      if (plant.numberOfTempHistory < AVG_HISTORY_DAYS)
-        (plant.numberOfTempHistory)++;
+      plant->tempHistory[0] = averageValueThisDay;
+      if (plant->numberOfTempHistory < AVG_HISTORY_DAYS)
+        (plant->numberOfTempHistory)++;
     }
   }
   updatePlantStatus(plant);
 }
 
-void updatePlantStatus(Plant plant)
+void updatePlantStatus(Plant *plant)
 {
-  if (plant.sun[plant.numberOfSunReadings - 1].reading > plant.highSun)
+  if (plant->sun[plant->numberOfSunReadings - 1].reading > plant->highSun)
   {
-    STR_COPY(plant.currentStatus, "BEHÖVER SKUGGA");
+    STR_COPY(plant->currentStatus, "BEHÖVER SKUGGA");
   }
-  else if (plant.sun[plant.numberOfSunReadings - 1].reading < plant.lowSun)
+  else if (plant->sun[plant->numberOfSunReadings - 1].reading < plant->lowSun)
   {
-    STR_COPY(plant.currentStatus, "BEHÖVER LJUS");
+    STR_COPY(plant->currentStatus, "BEHÖVER LJUS");
   }
 }

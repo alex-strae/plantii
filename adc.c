@@ -1,6 +1,8 @@
 #include "adc.h"
 #include "gd32vf103.h"
 #include "lcd.h"
+#include <stdio.h>
+
 
 void ADC3powerUpInit(int tmp) {
     rcu_periph_clock_enable(RCU_GPIOA);

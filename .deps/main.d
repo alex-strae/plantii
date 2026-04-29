@@ -27,7 +27,7 @@ build/main.o: main.c \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
  ../../firmware/RISCV/drivers/riscv_const.h drivers.h adc.h lcd.h plant.h \
- utilities.h usart.h
+ utilities.h usart.h renderPlants.h wifiServices.h
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 
@@ -96,3 +96,7 @@ plant.h:
 utilities.h:
 
 usart.h:
+
+renderPlants.h:
+
+wifiServices.h:
