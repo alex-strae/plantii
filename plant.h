@@ -73,5 +73,6 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
 
 void updatePlantReadings(Plant *plant, SensorType type, int plantID);
 void updatePlantStatus(Plant *plant);
+int applyGreenFingers(Plant allPlants[], int numberOfPlants);
 
 #endif

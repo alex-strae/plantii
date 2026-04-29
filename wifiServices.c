@@ -21,7 +21,7 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
                              "{\"name\":\"%s\","
                              "\"status\":\"%s\","
                              "\"currentSun\":%d,"
-                             "\"currentMoisture\":%d",
+                             "\"currentMoisture\":%d,"
                              "\"currentTemp\":%d}",
                              allPlants[i].name,
                              allPlants[i].currentStatus,

@@ -16,33 +16,6 @@
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
-int applyGreenFingers(Plant allPlants[], int numberOfPlants)
-{
-  int updateDone = 0;
-  uint32_t currentTime = rtc_counter_get();
-  for (int i = 0; i < numberOfPlants; i++)
-  {
-    if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
-    {
-      updatePlantReadings(&allPlants[i], SUN, i);
-      updateDone = 1;
-    }
-
-    if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
-    {
-      updatePlantReadings(&allPlants[i], MOISTURE, i);
-      updateDone = 1;
-    }
-
-    if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
-    {
-      updatePlantReadings(&allPlants[i], TEMPERATURE, i);
-      updateDone = 1;
-    }
-  }
-  return updateDone;
-}
-
 int main(void)
 {
 
@@ -58,14 +31,14 @@ int main(void)
   RAD 3 GER IDEAL, MIN, MAX VÄRDE FÖR FUKT
   RAD 4 SAMMA FÖR SOL
   RAD 5 SAMMA FÖR TEMP, se nedan
-
-  initPlant("Gurka", &numberOfPlants, allPlants,
-    1800, 60, 1800,
-    70, 20, 90,
-    50, 20, 70,
-    23, 19, 28);
 */
-  // STANDARD-KOD INITIERINGAR. RTCINIT har några förändringar vs original
+  initPlant("Gurka", &numberOfPlants, allPlants,
+            1800, 60, 1800,
+            70, 20, 90,
+            50, 20, 70,
+            23, 19, 28);
+
+  // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original
   t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
@@ -75,20 +48,20 @@ int main(void)
   Lcd_Init();
   LCD_Fill(0, 0, 160, 80, BLACK);
   // keyinit();          // Initialize keyboard toolbox
-
-  // VÅRA INITIERINGAR
   MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
-  // u0init(EI); // Init WiFi över UART
+  u0init(EI); // Init WiFi över UART
 
   eclic_global_interrupt_enable();
 
+  LCD_Clear(BLACK);
+  LCD_ShowStr(0, 0, "STANDBY", GREEN, TRANSPARENT);
   while (1)
   {
     idle++;
-    /*if (commandBufferIndex > 0)                   //DENNA AKTIVERAR TX WIFI
+    if (commandBufferIndex > 0) // DENNA AKTIVERAR TX WIFI
       receiveCommands(allPlants, &numberOfPlants);
-    */
+
     if (t5expq())
     {
       l88row(colset());
@@ -97,7 +70,7 @@ int main(void)
       //// LCD_KOD EJ NÖDVÄNDIG, ENDAST FÖR ATT VISA ATT EN STATUS-CHECK HAR KÖRTS
       {
         ms = 0;
-        if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
+        if (0 && oneMinuteHasPassed(&currentMin) && numberOfPlants)
         {
           if (applyGreenFingers(allPlants, numberOfPlants))
           {
@@ -109,11 +82,6 @@ int main(void)
             LCD_Clear(BLACK);
             LCD_ShowStr(0, 0, "GREEN FINGERS STANDBY", GREEN, TRANSPARENT);
           }
-        }
-        else
-        {
-          LCD_Clear(BLACK);
-          LCD_ShowStr(0, 0, "STANDBY OR NO PLANTS REGISTERED", YELLOW, TRANSPARENT);
         }
         /// SLUT
 

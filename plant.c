@@ -113,7 +113,6 @@ void updatePlantReadings(Plant *plant, SensorType type, int plantID)
    // SE KOMMENTARER FÖR SOL-SENSOR OVAN FÖR BESKRIVNING - SNARLIK PROCEDUR!
   else if (type == MOISTURE)
   {
-
    
   }
   else if (type == TEMPERATURE)
@@ -160,4 +159,31 @@ void updatePlantStatus(Plant *plant)
   {
     STR_COPY(plant->currentStatus, "BEHÖVER LJUS");
   }
+}
+
+int applyGreenFingers(Plant allPlants[], int numberOfPlants)
+{
+  int updateDone = 0;
+  uint32_t currentTime = rtc_counter_get();
+  for (int i = 0; i < numberOfPlants; i++)
+  {
+    if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
+    {
+      updatePlantReadings(&allPlants[i], SUN, i);
+      updateDone = 1;
+    }
+
+    if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
+    {
+      updatePlantReadings(&allPlants[i], MOISTURE, i);
+      updateDone = 1;
+    }
+
+    if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
+    {
+      updatePlantReadings(&allPlants[i], TEMPERATURE, i);
+      updateDone = 1;
+    }
+  }
+  return updateDone;
 }
