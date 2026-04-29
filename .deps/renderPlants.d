@@ -1,4 +1,5 @@
-build/utilities.o: utilities.c \
+build/renderPlants.o: renderPlants.c lcd.h \
+ ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103_libopt.h \
@@ -12,7 +13,6 @@ build/utilities.o: utilities.c \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_exmc.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_exti.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_fmc.h \
- ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_i2c.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_fwdgt.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_dbg.h \
@@ -26,7 +26,11 @@ build/utilities.o: utilities.c \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h lcd.h
+ ../../firmware/RISCV/drivers/riscv_const.h plant.h utilities.h
+
+lcd.h:
+
+../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h:
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 
@@ -53,8 +57,6 @@ build/utilities.o: utilities.c \
 ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_exti.h:
 
 ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_fmc.h:
-
-../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h:
 
 ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_i2c.h:
 
@@ -84,4 +86,6 @@ build/utilities.o: utilities.c \
 
 ../../firmware/RISCV/drivers/riscv_const.h:
 
-lcd.h:
+plant.h:
+
+utilities.h:

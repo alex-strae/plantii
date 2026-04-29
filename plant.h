@@ -1,5 +1,6 @@
 #ifndef PLANT_H
 #define PLANT_H
+#include <stdint.h>
 
 #define MAX_SUN_READINGS 48   // SOLLJUS LÄSES AV OFTA, MEN AVG-VÄRDE FÖR VARJE HALVTIMMA SPARAS
 #define MAX_MOISTURE_READINGS 24
@@ -8,6 +9,7 @@
 #define STATUS_LENGTH 15
 #define STAMP_LENGTH 10
 #define AVG_HISTORY_DAYS 30
+
 
 typedef struct
 {

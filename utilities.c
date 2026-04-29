@@ -48,10 +48,18 @@ void generateTimeStamp(char buffer[])
   snprintf(buffer, 9, "%02d:%02d:%02d", hours, min, sec);
 }
 
+void generateTimeStampFromValue(char buffer[], uint32_t source)
+{
+  int hours = source / 3600;
+  int min = (source % 3600) / 60;
+  int sec = source % 60;
+  snprintf(buffer, 9, "%02d:%02d:%02d", hours, min, sec);
+}
+
 int oneMinuteHasPassed(int *currentMin) {
   uint32_t currentTime = rtc_counter_get();
   int min = (currentTime % 3600) / 60;
-  if (min <= currentMin) return 0;
+  if (min <= *currentMin) return 0;
   else {
     *currentMin = min;
     return 1;
