@@ -3,6 +3,7 @@
 #include "plant.h"
 #include <string.h>
 #include "utilities.h"
+#include "renderPlants.h"
 
 void renderAllPlants(Plant allPlants[], int numberOfPlants)
 {

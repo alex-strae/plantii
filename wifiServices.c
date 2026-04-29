@@ -1,6 +1,10 @@
 #include "lcd.h"
 #include "plant.h"
 #include "usart.h"
+#include "wifiServices.h"
+#include <stdio.h>
+#include <string.h>
+#include "renderPlants.h"
 
 void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPlants)
 {
