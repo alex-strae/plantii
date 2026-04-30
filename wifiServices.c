@@ -84,7 +84,19 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
           sscanf(ptr, "\"cmd\":\"%14[^\"]\"", cmd);
         }
 
-        if (!strcmp(cmd, "addPlant"))
+        if (!strcmp(cmd, "startPump")) {
+          // ADD IN START PUMP CODE
+          LCD_Clear(BLACK);
+          LCD_ShowStr(0, 0, "PUMP STARTED!", BLUE, TRANSPARENT);
+        }
+
+        else if (!strcmp(cmd, "startLamp")) {
+          // ADD IN TOGGLE SUN LAMP CODE
+          LCD_Clear(BLACK);
+          LCD_ShowStr(0, 0, "LAMP TOGGLED", YELLOW, TRANSPARENT);
+        }
+
+        else if (!strcmp(cmd, "addPlant"))
         {
           char name[NAME_LENGTH];
           int idealMoist;
@@ -135,7 +147,7 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
   }
 }
 
-int getValue(const char *json, const char *key)
+int getValue(const volatile char *json, const char *key)
 {
   char search[32];
   sprintf(search, "\"%s\":", key);

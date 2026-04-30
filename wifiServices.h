@@ -7,6 +7,6 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
 
 void receiveCommands(Plant allPlants[], int *numberOfPlants);
 
-int getValue(const char *json, const char *key);
+int getValue(const volatile char *json, const char *key);
 
 #endif

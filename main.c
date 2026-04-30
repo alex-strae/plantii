@@ -10,32 +10,17 @@
 #include "renderPlants.h"
 #include "wifiServices.h"
 
-#define EI 1
-#define DI 0
-#define MAXIMUM_NUMBER_OF_PLANTS
+#define MAXIMUM_NUMBER_OF_PLANTS 3
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
 int main(void)
 {
-
   int ms = 0, s = 0, idle = 0;
   int currentMin = 0;
-
-  Plant allPlants[3];
+  Plant allPlants[MAXIMUM_NUMBER_OF_PLANTS];
   int numberOfPlants = 0;
-  /*
-  EXEMPEL PÅ HUR NY PLANTA INITIERAS:
-  RAD 1 GER NAMN OCH FASTA VARIABLER.
-  RAD 2 GER IDEAL, MIN, MAX VÄRDE FÖR FUKT
-  RAD 3 SAMMA FÖR SOL
-  RAD 4 SAMMA FÖR TEMP, se nedan
 
-  initPlant("Gurka", &numberOfPlants, allPlants,
-            70, 20, 90,
-            50, 20, 70,
-            23, 19, 28);
-*/
   // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original
   t5omsi(); // Initialize timer5 1kHz
   colinit();
@@ -48,18 +33,18 @@ int main(void)
   // keyinit();          // Initialize keyboard toolbox
   MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
-  u0init(EI);         // Init WiFi över UART
-
+  u0init(1);         // Init WiFi över UART
   eclic_global_interrupt_enable();
 
   LCD_Clear(BLACK);
   LCD_ShowStr(0, 0, "STANDBY", GREEN, TRANSPARENT);
+  putstr("System online");
 
-  putstr("System online!");
   while (1)
   {
     idle++;
-    if (commandBufferIndex > 0) // DENNA AKTIVERAR LYSSNING AV RX WIFI
+    // DENNA AKTIVERAR RX WIFI
+    if (commandBufferIndex > 0) 
       receiveCommands(allPlants, &numberOfPlants);
 
     if (t5expq())
@@ -69,12 +54,13 @@ int main(void)
       if (ms == 1000)
       {
         ms = 0;
-        if (1 && oneMinuteHasPassed(&currentMin) && numberOfPlants)
+        // DENNA KÖR CHECK AV SENSORER
+        if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
         {
+          LCD_Clear(BLACK); // JUST DENNA RAD EJ NÖDVÄNDIG
+
           if (applyGreenFingers(allPlants, numberOfPlants))
-            putstr("Sensors just read!");
-          else
-            putstr("System online!");
+            putstr("Green fingers working");
         }
 
         l88mem(0, idle >> 8); // ...Performance monitor
