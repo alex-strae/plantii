@@ -66,7 +66,6 @@ typedef enum
 SensorReading initSensorReading(int timeStamp, int inReading);
 
 void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
-  int moistInterval, int sunInterval, int tempInterval, 
    int idealMoist, int lowMoist, int highMoist,
    int idealSun, int lowSun, int highSun,
    int idealTemp, int lowTemp, int highTemp);

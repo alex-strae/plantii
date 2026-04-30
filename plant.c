@@ -15,7 +15,6 @@ SensorReading initSensorReading(int newTimeStamp, int inReading)
 }
 
 void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
-               int moistInterval, int sunInterval, int tempInterval,
                int idealMoist, int lowMoist, int highMoist,
                int idealSun, int lowSun, int highSun,
                int idealTemp, int lowTemp, int highTemp)
@@ -42,9 +41,9 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
   newPlant.numberOfSunHistory = 1;
   newPlant.numberOfTempHistory = 1;
 
-  newPlant.moistInterval = moistInterval;
-  newPlant.sunInterval = sunInterval;
-  newPlant.tempInterval = tempInterval;
+  newPlant.moistInterval = 1800;
+  newPlant.sunInterval = 60;
+  newPlant.tempInterval = 1800;
 
   newPlant.idealMoist = idealMoist;
   newPlant.lowMoist = lowMoist;

@@ -27,17 +27,15 @@ int main(void)
   /*
   EXEMPEL PÅ HUR NY PLANTA INITIERAS:
   RAD 1 GER NAMN OCH FASTA VARIABLER.
-  RAD 2 GER VÄRDE I SEKUNDER SOM SENSORTYP SKA UPPDATERAS
-  RAD 3 GER IDEAL, MIN, MAX VÄRDE FÖR FUKT
-  RAD 4 SAMMA FÖR SOL
-  RAD 5 SAMMA FÖR TEMP, se nedan
-*/
+  RAD 2 GER IDEAL, MIN, MAX VÄRDE FÖR FUKT
+  RAD 3 SAMMA FÖR SOL
+  RAD 4 SAMMA FÖR TEMP, se nedan
+
   initPlant("Gurka", &numberOfPlants, allPlants,
-            1800, 60, 1800,
             70, 20, 90,
             50, 20, 70,
             23, 19, 28);
-
+*/
   // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original
   t5omsi(); // Initialize timer5 1kHz
   colinit();
@@ -50,16 +48,18 @@ int main(void)
   // keyinit();          // Initialize keyboard toolbox
   MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
-  u0init(EI); // Init WiFi över UART
+  u0init(EI);         // Init WiFi över UART
 
   eclic_global_interrupt_enable();
 
   LCD_Clear(BLACK);
   LCD_ShowStr(0, 0, "STANDBY", GREEN, TRANSPARENT);
+
+  putstr("System online!");
   while (1)
   {
     idle++;
-    if (commandBufferIndex > 0) // DENNA AKTIVERAR TX WIFI
+    if (commandBufferIndex > 0) // DENNA AKTIVERAR LYSSNING AV RX WIFI
       receiveCommands(allPlants, &numberOfPlants);
 
     if (t5expq())
@@ -67,23 +67,15 @@ int main(void)
       l88row(colset());
       ms++;
       if (ms == 1000)
-      //// LCD_KOD EJ NÖDVÄNDIG, ENDAST FÖR ATT VISA ATT EN STATUS-CHECK HAR KÖRTS
       {
         ms = 0;
-        if (0 && oneMinuteHasPassed(&currentMin) && numberOfPlants)
+        if (1 && oneMinuteHasPassed(&currentMin) && numberOfPlants)
         {
           if (applyGreenFingers(allPlants, numberOfPlants))
-          {
-            LCD_Clear(BLACK);
-            LCD_ShowStr(0, 0, "VALUES JUST UPDATED", GREEN, TRANSPARENT);
-          }
+            putstr("Sensors just read!");
           else
-          {
-            LCD_Clear(BLACK);
-            LCD_ShowStr(0, 0, "GREEN FINGERS STANDBY", GREEN, TRANSPARENT);
-          }
+            putstr("System online!");
         }
-        /// SLUT
 
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);

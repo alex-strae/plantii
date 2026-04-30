@@ -3,7 +3,7 @@
 #include "eclicw.h"
 #include "drivers.h"
 #include "lcd.h"
-#define BUF_SIZE 100
+#define BUF_SIZE 256
 
 int txr = 0, txw = 0, txq[512] = {0}; // 256 Byte wr queue
 volatile char commandBuffer[BUF_SIZE];

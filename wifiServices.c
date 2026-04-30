@@ -21,14 +21,31 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
                              "{\"name\":\"%s\","
                              "\"status\":\"%s\","
                              "\"currentSun\":%d,"
-                             "\"currentMoisture\":%d,"
-                             "\"currentTemp\":%d}",
+                             "\"currentMoist\":%d,"
+                             "\"currentTemp\":%d,"
+                             "\"idealMoist\":%d,"
+                             "\"idealSun\":%d,"
+                             "\"idealTemp\":%d,"
+                             "\"minMoist\":%d,"
+                             "\"minSun\":%d,"
+                             "\"minTemp\":%d,"
+                             "\"maxMoist\":%d,"
+                             "\"maxSun\":%d,"
+                             "\"maxTemp\":%d}",
                              allPlants[i].name,
                              allPlants[i].currentStatus,
                              allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].reading,
                              allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].reading,
-                              allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].reading
-    );
+                             allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].reading,
+                             allPlants[i].idealMoist,
+                             allPlants[i].idealSun,
+                             allPlants[i].idealTemp,
+                            allPlants[i].lowMoist,
+                             allPlants[i].lowSun,
+                             allPlants[i].lowTemp,
+                            allPlants[i].highMoist,
+                             allPlants[i].highSun,
+                             allPlants[i].highTemp);
   }
   snprintf(out + currentIndex, outSize - currentIndex, "]\n");
 }
@@ -51,7 +68,7 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
       else if (!strcmp((char *)commandBuffer, "getAllPlants"))
       {
         LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, "transmit in session", WHITE, TRANSPARENT);
+        LCD_ShowStr(0, 0, "data transmitted", WHITE, TRANSPARENT);
 
         char data[512];
         jsonAllPlants(data, sizeof(data), allPlants, *numberOfPlants);
@@ -60,13 +77,75 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
 
       else
       {
+        char cmd[15];
+        char *ptr = strstr(commandBuffer, "\"cmd\":\"");
+        if (ptr != NULL)
+        {
+          sscanf(ptr, "\"cmd\":\"%14[^\"]\"", cmd);
+        }
+
+        if (!strcmp(cmd, "addPlant"))
+        {
+          char name[NAME_LENGTH];
+          int idealMoist;
+          int idealSun;
+          int idealTemp;
+
+          int lowMoist;
+          int lowSun;
+          int lowTemp;
+
+          int highMoist;
+          int highSun;
+          int highTemp;
+
+          char *ptr = strstr(commandBuffer, "\"name\":\"");
+          if (ptr != NULL)
+          {
+            sscanf(ptr, "\"name\":\"%[^\"]\"", name);
+          }
+
+          idealMoist = getValue(commandBuffer, "idealMoist");
+          idealSun = getValue(commandBuffer, "idealSun");
+          idealTemp = getValue(commandBuffer, "idealTemp");
+          lowMoist = getValue(commandBuffer, "minMoist");
+          lowSun = getValue(commandBuffer, "minSun");
+          lowTemp = getValue(commandBuffer, "minTemp");
+          highMoist = getValue(commandBuffer, "maxMoist");
+          highSun = getValue(commandBuffer, "maxSun");
+          highTemp = getValue(commandBuffer, "maxTemp");
+          initPlant(name, numberOfPlants, allPlants,
+                    idealMoist, lowMoist, highMoist,
+                    idealSun, lowSun, highSun,
+                    idealTemp, lowTemp, highTemp);
         LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
-        LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
-        putstr((char *)commandBuffer);
+        LCD_ShowStr(0, 0, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
+        }
+        else
+        {
+          LCD_Clear(BLACK);
+          LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
+          LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
+          putstr((char *)commandBuffer);
+        }
       }
       commandBufferIndex = 0;
       break;
     }
   }
+}
+
+int getValue(const char *json, const char *key)
+{
+  char search[32];
+  sprintf(search, "\"%s\":", key);
+
+  char *ptr = strstr(json, search);
+  if (ptr != NULL)
+  {
+    ptr += strlen(search); // hoppa till värdet
+    return atoi(ptr);
+  }
+
+  return 0;
 }
