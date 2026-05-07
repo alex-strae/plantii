@@ -305,7 +305,8 @@ keyscan:addi sp, sp, -4     // Push: Make room on the stack...
         snez a0,a1
         add t1,t1,a0        // (else it must have been 0001)
 
-        call colget         // Get active column (must be 0..3)
+        //call colget         // Get active column (must be 0..3)
+        li a0,1                // DAVES KOD         
         slli a0,a0,2        // ...move it up 2 bits...
         or t3,t1,a0         // ...and combind it with row data!
 

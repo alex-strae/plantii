@@ -22,7 +22,7 @@ void initPlant(char inName[], int *numberOfPlants, Plant allPlants[],
   if (*numberOfPlants > 2)
     return;
   Plant newPlant;
-  SensorReading defaultReading = initSensorReading(0, 50);
+  SensorReading defaultReading = initSensorReading(0, 0);
 
   STR_COPY(newPlant.name, inName);
   STR_COPY(newPlant.currentStatus, "OK");
@@ -66,7 +66,8 @@ void updatePlantReadings(Plant *plant, SensorType type, int plantID)
 {
   if (type == SUN)
   {
-    int currentValue = readLightSensor(ADC0, ADC_FLAG_EOC);
+    //int currentValue = readLightSensor(ADC0, ADC_FLAG_EOC);
+    int currentValue = ADC_read(1);
     if (currentValue < 0)
       currentValue = 0;
     if (plant->numberOfSunReadings <= MAX_SUN_READINGS)
@@ -112,17 +113,44 @@ void updatePlantReadings(Plant *plant, SensorType type, int plantID)
    // SE KOMMENTARER FÖR SOL-SENSOR OVAN FÖR BESKRIVNING - SNARLIK PROCEDUR!
   else if (type == MOISTURE)
   {
-   
+    int currentValue = (int) ADC_read(3);
+    if (currentValue < 0)
+      currentValue = 0;
+ 
+      if (plant->numberOfMoistureReadings <= MAX_MOISTURE_READINGS)
+    {
+      plant->moisture[plant->numberOfMoistureReadings - 1].reading = currentValue;
+      int32_t currentTime = rtc_counter_get();
+      plant->moisture[plant->numberOfMoistureReadings - 1].timeStamp = currentTime;
+    }
+
+    if (plant->numberOfMoistureReadings == MAX_MOISTURE_READINGS)
+    {
+      int averageValueThisDay = 0;
+      for (int i = 0; i < MAX_MOISTURE_READINGS; i++)
+      {
+        averageValueThisDay += plant->moisture[i].reading;
+      }
+      plant->numberOfMoistureReadings = 1;
+      averageValueThisDay /= MAX_MOISTURE_READINGS;
+      for (int i = AVG_HISTORY_DAYS -1; i > 0; i--)
+      {
+        plant->moistHistory[i] = plant->moistHistory[i - 1];
+      }
+      plant->moistHistory[0] = averageValueThisDay;
+      if (plant->numberOfMoistureHistory < AVG_HISTORY_DAYS)
+        (plant->numberOfMoistureHistory)++;
+    }
   }
   else if (type == TEMPERATURE)
   {
-    int currentValue = read_temp();
+    int currentValue = (int) read_temp();
     if (currentValue < 0)
       currentValue = 0;
 
     if (plant->numberOfTempReadings <= MAX_TEMP_READINGS)
     {
-      plant->temp[plant->numberOfTempReadings - 1].reading += currentValue;
+      plant->temp[plant->numberOfTempReadings - 1].reading = currentValue;
       int32_t currentTime = rtc_counter_get();
       plant->temp[plant->numberOfTempReadings - 1].timeStamp = currentTime;
     }
@@ -166,19 +194,19 @@ int applyGreenFingers(Plant allPlants[], int numberOfPlants)
   uint32_t currentTime = rtc_counter_get();
   for (int i = 0; i < numberOfPlants; i++)
   {
-    if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval)
+    if (currentTime - allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp >= allPlants[i].sunInterval || !allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].timeStamp)
     {
       updatePlantReadings(&allPlants[i], SUN, i);
       updateDone = 1;
     }
 
-    if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval)
+    if (currentTime - allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp >= allPlants[i].moistInterval || !allPlants[i].moisture[allPlants[i].numberOfMoistureReadings - 1].timeStamp)
     {
       updatePlantReadings(&allPlants[i], MOISTURE, i);
       updateDone = 1;
     }
 
-    if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval)
+    if (currentTime - allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp >= allPlants[i].tempInterval || !allPlants[i].temp[allPlants[i].numberOfTempReadings - 1].timeStamp)
     {
       updatePlantReadings(&allPlants[i], TEMPERATURE, i);
       updateDone = 1;

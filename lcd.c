@@ -53,6 +53,15 @@ void LCD_WR_Queue(){
     }
 }
 
+
+int is_LCD_queue_empy()
+{
+	if (r==w)
+	return 1;
+	else
+	return 0;
+}
+
 void LCD_Write_Bus(int dat) {
    while (((w+1)%256)==r) LCD_WR_Queue(); //If buffer full then spin...
    queue[w++]=dat;                        //...If/when not then store data...
@@ -129,7 +138,7 @@ void LCD_WR_REG(u8 dat)
   Return value: None
 */
 void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2)
-{
+{	lcd_conf.offset_y=-10;                           /////POTENTIALLY DANGEROUS CHECK LINUS ????
 	LCD_WR_REG(0x2a);  // Column address setting
 	LCD_WR_DATA(x1+lcd_conf.offset_x);
 	LCD_WR_DATA(x2+lcd_conf.offset_x);
@@ -152,7 +161,7 @@ void spi_config(void)
     OLED_CS_Set();
     spi_struct_para_init(&spi_init_struct);
 
-    /* SPI1 parameter config */
+    /*SPI1 parameter config */
     spi_init_struct.trans_mode           = SPI_TRANSMODE_FULLDUPLEX;
     spi_init_struct.device_mode          = SPI_MASTER;
     spi_init_struct.frame_size           = SPI_FRAMESIZE_8BIT;
@@ -162,7 +171,10 @@ void spi_config(void)
     spi_init_struct.endian               = SPI_ENDIAN_MSB;
     spi_init(SPI1, &spi_init_struct);
 
-	spi_crc_polynomial_set(SPI1,7);
+
+	
+
+	//spi_crc_polynomial_set(SPI1,7);
 	spi_enable(SPI1);
 }
 
@@ -315,7 +327,7 @@ void Lcd_Init(void)
 void LCD_Clear(u16 Color)
 {
 	u16 i,j;  	
-	LCD_Address_Set(0,0,LCD_W-1,LCD_H-1);
+	LCD_Address_Set(0,0,LCD_W-1,LCD_H-1);  
     for(i=0;i<LCD_W;i++)
 	  {
 			for (j=0;j<LCD_H;j++)

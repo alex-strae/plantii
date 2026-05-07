@@ -53,7 +53,7 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
 void receiveCommands(Plant allPlants[], int *numberOfPlants)
 {
   LCD_Clear(BLACK);
-  LCD_ShowStr(0, 0, "in receive commands", WHITE, TRANSPARENT);
+  LCD_ShowStr(10, 10, "in receive commands", WHITE, TRANSPARENT);
   for (int j = 0; j < commandBufferIndex; j++)
   {
     if (commandBuffer[j] == '\n')
@@ -68,7 +68,7 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
       else if (!strcmp((char *)commandBuffer, "getAllPlants"))
       {
         LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, "data transmitted", WHITE, TRANSPARENT);
+        LCD_ShowStr(10, 10, "data transmitted", WHITE, TRANSPARENT);
 
         char data[512];
         jsonAllPlants(data, sizeof(data), allPlants, *numberOfPlants);
@@ -87,13 +87,13 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
         if (!strcmp(cmd, "startPump")) {
           // ADD IN START PUMP CODE
           LCD_Clear(BLACK);
-          LCD_ShowStr(0, 0, "PUMP STARTED!", BLUE, TRANSPARENT);
+          LCD_ShowStr(10, 10, "PUMP STARTED!", BLUE, TRANSPARENT);
         }
 
         else if (!strcmp(cmd, "startLamp")) {
           // ADD IN TOGGLE SUN LAMP CODE
           LCD_Clear(BLACK);
-          LCD_ShowStr(0, 0, "LAMP TOGGLED", YELLOW, TRANSPARENT);
+          LCD_ShowStr(10, 10, "LAMP TOGGLED", YELLOW, TRANSPARENT);
         }
 
         else if (!strcmp(cmd, "addPlant"))
@@ -131,13 +131,13 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
                     idealSun, lowSun, highSun,
                     idealTemp, lowTemp, highTemp);
         LCD_Clear(BLACK);
-        LCD_ShowStr(0, 0, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
+        LCD_ShowStr(10, 10, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
         }
         else
         {
           LCD_Clear(BLACK);
-          LCD_ShowStr(0, 0, "BAD COMMAND:", WHITE, TRANSPARENT);
-          LCD_ShowStr(0, 13, (char *)commandBuffer, WHITE, TRANSPARENT);
+          LCD_ShowStr(10, 10, "BAD COMMAND:", WHITE, TRANSPARENT);
+          LCD_ShowStr(10, 23, (char *)commandBuffer, WHITE, TRANSPARENT);
           putstr((char *)commandBuffer);
         }
       }

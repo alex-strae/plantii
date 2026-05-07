@@ -12,7 +12,7 @@
 #define LCD_INVERTED  1
 
 #define LCD_W 160
-#define LCD_H 80
+#define LCD_H 160
 
 typedef unsigned char u8;
 typedef unsigned int u16;
@@ -36,8 +36,9 @@ typedef unsigned long u32;
 #define TRANSPARENT 1
 #define OPAQUE      0
 
+void lcd_delay_1ms(uint32_t count);
 extern  u16 BACK_COLOR;   // Background color
-
+int is_LCD_queue_empy();
 void LCD_WR_Queue();
 void LCD_Wait_On_Queue();
 void LCD_Write_Bus(int dat);
