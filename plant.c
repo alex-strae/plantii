@@ -67,7 +67,7 @@ void updatePlantReadings(Plant *plant, SensorType type, int plantID)
   if (type == SUN)
   {
     //int currentValue = readLightSensor(ADC0, ADC_FLAG_EOC);
-    int currentValue = ADC_read(1);
+    int currentValue = ADC_read(3);
     if (currentValue < 0)
       currentValue = 0;
     if (plant->numberOfSunReadings <= MAX_SUN_READINGS)
@@ -113,7 +113,7 @@ void updatePlantReadings(Plant *plant, SensorType type, int plantID)
    // SE KOMMENTARER FÖR SOL-SENSOR OVAN FÖR BESKRIVNING - SNARLIK PROCEDUR!
   else if (type == MOISTURE)
   {
-    int currentValue = (int) ADC_read(3);
+    int currentValue = (int) ADC_read(1);
     if (currentValue < 0)
       currentValue = 0;
  

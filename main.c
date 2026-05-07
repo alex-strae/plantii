@@ -42,7 +42,7 @@ int main(void)
   Lcd_SetType(LCD_INVERTED);
   Lcd_Init();
   LCD_Clear(BLACK);
-  LCD_ShowStr(10, 10, "Bullshit sir", WHITE, TRANSPARENT);
+  LCD_ShowStr(10, 10, "GREEN FINGERS", GREEN, TRANSPARENT);
 
   MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
@@ -69,7 +69,6 @@ int main(void)
         // DENNA KÖR CHECK AV SENSORER
         if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
         {
-
           if (applyGreenFingers(allPlants, numberOfPlants))
             putstr("Green fingers working");
         }

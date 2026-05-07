@@ -100,13 +100,13 @@ void pages(int page, int point, int numberOfPlants, Plant allPlants[])   ////int
         temp=read_temp();
         LCD_Clear(BLACK);
         //ADC_read(3);
-        fukt = ADC_read(3);
+        fukt = ADC_read(1);
         LCD_ShowChar(1,point,'>',TRANSPARENT,WHITE);
         LCD_ShowStr(x, y, "Moisture: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,fukt,4,WHITE);y+=16;
         //channel = 1;
         //ADC_read(1);
-        sun = ADC_read(1);
+        sun = ADC_read(3);
         LCD_ShowStr(x, y, "sun: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,sun,4,WHITE);y+=16;
         LCD_ShowStr(x, y, "Temp: ", WHITE, TRANSPARENT);

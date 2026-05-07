@@ -7,7 +7,7 @@ void ADC3powerUpInit(int tmp);    // ADC0 Ch 3, and if tmp also ch 16
 float read_temp(void);
 void MAX31865_Init(void);
 
-uint16_t ADC_read(int channel);
+int ADC_read(int channel);
 
 enum {
     HOME,

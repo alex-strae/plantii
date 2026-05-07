@@ -140,7 +140,7 @@ float read_temp(void) {
     return (temp_sum / 5.0f);//temp_sum / 5.0f
 }
 
-uint16_t ADC_read(int channel) {
+int ADC_read(int channel) {
 
     if(channel == 1)
     adc_regular_channel_config(ADC0, 0, ADC_CHANNEL_1, ADC_SAMPLETIME_13POINT5);  ////////
@@ -151,13 +151,17 @@ uint16_t ADC_read(int channel) {
 
     while(!adc_flag_get(ADC0, ADC_FLAG_EOC));
 
-    uint16_t sensorValue = adc_regular_data_read(ADC0);
-    if (channel == 1) {
-        //KALIBRERA SOLVÄRDE. Max verkar vara 600.
-        sensorValue /= 600;
-    } else if (channel == 3) {
-        //KALIBRERA FUKTVÄRDE
-
+    int sensorValue = (int) adc_regular_data_read(ADC0);
+    if (channel == 3) {
+        //KALIBRERA SOLVÄRDE. PITCH BLACK = 4000. FULL SOL = 0
+        sensorValue = 3800 - sensorValue;
+        if (sensorValue < 0) sensorValue = 0;
+        sensorValue /= 38;
+    } else if (channel == 1) {
+        //KALIBRERA FUKTVÄRDE. WET = 1600. DRY = 2500
+        sensorValue = 2500 - sensorValue;
+        if (sensorValue < 0) sensorValue = 0;
+        sensorValue /= 9;
     }
     return sensorValue;
 }
