@@ -1,6 +1,7 @@
 #include "plant.h"
 #include <stdio.h>
 #include "lcd.h"
+#include "pwm.h"
 #include "adc.h"
 #include "gd32vf103.h"
 #define STR_COPY(dest, src) \
@@ -186,6 +187,12 @@ void updatePlantStatus(Plant *plant)
   {
     STR_COPY(plant->currentStatus, "BEHÖVER LJUS");
   }
+
+  if (plant->moisture[plant->numberOfMoistureReadings - 1].reading < plant->lowMoist)
+  {
+    T1setPWMch0(900); // BÖRJA VATTNA, LAGOM FLÖDE = 900?
+  }
+  
 }
 
 int applyGreenFingers(Plant allPlants[], int numberOfPlants)
@@ -211,6 +218,11 @@ int applyGreenFingers(Plant allPlants[], int numberOfPlants)
       updatePlantReadings(&allPlants[i], TEMPERATURE, i);
       updateDone = 1;
     }
+
+    // PGA ENDAST 1 UPPSÄTTNING SENSORER SÅ KÖRS NEDAN UTANFÖR FOR LOOP.
+    // I framtiden ska conditional nedan inte kolla (fukt > 95) utan (fukt > plant->highMoist)
+    int fukt = ADC_read(1);
+    if (fukt > 95) T1setPWMch0(1500); // Stanna vattenpump
   }
   return updateDone;
 }

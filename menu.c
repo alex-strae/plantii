@@ -5,14 +5,11 @@
 #define TIMEOUT_mins 5
 #define TIMOUT_ms ( TIMEOUT_mins *60000)
 
-void pages(int page, int point, int numberOfPlants, Plant allPlants[])   ////int numberOfPlants, PLANT allPlants[] = alex_code
+void pages(int page, int point, int *pNumberOfPlants, Plant allPlants[])
 {
   int x = 12;
-  int y=10;
-  int fukt = 0;
+  int y = 10;
   int plantnum = 1;
-  int channel = 3;
-  int sun =0;
   int runtemp =0;
   float temp=0;
   
@@ -32,7 +29,7 @@ void pages(int page, int point, int numberOfPlants, Plant allPlants[])   ////int
      case SEEDATA: {
       LCD_Clear(BLACK);
       LCD_ShowChar(1,point,'>',TRANSPARENT,WHITE);
-      for(int i=0; i<numberOfPlants;i++)
+      for(int i=0; i<(*pNumberOfPlants);i++)
       {
         LCD_ShowStr(x, y, "plant ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+48,y,i+1,TRANSPARENT,WHITE);y+=16;
@@ -72,19 +69,22 @@ void pages(int page, int point, int numberOfPlants, Plant allPlants[])   ////int
         LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);}break;
         case TOMATO:{
         LCD_Clear(BLACK);
-        LCD_ShowStr(x, y, "Tomato", WHITE, TRANSPARENT);y+=16;
-        LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);      //needs function
+        LCD_ShowStr(x, y, "Tomato added!", WHITE, TRANSPARENT);y+=16;
+        LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);
+        initPlant("Tomato", pNumberOfPlants, allPlants, 60, 30, 85, 70, 30, 90, 25, 20, 35);
         }break;   
         case CUCUMBER:{
         LCD_Clear(BLACK);
         LCD_ShowStr(x, y, "Cucumber", WHITE, TRANSPARENT);y+=16;
-        LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);       //needs function
+        LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);
+        initPlant("Cucumber", pNumberOfPlants, allPlants, 70, 50, 100, 50, 20, 55, 25, 20, 30);
         }break;  
         case PURPLEHAZE:{
         LCD_Clear(BLACK);
         LCD_ShowStr(x, y, "DRUGS ARE BAD", WHITE, TRANSPARENT);y+=16;
         LCD_ShowStr(x, y, "mmkaaaayy", WHITE, TRANSPARENT);y+=16;
         LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);
+        initPlant("My swagga", pNumberOfPlants, allPlants, 42, 20, 60, 70, 50, 100, 25, 20, 40);
         }break;                                                    //needs function
       case CUSTOM_SETTINGS:{
         LCD_Clear(BLACK);
@@ -94,19 +94,14 @@ void pages(int page, int point, int numberOfPlants, Plant allPlants[])   ////int
         }break;
       case SNAPSHOT:{
        LCD_Wait_On_Queue();
-       
        for(int i=0;i>500000;i++);
-        //temp=MAX31865_ReadADC();
-        temp=read_temp();
+        temp = read_temp();
         LCD_Clear(BLACK);
-        //ADC_read(3);
-        fukt = ADC_read(1);
+        int fukt = ADC_read(1);
         LCD_ShowChar(1,point,'>',TRANSPARENT,WHITE);
         LCD_ShowStr(x, y, "Moisture: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,fukt,4,WHITE);y+=16;
-        //channel = 1;
-        //ADC_read(1);
-        sun = ADC_read(3);
+        int sun = ADC_read(3);
         LCD_ShowStr(x, y, "sun: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,sun,4,WHITE);y+=16;
         LCD_ShowStr(x, y, "Temp: ", WHITE, TRANSPARENT);
@@ -301,7 +296,7 @@ int which_page(int page, int pointer)
     
 }
 
-void Buttonpressed(int *P_page,int akey, int numberOfPlants, Plant allPlants[], int *P_point)
+void Buttonpressed(int *P_page,int akey, int *pNumberOfPlants, Plant allPlants[], int *P_point)
 {
 
   int next_page =-1;
@@ -317,7 +312,7 @@ void Buttonpressed(int *P_page,int akey, int numberOfPlants, Plant allPlants[], 
                     {
                       (*P_point) = 13; 
                       (*P_page) = next_page;                                 //NEW PAGE PUT THE CURSOR IN THE START POSITION (ROW 0)
-                      pages(*P_page,*P_point,numberOfPlants,allPlants);  //numberOfPlants,allPlants = alex_code
+                      pages(*P_page,*P_point, pNumberOfPlants,allPlants);  //numberOfPlants,allPlants = alex_code
                     }
                     else (*P_page)=(*P_page);
                   }break;

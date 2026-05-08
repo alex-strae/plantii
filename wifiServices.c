@@ -1,6 +1,7 @@
 #include "lcd.h"
 #include "plant.h"
 #include "usart.h"
+#include "pwm.h"
 #include "wifiServices.h"
 #include <stdio.h>
 #include <string.h>
@@ -85,7 +86,7 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
         }
 
         if (!strcmp(cmd, "startPump")) {
-          // ADD IN START PUMP CODE
+          T1setPWMch0(900);
           LCD_Clear(BLACK);
           LCD_ShowStr(10, 10, "PUMP STARTED!", BLUE, TRANSPARENT);
         }
@@ -152,11 +153,11 @@ int getValue(const volatile char *json, const char *key)
   char search[32];
   sprintf(search, "\"%s\":", key);
 
-  char *ptr = strstr(json, search);
+  char *ptr = strstr(json, search); // DENNA BLIR INDEXET DÄR search hittas i json. Dvs motsvarigheten till indexOf()
   if (ptr != NULL)
   {
-    ptr += strlen(search); // hoppa till värdet
-    return atoi(ptr);
+    ptr += strlen(search); // lägg till längden av sökordet. Och sökordet är vårat nyckelord. Resultat: ptr innehåller indexet där värdet börjar!
+    return atoi(ptr); // atoi är såpass smart att den börjar och slutar automatiskt där värdet börjar/slutar, och " kommer ange början/slutet pga json
   }
 
   return 0;

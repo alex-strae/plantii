@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "renderPlants.h"
 #include "wifiServices.h"
+#include "pwm.h"
 
 #define TIMEOUT_mins 1
 #define TIMOUT_ms (TIMEOUT_mins * 60000)
@@ -31,7 +32,7 @@ int main(void)
   Plant allPlants[MAXIMUM_NUMBER_OF_PLANTS];
   int numberOfPlants = 0;
 
-  // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original
+  // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original. Möjligen fler.
   t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
@@ -47,6 +48,8 @@ int main(void)
   MAX31865_Init();    // Init Jocke temp-sensor
   ADC3powerUpInit(0); // Initialize ADC0, Ch3
   u0init(1);          // Init WiFi över UART
+  T1powerUpInitPWM(0x1);  // Init vattenpump
+
   eclic_global_interrupt_enable();
 
   putstr("System online");
@@ -79,10 +82,9 @@ int main(void)
       }
 
        if ((key=keyscan())>=0) {  
-                nopress=0;                  ///for a time out (no button pressed after x mins return to home screen)
-              //if (pKey==key) c++; else {c=0; pKey=key;}             
+              nopress=0;                  ///for a time out (no button pressed after x mins return to home screen)          
               akey = lookUpTbl[key];
-              Buttonpressed(&page,akey,numberOfPlants,allPlants, &pointer);             
+              Buttonpressed(&page, akey, &numberOfPlants, allPlants, &pointer);             
             }
            else {
             no_button_press(&page, &nopress);  
