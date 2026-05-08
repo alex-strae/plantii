@@ -1,6 +1,7 @@
 #include "adc.h"
 #include "lcd.h"
 #include "plant.h"
+#include "renderPlants.h"
 #define BACK_Y 124
 #define TIMEOUT_mins 5
 #define TIMOUT_ms ( TIMEOUT_mins *60000)
@@ -112,7 +113,7 @@ void pages(int page, int point, int *pNumberOfPlants, Plant allPlants[])
       }break;
       case VIEWHISTORY:{
         LCD_Clear(BLACK);
-        LCD_ShowStr(x, y, "some data ", WHITE, TRANSPARENT); 
+        renderAllHistory(allPlants, *pNumberOfPlants);          // WIP, SE FUNKTION
         LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);     //needs function
       }break;
       case RESETDATA:{
