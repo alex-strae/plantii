@@ -9,24 +9,4 @@ void MAX31865_Init(void);
 
 int ADC_read(int channel);
 
-enum {
-    HOME,
-    MAINMENU,
-    SEEDATA,
-    plant1,
-    SNAPSHOT,
-    VIEWHISTORY,
-    plant2,
-    plant3,
-    REGISTER,
-    CHOOSE_DEFUALT,
-    TOMATO,
-    CUCUMBER,
-    PURPLEHAZE,
-    CUSTOM_SETTINGS,
-    RESETDATA,
-    SHOW_ALEX_CODE,
-    PROVE_MUX,
-};
-
 #endif

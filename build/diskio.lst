@@ -1,0 +1,2715 @@
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 1
+
+
+   1              		.file	"diskio.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.sd_send_cmd,"ax",@progbits
+  10              		.align	1
+  12              	sd_send_cmd:
+  13              	.LFB0:
+  14              		.file 1 "diskio.c"
+   1:diskio.c      **** #include "ff.h"
+   2:diskio.c      **** #include "diskio.h"
+   3:diskio.c      **** #include "SPI_Driver.h"
+   4:diskio.c      **** 
+   5:diskio.c      **** // SD card type flags
+   6:diskio.c      **** static uint8_t CardType;
+   7:diskio.c      **** 
+   8:diskio.c      **** #define CT_MMC   0x01  // SD ver 1
+   9:diskio.c      **** #define CT_SD1   0x02  // SD ver 2
+  10:diskio.c      **** #define CT_SDHC  0x04  // SDHC
+  11:diskio.c      **** 
+  12:diskio.c      **** // Send a command to the SD card
+  13:diskio.c      **** static uint8_t sd_send_cmd(uint8_t cmd, uint32_t arg)
+  14:diskio.c      **** {
+  15              		.loc 1 14 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  15:diskio.c      ****     uint8_t crc, res;
+  18              		.loc 1 15 5
+  16:diskio.c      **** 
+  17:diskio.c      ****     sd_cs_low();
+  19              		.loc 1 17 5
+  14:diskio.c      ****     uint8_t crc, res;
+  20              		.loc 1 14 1 is_stmt 0
+  21 0000 4111     		addi	sp,sp,-16
+  22              	.LCFI0:
+  23              		.cfi_def_cfa_offset 16
+  24 0002 06C6     		sw	ra,12(sp)
+  25 0004 22C4     		sw	s0,8(sp)
+  26 0006 26C2     		sw	s1,4(sp)
+  27              		.cfi_offset 1, -4
+  28              		.cfi_offset 8, -8
+  29              		.cfi_offset 9, -12
+  14:diskio.c      ****     uint8_t crc, res;
+  30              		.loc 1 14 1
+  31 0008 2E84     		mv	s0,a1
+  32 000a AA84     		mv	s1,a0
+  33              		.loc 1 17 5
+  34 000c 97000000 		call	sd_cs_low
+  34      E7800000 
+  35              	.LVL1:
+  18:diskio.c      **** 
+  19:diskio.c      ****     spi0_txrx(0x40 | cmd);
+  36              		.loc 1 19 5 is_stmt 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 2
+
+
+  37 0014 13E50404 		ori	a0,s1,64
+  38 0018 97000000 		call	spi0_txrx
+  38      E7800000 
+  39              	.LVL2:
+  20:diskio.c      ****     spi0_txrx((uint8_t)(arg >> 24));
+  40              		.loc 1 20 5
+  41 0020 13558401 		srli	a0,s0,24
+  42 0024 97000000 		call	spi0_txrx
+  42      E7800000 
+  43              	.LVL3:
+  21:diskio.c      ****     spi0_txrx((uint8_t)(arg >> 16));
+  44              		.loc 1 21 5
+  45              		.loc 1 21 29 is_stmt 0
+  46 002c 13550401 		srli	a0,s0,16
+  47              		.loc 1 21 5
+  48 0030 1375F50F 		andi	a0,a0,0xff
+  49 0034 97000000 		call	spi0_txrx
+  49      E7800000 
+  50              	.LVL4:
+  22:diskio.c      ****     spi0_txrx((uint8_t)(arg >> 8));
+  51              		.loc 1 22 5 is_stmt 1
+  52              		.loc 1 22 29 is_stmt 0
+  53 003c 13558400 		srli	a0,s0,8
+  54              		.loc 1 22 5
+  55 0040 1375F50F 		andi	a0,a0,0xff
+  56 0044 97000000 		call	spi0_txrx
+  56      E7800000 
+  57              	.LVL5:
+  23:diskio.c      ****     spi0_txrx((uint8_t)(arg));
+  58              		.loc 1 23 5 is_stmt 1
+  59 004c 1375F40F 		andi	a0,s0,0xff
+  60 0050 97000000 		call	spi0_txrx
+  60      E7800000 
+  61              	.LVL6:
+  24:diskio.c      **** 
+  25:diskio.c      ****     // CRC only checked for CMD0 and CMD8
+  26:diskio.c      ****     crc = 0x01; // Dummy CRC
+  62              		.loc 1 26 5
+  27:diskio.c      ****     if (cmd == 0) crc = 0x95;
+  63              		.loc 1 27 5
+  64              		.loc 1 27 23 is_stmt 0
+  65 0058 13055009 		li	a0,149
+  66              		.loc 1 27 8
+  67 005c 99C4     		beq	s1,zero,.L2
+  28:diskio.c      ****     if (cmd == 8) crc = 0x87;
+  68              		.loc 1 28 5 is_stmt 1
+  69              		.loc 1 28 8 is_stmt 0
+  70 005e A147     		li	a5,8
+  26:diskio.c      ****     if (cmd == 0) crc = 0x95;
+  71              		.loc 1 26 9
+  72 0060 0545     		li	a0,1
+  73              		.loc 1 28 8
+  74 0062 6394F400 		bne	s1,a5,.L2
+  75              		.loc 1 28 23
+  76 0066 13057008 		li	a0,135
+  77              	.L2:
+  78              	.LVL7:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 3
+
+
+  29:diskio.c      ****     spi0_txrx(crc);
+  79              		.loc 1 29 5 is_stmt 1
+  80 006a 97000000 		call	spi0_txrx
+  80      E7800000 
+  81              	.LVL8:
+  30:diskio.c      **** 
+  31:diskio.c      ****     // Wait for response (up to 8 bytes)
+  32:diskio.c      ****     uint8_t i = 8;
+  82              		.loc 1 32 5
+  29:diskio.c      ****     spi0_txrx(crc);
+  83              		.loc 1 29 5 is_stmt 0
+  84 0072 2144     		li	s0,8
+  85              	.LVL9:
+  86              	.L4:
+  33:diskio.c      ****     do {
+  87              		.loc 1 33 5 is_stmt 1 discriminator 2
+  34:diskio.c      ****         res = spi0_txrx(0xFF);
+  88              		.loc 1 34 9 discriminator 2
+  89              		.loc 1 34 15 is_stmt 0 discriminator 2
+  90 0074 1305F00F 		li	a0,255
+  91 0078 97000000 		call	spi0_txrx
+  91      E7800000 
+  92              	.LVL10:
+  35:diskio.c      ****     } while ((res & 0x80) && --i);
+  93              		.loc 1 35 5 discriminator 2
+  94 0080 93178501 		slli	a5,a0,24
+  95 0084 E187     		srai	a5,a5,24
+  96 0086 63D60700 		bge	a5,zero,.L3
+  97              	.LVL11:
+  98 008a 7D14     		addi	s0,s0,-1
+  99              	.LVL12:
+ 100 008c 1374F40F 		andi	s0,s0,0xff
+ 101              		.loc 1 35 27 discriminator 1
+ 102 0090 75F0     		bne	s0,zero,.L4
+ 103              	.L3:
+  36:diskio.c      **** 
+  37:diskio.c      ****     return res;
+ 104              		.loc 1 37 5 is_stmt 1
+  38:diskio.c      **** }
+ 105              		.loc 1 38 1 is_stmt 0
+ 106 0092 B240     		lw	ra,12(sp)
+ 107              		.cfi_restore 1
+ 108 0094 2244     		lw	s0,8(sp)
+ 109              		.cfi_restore 8
+ 110 0096 9244     		lw	s1,4(sp)
+ 111              		.cfi_restore 9
+ 112 0098 4101     		addi	sp,sp,16
+ 113              	.LCFI1:
+ 114              		.cfi_def_cfa_offset 0
+ 115 009a 8280     		jr	ra
+ 116              		.cfi_endproc
+ 117              	.LFE0:
+ 119              		.section	.text.disk_initialize,"ax",@progbits
+ 120              		.align	1
+ 121              		.globl	disk_initialize
+ 123              	disk_initialize:
+ 124              	.LFB1:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 4
+
+
+  39:diskio.c      **** 
+  40:diskio.c      **** 
+  41:diskio.c      **** DSTATUS disk_initialize(BYTE pdrv)
+  42:diskio.c      **** {
+ 125              		.loc 1 42 1 is_stmt 1
+ 126              		.cfi_startproc
+ 127              	.LVL13:
+  43:diskio.c      ****     if (pdrv != 0) return STA_NOINIT;
+ 128              		.loc 1 43 5
+  42:diskio.c      ****     if (pdrv != 0) return STA_NOINIT;
+ 129              		.loc 1 42 1 is_stmt 0
+ 130 0000 7971     		addi	sp,sp,-48
+ 131              	.LCFI2:
+ 132              		.cfi_def_cfa_offset 48
+ 133 0002 06D6     		sw	ra,44(sp)
+ 134 0004 22D4     		sw	s0,40(sp)
+ 135 0006 26D2     		sw	s1,36(sp)
+ 136 0008 4AD0     		sw	s2,32(sp)
+ 137 000a 4ECE     		sw	s3,28(sp)
+ 138              		.cfi_offset 1, -4
+ 139              		.cfi_offset 8, -8
+ 140              		.cfi_offset 9, -12
+ 141              		.cfi_offset 18, -16
+ 142              		.cfi_offset 19, -20
+ 143              		.loc 1 43 8
+ 144 000c 11C9     		beq	a0,zero,.L11
+ 145              	.LVL14:
+ 146              	.L18:
+ 147              		.loc 1 43 27
+ 148 000e 8544     		li	s1,1
+ 149              	.L38:
+  44:diskio.c      **** 
+  45:diskio.c      ****     uint8_t response;
+  46:diskio.c      ****     uint32_t timeout;
+  47:diskio.c      **** 
+  48:diskio.c      ****     // Startup delay + 80 dummy clocks
+  49:diskio.c      ****     for (volatile uint32_t i = 0; i < 1000000; i++);
+  50:diskio.c      ****     sd_cs_high();
+  51:diskio.c      ****     for (uint8_t i = 0; i < 20; i++) spi0_txrx(0xFF);
+  52:diskio.c      **** 
+  53:diskio.c      ****     // CMD0 - reset card
+  54:diskio.c      ****     uint8_t retry = 0;
+  55:diskio.c      ****     do {
+  56:diskio.c      ****         response = sd_send_cmd(0, 0);
+  57:diskio.c      ****         sd_cs_high();
+  58:diskio.c      ****         spi0_txrx(0xFF);
+  59:diskio.c      ****     } while (response != 0x01 && ++retry < 10);
+  60:diskio.c      **** 
+  61:diskio.c      ****     if (response != 0x01) return STA_NOINIT;
+  62:diskio.c      **** 
+  63:diskio.c      ****     // CMD8 - check voltage range (required for SDHC)
+  64:diskio.c      ****     response = sd_send_cmd(8, 0x1AA);
+  65:diskio.c      ****     if (response == 0x01) {
+  66:diskio.c      ****         // Read 4 byte R7 response
+  67:diskio.c      ****         uint8_t r7[4];
+  68:diskio.c      ****         for (int i = 0; i < 4; i++) r7[i] = spi0_txrx(0xFF);
+  69:diskio.c      ****         sd_cs_high();
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 5
+
+
+  70:diskio.c      ****         spi0_txrx(0xFF);
+  71:diskio.c      **** 
+  72:diskio.c      ****         if (r7[2] == 0x01 && r7[3] == 0xAA) {
+  73:diskio.c      ****             // SDHC - send ACMD41 with HCS bit
+  74:diskio.c      ****             timeout = 10000;
+  75:diskio.c      ****             do {
+  76:diskio.c      ****                 sd_send_cmd(55, 0);  // APP_CMD
+  77:diskio.c      ****                 sd_cs_high();
+  78:diskio.c      ****                 spi0_txrx(0xFF);
+  79:diskio.c      ****                 response = sd_send_cmd(41, 0x40000000); // HCS=1
+  80:diskio.c      ****                 sd_cs_high();
+  81:diskio.c      ****                 spi0_txrx(0xFF);
+  82:diskio.c      ****             } while (response != 0x00 && --timeout);
+  83:diskio.c      **** 
+  84:diskio.c      ****             if (response != 0x00) return STA_NOINIT;
+  85:diskio.c      **** 
+  86:diskio.c      ****             // CMD58 - read OCR to confirm SDHC
+  87:diskio.c      ****             response = sd_send_cmd(58, 0);
+  88:diskio.c      ****             uint8_t ocr[4];
+  89:diskio.c      ****             for (int i = 0; i < 4; i++) ocr[i] = spi0_txrx(0xFF);
+  90:diskio.c      ****             sd_cs_high();
+  91:diskio.c      ****             spi0_txrx(0xFF);
+  92:diskio.c      **** 
+  93:diskio.c      ****             CardType = (ocr[0] & 0x40) ? CT_SDHC : CT_SD2;
+  94:diskio.c      ****         }
+  95:diskio.c      ****     } else {
+  96:diskio.c      ****         // SD v1 - send ACMD41 without HCS
+  97:diskio.c      ****         sd_cs_high();
+  98:diskio.c      ****         spi0_txrx(0xFF);
+  99:diskio.c      **** 
+ 100:diskio.c      ****         timeout = 10000;
+ 101:diskio.c      ****         do {
+ 102:diskio.c      ****             sd_send_cmd(55, 0);
+ 103:diskio.c      ****             sd_cs_high();
+ 104:diskio.c      ****             spi0_txrx(0xFF);
+ 105:diskio.c      ****             response = sd_send_cmd(41, 0);
+ 106:diskio.c      ****             sd_cs_high();
+ 107:diskio.c      ****             spi0_txrx(0xFF);
+ 108:diskio.c      ****         } while (response != 0x00 && --timeout);
+ 109:diskio.c      **** 
+ 110:diskio.c      ****         CardType = CT_SD1;
+ 111:diskio.c      ****     }
+ 112:diskio.c      **** 
+ 113:diskio.c      ****     return (timeout == 0) ? STA_NOINIT : 0;
+ 114:diskio.c      **** }
+ 150              		.loc 1 114 1
+ 151 0010 B250     		lw	ra,44(sp)
+ 152              		.cfi_remember_state
+ 153              		.cfi_restore 1
+ 154 0012 2254     		lw	s0,40(sp)
+ 155              		.cfi_restore 8
+ 156 0014 2685     		mv	a0,s1
+ 157 0016 0259     		lw	s2,32(sp)
+ 158              		.cfi_restore 18
+ 159 0018 9254     		lw	s1,36(sp)
+ 160              		.cfi_restore 9
+ 161 001a F249     		lw	s3,28(sp)
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 6
+
+
+ 162              		.cfi_restore 19
+ 163 001c 4561     		addi	sp,sp,48
+ 164              	.LCFI3:
+ 165              		.cfi_def_cfa_offset 0
+ 166 001e 8280     		jr	ra
+ 167              	.LVL15:
+ 168              	.L11:
+ 169              	.LCFI4:
+ 170              		.cfi_restore_state
+  45:diskio.c      ****     uint32_t timeout;
+ 171              		.loc 1 45 5 is_stmt 1
+  46:diskio.c      **** 
+ 172              		.loc 1 46 5
+  49:diskio.c      ****     sd_cs_high();
+ 173              		.loc 1 49 5
+ 174              	.LBB2:
+  49:diskio.c      ****     sd_cs_high();
+ 175              		.loc 1 49 10
+  49:diskio.c      ****     sd_cs_high();
+ 176              		.loc 1 49 5 is_stmt 0
+ 177 0020 B7470F00 		li	a5,999424
+  49:diskio.c      ****     sd_cs_high();
+ 178              		.loc 1 49 28
+ 179 0024 02C4     		sw	zero,8(sp)
+  49:diskio.c      ****     sd_cs_high();
+ 180              		.loc 1 49 5
+ 181 0026 9387F723 		addi	a5,a5,575
+ 182              	.L13:
+  49:diskio.c      ****     sd_cs_high();
+ 183              		.loc 1 49 37 discriminator 1
+ 184 002a 2247     		lw	a4,8(sp)
+  49:diskio.c      ****     sd_cs_high();
+ 185              		.loc 1 49 5 discriminator 1
+ 186 002c 63FBE704 		bleu	a4,a5,.L14
+ 187              	.LBE2:
+  50:diskio.c      ****     for (uint8_t i = 0; i < 20; i++) spi0_txrx(0xFF);
+ 188              		.loc 1 50 5 is_stmt 1
+ 189 0030 97000000 		call	sd_cs_high
+ 189      E7800000 
+ 190              	.LVL16:
+  51:diskio.c      **** 
+ 191              		.loc 1 51 5
+ 192              	.LBB3:
+  51:diskio.c      **** 
+ 193              		.loc 1 51 10
+ 194              	.LBE3:
+  50:diskio.c      ****     for (uint8_t i = 0; i < 20; i++) spi0_txrx(0xFF);
+ 195              		.loc 1 50 5 is_stmt 0
+ 196 0038 D144     		li	s1,20
+ 197              	.LVL17:
+ 198              	.L15:
+ 199              	.LBB4:
+  51:diskio.c      **** 
+ 200              		.loc 1 51 38 is_stmt 1 discriminator 3
+ 201 003a FD14     		addi	s1,s1,-1
+ 202              	.LVL18:
+ 203 003c 1305F00F 		li	a0,255
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 7
+
+
+ 204 0040 93F4F40F 		andi	s1,s1,0xff
+ 205 0044 97000000 		call	spi0_txrx
+ 205      E7800000 
+ 206              	.LVL19:
+  51:diskio.c      **** 
+ 207              		.loc 1 51 5 is_stmt 0 discriminator 3
+ 208 004c FDF4     		bne	s1,zero,.L15
+ 209 004e A944     		li	s1,10
+ 210              	.LBE4:
+  59:diskio.c      **** 
+ 211              		.loc 1 59 5
+ 212 0050 0549     		li	s2,1
+ 213              	.L17:
+ 214              	.LVL20:
+  55:diskio.c      ****         response = sd_send_cmd(0, 0);
+ 215              		.loc 1 55 5 is_stmt 1 discriminator 2
+  56:diskio.c      ****         sd_cs_high();
+ 216              		.loc 1 56 9 discriminator 2
+  56:diskio.c      ****         sd_cs_high();
+ 217              		.loc 1 56 20 is_stmt 0 discriminator 2
+ 218 0052 8145     		li	a1,0
+ 219 0054 0145     		li	a0,0
+ 220 0056 97000000 		call	sd_send_cmd
+ 220      E7800000 
+ 221              	.LVL21:
+ 222 005e AA89     		mv	s3,a0
+ 223              	.LVL22:
+  57:diskio.c      ****         spi0_txrx(0xFF);
+ 224              		.loc 1 57 9 is_stmt 1 discriminator 2
+ 225 0060 97000000 		call	sd_cs_high
+ 225      E7800000 
+ 226              	.LVL23:
+  58:diskio.c      ****     } while (response != 0x01 && ++retry < 10);
+ 227              		.loc 1 58 9 discriminator 2
+ 228 0068 1305F00F 		li	a0,255
+ 229 006c 97000000 		call	spi0_txrx
+ 229      E7800000 
+ 230              	.LVL24:
+  59:diskio.c      **** 
+ 231              		.loc 1 59 5 is_stmt 0 discriminator 2
+ 232 0074 6383290F 		beq	s3,s2,.L16
+ 233              	.LVL25:
+ 234 0078 FD14     		addi	s1,s1,-1
+ 235              	.LVL26:
+ 236 007a 93F4F40F 		andi	s1,s1,0xff
+  59:diskio.c      **** 
+ 237              		.loc 1 59 31 discriminator 1
+ 238 007e F1F8     		bne	s1,zero,.L17
+ 239 0080 79B7     		j	.L18
+ 240              	.LVL27:
+ 241              	.L14:
+ 242              	.LBB5:
+  49:diskio.c      ****     sd_cs_high();
+ 243              		.loc 1 49 52 is_stmt 1 discriminator 3
+  49:diskio.c      ****     sd_cs_high();
+ 244              		.loc 1 49 49 is_stmt 0 discriminator 3
+ 245 0082 2247     		lw	a4,8(sp)
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 8
+
+
+ 246 0084 0507     		addi	a4,a4,1
+ 247 0086 3AC4     		sw	a4,8(sp)
+ 248 0088 4DB7     		j	.L13
+ 249              	.LVL28:
+ 250              	.L39:
+ 251              	.LBE5:
+  97:diskio.c      ****         spi0_txrx(0xFF);
+ 252              		.loc 1 97 9 is_stmt 1
+ 253 008a 97000000 		call	sd_cs_high
+ 253      E7800000 
+ 254              	.LVL29:
+  98:diskio.c      **** 
+ 255              		.loc 1 98 9
+ 256 0092 1305F00F 		li	a0,255
+ 100:diskio.c      ****         do {
+ 257              		.loc 1 100 17 is_stmt 0
+ 258 0096 0964     		li	s0,8192
+  98:diskio.c      **** 
+ 259              		.loc 1 98 9
+ 260 0098 97000000 		call	spi0_txrx
+ 260      E7800000 
+ 261              	.LVL30:
+ 100:diskio.c      ****         do {
+ 262              		.loc 1 100 9 is_stmt 1
+ 100:diskio.c      ****         do {
+ 263              		.loc 1 100 17 is_stmt 0
+ 264 00a0 13040471 		addi	s0,s0,1808
+ 265              	.LVL31:
+ 266              	.L26:
+ 101:diskio.c      ****             sd_send_cmd(55, 0);
+ 267              		.loc 1 101 9 is_stmt 1 discriminator 2
+ 102:diskio.c      ****             sd_cs_high();
+ 268              		.loc 1 102 13 discriminator 2
+ 269 00a4 8145     		li	a1,0
+ 270 00a6 13057003 		li	a0,55
+ 271 00aa 97000000 		call	sd_send_cmd
+ 271      E7800000 
+ 272              	.LVL32:
+ 103:diskio.c      ****             spi0_txrx(0xFF);
+ 273              		.loc 1 103 13 discriminator 2
+ 274 00b2 97000000 		call	sd_cs_high
+ 274      E7800000 
+ 275              	.LVL33:
+ 104:diskio.c      ****             response = sd_send_cmd(41, 0);
+ 276              		.loc 1 104 13 discriminator 2
+ 277 00ba 1305F00F 		li	a0,255
+ 278 00be 97000000 		call	spi0_txrx
+ 278      E7800000 
+ 279              	.LVL34:
+ 105:diskio.c      ****             sd_cs_high();
+ 280              		.loc 1 105 13 discriminator 2
+ 105:diskio.c      ****             sd_cs_high();
+ 281              		.loc 1 105 24 is_stmt 0 discriminator 2
+ 282 00c6 8145     		li	a1,0
+ 283 00c8 13059002 		li	a0,41
+ 284 00cc 97000000 		call	sd_send_cmd
+ 284      E7800000 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 9
+
+
+ 285              	.LVL35:
+ 286 00d4 AA84     		mv	s1,a0
+ 287              	.LVL36:
+ 106:diskio.c      ****             spi0_txrx(0xFF);
+ 288              		.loc 1 106 13 is_stmt 1 discriminator 2
+ 289 00d6 97000000 		call	sd_cs_high
+ 289      E7800000 
+ 290              	.LVL37:
+ 107:diskio.c      ****         } while (response != 0x00 && --timeout);
+ 291              		.loc 1 107 13 discriminator 2
+ 292 00de 1305F00F 		li	a0,255
+ 293 00e2 97000000 		call	spi0_txrx
+ 293      E7800000 
+ 294              	.LVL38:
+ 108:diskio.c      **** 
+ 295              		.loc 1 108 9 is_stmt 0 discriminator 2
+ 296 00ea 99C0     		beq	s1,zero,.L25
+ 108:diskio.c      **** 
+ 297              		.loc 1 108 35 discriminator 1
+ 298 00ec 7D14     		addi	s0,s0,-1
+ 299              	.LVL39:
+ 300 00ee 5DF8     		bne	s0,zero,.L26
+ 301              	.L25:
+ 110:diskio.c      ****     }
+ 302              		.loc 1 110 9 is_stmt 1
+ 110:diskio.c      ****     }
+ 303              		.loc 1 110 18 is_stmt 0
+ 304 00f0 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 305 00f4 0947     		li	a4,2
+ 306              	.LVL40:
+ 307              	.L41:
+ 308 00f6 2380E700 		sb	a4,%lo(.LANCHOR0)(a5)
+ 309              	.LVL41:
+ 310              	.L24:
+ 113:diskio.c      **** }
+ 311              		.loc 1 113 5 is_stmt 1
+ 113:diskio.c      **** }
+ 312              		.loc 1 113 40 is_stmt 0
+ 313 00fa 93341400 		seqz	s1,s0
+ 314 00fe 09BF     		j	.L38
+ 315              	.LVL42:
+ 316              	.L21:
+ 317              	.LBB6:
+ 318              	.LBB7:
+  84:diskio.c      **** 
+ 319              		.loc 1 84 13 is_stmt 1
+  87:diskio.c      ****             uint8_t ocr[4];
+ 320              		.loc 1 87 13
+  87:diskio.c      ****             uint8_t ocr[4];
+ 321              		.loc 1 87 24 is_stmt 0
+ 322 0100 8145     		li	a1,0
+ 323 0102 1305A003 		li	a0,58
+ 324 0106 97000000 		call	sd_send_cmd
+ 324      E7800000 
+ 325              	.LVL43:
+  88:diskio.c      ****             for (int i = 0; i < 4; i++) ocr[i] = spi0_txrx(0xFF);
+ 326              		.loc 1 88 13 is_stmt 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 10
+
+
+  89:diskio.c      ****             sd_cs_high();
+ 327              		.loc 1 89 13
+ 328              	.LBB8:
+  89:diskio.c      ****             sd_cs_high();
+ 329              		.loc 1 89 18
+  89:diskio.c      ****             sd_cs_high();
+ 330              		.loc 1 89 41
+  89:diskio.c      ****             sd_cs_high();
+ 331              		.loc 1 89 50 is_stmt 0
+ 332 010e 1305F00F 		li	a0,255
+ 333 0112 97000000 		call	spi0_txrx
+ 333      E7800000 
+ 334              	.LVL44:
+  89:diskio.c      ****             sd_cs_high();
+ 335              		.loc 1 89 41 is_stmt 1
+  89:diskio.c      ****             sd_cs_high();
+ 336              		.loc 1 89 50 is_stmt 0
+ 337 011a 1305F00F 		li	a0,255
+ 338 011e 97000000 		call	spi0_txrx
+ 338      E7800000 
+ 339              	.LVL45:
+  89:diskio.c      ****             sd_cs_high();
+ 340              		.loc 1 89 41 is_stmt 1
+  89:diskio.c      ****             sd_cs_high();
+ 341              		.loc 1 89 50 is_stmt 0
+ 342 0126 1305F00F 		li	a0,255
+ 343 012a 97000000 		call	spi0_txrx
+ 343      E7800000 
+ 344              	.LVL46:
+  89:diskio.c      ****             sd_cs_high();
+ 345              		.loc 1 89 41 is_stmt 1
+  89:diskio.c      ****             sd_cs_high();
+ 346              		.loc 1 89 50 is_stmt 0
+ 347 0132 1305F00F 		li	a0,255
+ 348 0136 97000000 		call	spi0_txrx
+ 348      E7800000 
+ 349              	.LVL47:
+ 350              	.LBE8:
+  90:diskio.c      ****             spi0_txrx(0xFF);
+ 351              		.loc 1 90 13 is_stmt 1
+ 352 013e 97000000 		call	sd_cs_high
+ 352      E7800000 
+ 353              	.LVL48:
+  91:diskio.c      **** 
+ 354              		.loc 1 91 13
+ 355 0146 1305F00F 		li	a0,255
+ 356 014a 97000000 		call	spi0_txrx
+ 356      E7800000 
+ 357              	.LVL49:
+  93:diskio.c      ****         }
+ 358              		.loc 1 93 13
+  93:diskio.c      ****         }
+ 359              		.loc 1 93 22 is_stmt 0
+ 360 0152 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 361 0156 1147     		li	a4,4
+ 362 0158 79BF     		j	.L41
+ 363              	.LVL50:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 11
+
+
+ 364              	.L16:
+ 365              	.LBE7:
+ 366              	.LBE6:
+  61:diskio.c      **** 
+ 367              		.loc 1 61 5 is_stmt 1
+  64:diskio.c      ****     if (response == 0x01) {
+ 368              		.loc 1 64 5
+  64:diskio.c      ****     if (response == 0x01) {
+ 369              		.loc 1 64 16 is_stmt 0
+ 370 015a 9305A01A 		li	a1,426
+ 371 015e 2145     		li	a0,8
+ 372 0160 97000000 		call	sd_send_cmd
+ 372      E7800000 
+ 373              	.LVL51:
+  65:diskio.c      ****         // Read 4 byte R7 response
+ 374              		.loc 1 65 5 is_stmt 1
+ 375              	.LBB12:
+ 376              	.LBB9:
+  68:diskio.c      ****         sd_cs_high();
+ 377              		.loc 1 68 18 is_stmt 0
+ 378 0168 8144     		li	s1,0
+ 379              	.LVL52:
+ 380              	.LBE9:
+ 381              	.LBE12:
+  65:diskio.c      ****         // Read 4 byte R7 response
+ 382              		.loc 1 65 8
+ 383 016a E31025F3 		bne	a0,s2,.L39
+ 384              	.LBB13:
+ 385              	.LBB10:
+  68:diskio.c      ****         sd_cs_high();
+ 386              		.loc 1 68 9
+ 387 016e 1149     		li	s2,4
+ 388              	.LVL53:
+ 389              	.L19:
+  68:diskio.c      ****         sd_cs_high();
+ 390              		.loc 1 68 37 is_stmt 1 discriminator 3
+  68:diskio.c      ****         sd_cs_high();
+ 391              		.loc 1 68 45 is_stmt 0 discriminator 3
+ 392 0170 1305F00F 		li	a0,255
+ 393 0174 97000000 		call	spi0_txrx
+ 393      E7800000 
+ 394              	.LVL54:
+  68:diskio.c      ****         sd_cs_high();
+ 395              		.loc 1 68 43 discriminator 3
+ 396 017c 7C00     		addi	a5,sp,12
+ 397 017e A697     		add	a5,a5,s1
+ 398 0180 2380A700 		sb	a0,0(a5)
+  68:diskio.c      ****         sd_cs_high();
+ 399              		.loc 1 68 33 discriminator 3
+ 400 0184 8504     		addi	s1,s1,1
+ 401              	.LVL55:
+  68:diskio.c      ****         sd_cs_high();
+ 402              		.loc 1 68 9 discriminator 3
+ 403 0186 E39524FF 		bne	s1,s2,.L19
+ 404              	.LBE10:
+  69:diskio.c      ****         spi0_txrx(0xFF);
+ 405              		.loc 1 69 9 is_stmt 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 12
+
+
+ 406 018a 97000000 		call	sd_cs_high
+ 406      E7800000 
+ 407              	.LVL56:
+  70:diskio.c      **** 
+ 408              		.loc 1 70 9
+ 409 0192 1305F00F 		li	a0,255
+ 410 0196 97000000 		call	spi0_txrx
+ 410      E7800000 
+ 411              	.LVL57:
+  72:diskio.c      ****             // SDHC - send ACMD41 with HCS bit
+ 412              		.loc 1 72 9
+  72:diskio.c      ****             // SDHC - send ACMD41 with HCS bit
+ 413              		.loc 1 72 15 is_stmt 0
+ 414 019e 8344E100 		lbu	s1,14(sp)
+ 415              	.LVL58:
+  72:diskio.c      ****             // SDHC - send ACMD41 with HCS bit
+ 416              		.loc 1 72 12
+ 417 01a2 8547     		li	a5,1
+ 418 01a4 E39BF4F4 		bne	s1,a5,.L24
+  72:diskio.c      ****             // SDHC - send ACMD41 with HCS bit
+ 419              		.loc 1 72 27 discriminator 1
+ 420 01a8 0347F100 		lbu	a4,15(sp)
+ 421 01ac 9307A00A 		li	a5,170
+ 422 01b0 E315F7F4 		bne	a4,a5,.L24
+ 423              	.LBB11:
+  74:diskio.c      ****             do {
+ 424              		.loc 1 74 21
+ 425 01b4 0964     		li	s0,8192
+ 426 01b6 13040471 		addi	s0,s0,1808
+ 427              	.L22:
+ 428              	.LVL59:
+  75:diskio.c      ****                 sd_send_cmd(55, 0);  // APP_CMD
+ 429              		.loc 1 75 13 is_stmt 1 discriminator 2
+  76:diskio.c      ****                 sd_cs_high();
+ 430              		.loc 1 76 17 discriminator 2
+ 431 01ba 8145     		li	a1,0
+ 432 01bc 13057003 		li	a0,55
+ 433 01c0 97000000 		call	sd_send_cmd
+ 433      E7800000 
+ 434              	.LVL60:
+  77:diskio.c      ****                 spi0_txrx(0xFF);
+ 435              		.loc 1 77 17 discriminator 2
+ 436 01c8 97000000 		call	sd_cs_high
+ 436      E7800000 
+ 437              	.LVL61:
+  78:diskio.c      ****                 response = sd_send_cmd(41, 0x40000000); // HCS=1
+ 438              		.loc 1 78 17 discriminator 2
+ 439 01d0 1305F00F 		li	a0,255
+ 440 01d4 97000000 		call	spi0_txrx
+ 440      E7800000 
+ 441              	.LVL62:
+  79:diskio.c      ****                 sd_cs_high();
+ 442              		.loc 1 79 17 discriminator 2
+  79:diskio.c      ****                 sd_cs_high();
+ 443              		.loc 1 79 28 is_stmt 0 discriminator 2
+ 444 01dc B7050040 		li	a1,1073741824
+ 445 01e0 13059002 		li	a0,41
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 13
+
+
+ 446 01e4 97000000 		call	sd_send_cmd
+ 446      E7800000 
+ 447              	.LVL63:
+ 448 01ec 2A89     		mv	s2,a0
+ 449              	.LVL64:
+  80:diskio.c      ****                 spi0_txrx(0xFF);
+ 450              		.loc 1 80 17 is_stmt 1 discriminator 2
+ 451 01ee 97000000 		call	sd_cs_high
+ 451      E7800000 
+ 452              	.LVL65:
+  81:diskio.c      ****             } while (response != 0x00 && --timeout);
+ 453              		.loc 1 81 17 discriminator 2
+ 454 01f6 1305F00F 		li	a0,255
+ 455 01fa 97000000 		call	spi0_txrx
+ 455      E7800000 
+ 456              	.LVL66:
+  82:diskio.c      **** 
+ 457              		.loc 1 82 13 is_stmt 0 discriminator 2
+ 458 0202 E30F09EE 		beq	s2,zero,.L21
+  82:diskio.c      **** 
+ 459              		.loc 1 82 39 discriminator 1
+ 460 0206 7D14     		addi	s0,s0,-1
+ 461              	.LVL67:
+ 462 0208 4DF8     		bne	s0,zero,.L22
+ 463 020a 19B5     		j	.L38
+ 464              	.LBE11:
+ 465              	.LBE13:
+ 466              		.cfi_endproc
+ 467              	.LFE1:
+ 469              		.section	.text.disk_status,"ax",@progbits
+ 470              		.align	1
+ 471              		.globl	disk_status
+ 473              	disk_status:
+ 474              	.LFB2:
+ 115:diskio.c      **** 
+ 116:diskio.c      **** 
+ 117:diskio.c      **** DSTATUS disk_status(BYTE pdrv)
+ 118:diskio.c      **** {
+ 475              		.loc 1 118 1 is_stmt 1
+ 476              		.cfi_startproc
+ 477              	.LVL68:
+ 119:diskio.c      ****     if (pdrv != 0) return STA_NOINIT;
+ 478              		.loc 1 119 5
+ 120:diskio.c      ****     return 0;
+ 121:diskio.c      **** }
+ 479              		.loc 1 121 1 is_stmt 0
+ 480 0000 3335A000 		snez	a0,a0
+ 481              	.LVL69:
+ 482 0004 8280     		ret
+ 483              		.cfi_endproc
+ 484              	.LFE2:
+ 486              		.section	.text.disk_read,"ax",@progbits
+ 487              		.align	1
+ 488              		.globl	disk_read
+ 490              	disk_read:
+ 491              	.LFB3:
+ 122:diskio.c      **** 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 14
+
+
+ 123:diskio.c      **** 
+ 124:diskio.c      **** DRESULT disk_read(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
+ 125:diskio.c      **** {
+ 492              		.loc 1 125 1 is_stmt 1
+ 493              		.cfi_startproc
+ 494              	.LVL70:
+ 126:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 495              		.loc 1 126 5
+ 496              		.loc 1 126 8 is_stmt 0
+ 497 0000 63160514 		bne	a0,zero,.L54
+ 127:diskio.c      **** 
+ 128:diskio.c      ****     // SDHC uses block addressing, SD uses byte addressing
+ 129:diskio.c      ****     if (!(CardType & CT_SDHC)) sector *= 512;
+ 498              		.loc 1 129 8
+ 499 0004 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 500 0008 83C70700 		lbu	a5,%lo(.LANCHOR0)(a5)
+ 125:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 501              		.loc 1 125 1
+ 502 000c 0111     		addi	sp,sp,-32
+ 503              	.LCFI5:
+ 504              		.cfi_def_cfa_offset 32
+ 505 000e 26CA     		sw	s1,20(sp)
+ 506 0010 4AC8     		sw	s2,16(sp)
+ 507 0012 06CE     		sw	ra,28(sp)
+ 508 0014 22CC     		sw	s0,24(sp)
+ 509 0016 4EC6     		sw	s3,12(sp)
+ 510 0018 52C4     		sw	s4,8(sp)
+ 511 001a 56C2     		sw	s5,4(sp)
+ 512              		.cfi_offset 9, -12
+ 513              		.cfi_offset 18, -16
+ 514              		.cfi_offset 1, -4
+ 515              		.cfi_offset 8, -8
+ 516              		.cfi_offset 19, -20
+ 517              		.cfi_offset 20, -24
+ 518              		.cfi_offset 21, -28
+ 519              		.loc 1 129 8
+ 520 001c 918B     		andi	a5,a5,4
+ 521 001e 2E89     		mv	s2,a1
+ 522 0020 B684     		mv	s1,a3
+ 523              		.loc 1 129 5 is_stmt 1
+ 524 0022 B285     		mv	a1,a2
+ 525              	.LVL71:
+ 526              		.loc 1 129 8 is_stmt 0
+ 527 0024 99E3     		bne	a5,zero,.L45
+ 528              		.loc 1 129 32 is_stmt 1 discriminator 1
+ 529              		.loc 1 129 39 is_stmt 0 discriminator 1
+ 530 0026 93159600 		slli	a1,a2,9
+ 531              	.LVL72:
+ 532              	.L45:
+ 130:diskio.c      **** 
+ 131:diskio.c      ****     uint8_t response;
+ 533              		.loc 1 131 5 is_stmt 1
+ 132:diskio.c      **** 
+ 133:diskio.c      ****     if (count == 1) {
+ 534              		.loc 1 133 5
+ 535              		.loc 1 133 8 is_stmt 0
+ 536 002a 8547     		li	a5,1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 15
+
+
+ 537 002c 6390F40A 		bne	s1,a5,.L46
+ 538              	.LBB14:
+ 134:diskio.c      ****         // Single block read CMD17
+ 135:diskio.c      ****         response = sd_send_cmd(17, sector);
+ 539              		.loc 1 135 9 is_stmt 1
+ 540              		.loc 1 135 20 is_stmt 0
+ 541 0030 4545     		li	a0,17
+ 542              	.LVL73:
+ 543 0032 97000000 		call	sd_send_cmd
+ 543      E7800000 
+ 544              	.LVL74:
+ 136:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 545              		.loc 1 136 9 is_stmt 1
+ 546              		.loc 1 136 12 is_stmt 0
+ 547 003a 19CD     		beq	a0,zero,.L55
+ 548              	.LVL75:
+ 549              	.L49:
+ 550              		.loc 1 136 33 is_stmt 1 discriminator 1
+ 551 003c 97000000 		call	sd_cs_high
+ 551      E7800000 
+ 552              	.LVL76:
+ 553              		.loc 1 136 47 discriminator 1
+ 554              		.loc 1 136 54 is_stmt 0 discriminator 1
+ 555 0044 0545     		li	a0,1
+ 556              	.LVL77:
+ 557              	.L43:
+ 558              	.LBE14:
+ 137:diskio.c      **** 
+ 138:diskio.c      ****         // Wait for data token 0xFE
+ 139:diskio.c      ****         uint16_t timeout = 10000;
+ 140:diskio.c      ****         do {
+ 141:diskio.c      ****             response = spi0_txrx(0xFF);
+ 142:diskio.c      ****         } while (response != 0xFE && --timeout);
+ 143:diskio.c      **** 
+ 144:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 145:diskio.c      **** 
+ 146:diskio.c      ****         // Read 512 bytes
+ 147:diskio.c      ****         for (int i = 0; i < 512; i++) buff[i] = spi0_txrx(0xFF);
+ 148:diskio.c      **** 
+ 149:diskio.c      ****         // Discard CRC
+ 150:diskio.c      ****         spi0_txrx(0xFF);
+ 151:diskio.c      ****         spi0_txrx(0xFF);
+ 152:diskio.c      ****     } else {
+ 153:diskio.c      ****         // Multiple block read CMD18
+ 154:diskio.c      ****         response = sd_send_cmd(18, sector);
+ 155:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 156:diskio.c      **** 
+ 157:diskio.c      ****         do {
+ 158:diskio.c      ****             // Wait for data token
+ 159:diskio.c      ****             uint16_t timeout = 10000;
+ 160:diskio.c      ****             do {
+ 161:diskio.c      ****                 response = spi0_txrx(0xFF);
+ 162:diskio.c      ****             } while (response != 0xFE && --timeout);
+ 163:diskio.c      **** 
+ 164:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 165:diskio.c      **** 
+ 166:diskio.c      ****             for (int i = 0; i < 512; i++) *buff++ = spi0_txrx(0xFF);
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 16
+
+
+ 167:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 168:diskio.c      ****             spi0_txrx(0xFF);
+ 169:diskio.c      ****         } while (--count);
+ 170:diskio.c      **** 
+ 171:diskio.c      ****         // Stop transmission CMD12
+ 172:diskio.c      ****         sd_send_cmd(12, 0);
+ 173:diskio.c      ****     }
+ 174:diskio.c      **** 
+ 175:diskio.c      ****     sd_cs_high();
+ 176:diskio.c      ****     spi0_txrx(0xFF);
+ 177:diskio.c      ****     return RES_OK;
+ 178:diskio.c      **** }
+ 559              		.loc 1 178 1
+ 560 0046 F240     		lw	ra,28(sp)
+ 561              		.cfi_remember_state
+ 562              		.cfi_restore 1
+ 563 0048 6244     		lw	s0,24(sp)
+ 564              		.cfi_restore 8
+ 565 004a D244     		lw	s1,20(sp)
+ 566              		.cfi_restore 9
+ 567 004c 4249     		lw	s2,16(sp)
+ 568              		.cfi_restore 18
+ 569 004e B249     		lw	s3,12(sp)
+ 570              		.cfi_restore 19
+ 571 0050 224A     		lw	s4,8(sp)
+ 572              		.cfi_restore 20
+ 573 0052 924A     		lw	s5,4(sp)
+ 574              		.cfi_restore 21
+ 575 0054 0561     		addi	sp,sp,32
+ 576              	.LCFI6:
+ 577              		.cfi_def_cfa_offset 0
+ 578 0056 8280     		jr	ra
+ 579              	.LVL78:
+ 580              	.L55:
+ 581              	.LCFI7:
+ 582              		.cfi_restore_state
+ 583              	.LBB18:
+ 584 0058 0964     		li	s0,8192
+ 585 005a 13040471 		addi	s0,s0,1808
+ 142:diskio.c      **** 
+ 586              		.loc 1 142 9
+ 587 005e 9304E00F 		li	s1,254
+ 588              	.LVL79:
+ 589              	.L47:
+ 140:diskio.c      ****             response = spi0_txrx(0xFF);
+ 590              		.loc 1 140 9 is_stmt 1 discriminator 2
+ 141:diskio.c      ****         } while (response != 0xFE && --timeout);
+ 591              		.loc 1 141 13 discriminator 2
+ 141:diskio.c      ****         } while (response != 0xFE && --timeout);
+ 592              		.loc 1 141 24 is_stmt 0 discriminator 2
+ 593 0062 1305F00F 		li	a0,255
+ 594              	.LVL80:
+ 595 0066 97000000 		call	spi0_txrx
+ 595      E7800000 
+ 596              	.LVL81:
+ 142:diskio.c      **** 
+ 597              		.loc 1 142 9 discriminator 2
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 17
+
+
+ 598 006e 63079500 		beq	a0,s1,.L56
+ 599              	.LVL82:
+ 600 0072 7D14     		addi	s0,s0,-1
+ 601              	.LVL83:
+ 602 0074 4204     		slli	s0,s0,16
+ 603 0076 4180     		srli	s0,s0,16
+ 142:diskio.c      **** 
+ 604              		.loc 1 142 35 discriminator 1
+ 605 0078 6DF4     		bne	s0,zero,.L47
+ 606 007a C9B7     		j	.L49
+ 607              	.LVL84:
+ 608              	.L56:
+ 609              	.LBB15:
+ 147:diskio.c      **** 
+ 610              		.loc 1 147 18
+ 611 007c 0144     		li	s0,0
+ 612              	.LVL85:
+ 147:diskio.c      **** 
+ 613              		.loc 1 147 9
+ 614 007e 93040020 		li	s1,512
+ 615              	.LVL86:
+ 616              	.L48:
+ 147:diskio.c      **** 
+ 617              		.loc 1 147 39 is_stmt 1 discriminator 3
+ 147:diskio.c      **** 
+ 618              		.loc 1 147 49 is_stmt 0 discriminator 3
+ 619 0082 1305F00F 		li	a0,255
+ 620 0086 97000000 		call	spi0_txrx
+ 620      E7800000 
+ 621              	.LVL87:
+ 147:diskio.c      **** 
+ 622              		.loc 1 147 47 discriminator 3
+ 623 008e B3078900 		add	a5,s2,s0
+ 624 0092 2380A700 		sb	a0,0(a5)
+ 147:diskio.c      **** 
+ 625              		.loc 1 147 35 discriminator 3
+ 626 0096 0504     		addi	s0,s0,1
+ 627              	.LVL88:
+ 147:diskio.c      **** 
+ 628              		.loc 1 147 9 discriminator 3
+ 629 0098 E31594FE 		bne	s0,s1,.L48
+ 630              	.LBE15:
+ 150:diskio.c      ****         spi0_txrx(0xFF);
+ 631              		.loc 1 150 9 is_stmt 1
+ 632 009c 1305F00F 		li	a0,255
+ 633 00a0 97000000 		call	spi0_txrx
+ 633      E7800000 
+ 634              	.LVL89:
+ 151:diskio.c      ****     } else {
+ 635              		.loc 1 151 9
+ 636 00a8 1305F00F 		li	a0,255
+ 637 00ac 97000000 		call	spi0_txrx
+ 637      E7800000 
+ 638              	.LVL90:
+ 639              	.L50:
+ 640              	.LBE18:
+ 175:diskio.c      ****     spi0_txrx(0xFF);
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 18
+
+
+ 641              		.loc 1 175 5
+ 642 00b4 97000000 		call	sd_cs_high
+ 642      E7800000 
+ 643              	.LVL91:
+ 176:diskio.c      ****     return RES_OK;
+ 644              		.loc 1 176 5
+ 645 00bc 1305F00F 		li	a0,255
+ 646 00c0 97000000 		call	spi0_txrx
+ 646      E7800000 
+ 647              	.LVL92:
+ 177:diskio.c      **** }
+ 648              		.loc 1 177 5
+ 177:diskio.c      **** }
+ 649              		.loc 1 177 12 is_stmt 0
+ 650 00c8 0145     		li	a0,0
+ 651 00ca B5BF     		j	.L43
+ 652              	.LVL93:
+ 653              	.L46:
+ 154:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 654              		.loc 1 154 9 is_stmt 1
+ 154:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 655              		.loc 1 154 20 is_stmt 0
+ 656 00cc 4945     		li	a0,18
+ 657              	.LVL94:
+ 658 00ce 97000000 		call	sd_send_cmd
+ 658      E7800000 
+ 659              	.LVL95:
+ 155:diskio.c      **** 
+ 660              		.loc 1 155 9 is_stmt 1
+ 155:diskio.c      **** 
+ 661              		.loc 1 155 12 is_stmt 0
+ 662 00d6 3DF1     		bne	a0,zero,.L49
+ 663              	.LBB19:
+ 664              	.LBB16:
+ 147:diskio.c      **** 
+ 665              		.loc 1 147 18
+ 666 00d8 8969     		li	s3,8192
+ 667 00da 93890971 		addi	s3,s3,1808
+ 668              	.LBE16:
+ 669              	.LBE19:
+ 670              	.LBB20:
+ 162:diskio.c      **** 
+ 671              		.loc 1 162 13
+ 672 00de 130AE00F 		li	s4,254
+ 673              	.LBB21:
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 674              		.loc 1 166 13
+ 675 00e2 930A0020 		li	s5,512
+ 676              	.LVL96:
+ 677              	.L53:
+ 678              	.LBE21:
+ 679              	.LBE20:
+ 157:diskio.c      ****             // Wait for data token
+ 680              		.loc 1 157 9 is_stmt 1
+ 681              	.LBB23:
+ 159:diskio.c      ****             do {
+ 682              		.loc 1 159 13
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 19
+
+
+ 683              	.LBE23:
+ 684              	.LBB24:
+ 685              	.LBB17:
+ 147:diskio.c      **** 
+ 686              		.loc 1 147 18 is_stmt 0
+ 687 00e6 4E84     		mv	s0,s3
+ 688              	.LVL97:
+ 689              	.L52:
+ 690              	.LBE17:
+ 691              	.LBE24:
+ 692              	.LBB25:
+ 160:diskio.c      ****                 response = spi0_txrx(0xFF);
+ 693              		.loc 1 160 13 is_stmt 1 discriminator 2
+ 161:diskio.c      ****             } while (response != 0xFE && --timeout);
+ 694              		.loc 1 161 17 discriminator 2
+ 161:diskio.c      ****             } while (response != 0xFE && --timeout);
+ 695              		.loc 1 161 28 is_stmt 0 discriminator 2
+ 696 00e8 1305F00F 		li	a0,255
+ 697 00ec 97000000 		call	spi0_txrx
+ 697      E7800000 
+ 698              	.LVL98:
+ 162:diskio.c      **** 
+ 699              		.loc 1 162 13 discriminator 2
+ 700 00f4 63074501 		beq	a0,s4,.L57
+ 701              	.LVL99:
+ 702 00f8 7D14     		addi	s0,s0,-1
+ 703              	.LVL100:
+ 704 00fa 4204     		slli	s0,s0,16
+ 705 00fc 4180     		srli	s0,s0,16
+ 162:diskio.c      **** 
+ 706              		.loc 1 162 39 discriminator 1
+ 707 00fe 6DF4     		bne	s0,zero,.L52
+ 708 0100 35BF     		j	.L49
+ 709              	.LVL101:
+ 710              	.L57:
+ 711              	.LBB22:
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 712              		.loc 1 166 22
+ 713 0102 0144     		li	s0,0
+ 714              	.LVL102:
+ 715              	.L51:
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 716              		.loc 1 166 43 is_stmt 1 discriminator 3
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 717              		.loc 1 166 53 is_stmt 0 discriminator 3
+ 718 0104 1305F00F 		li	a0,255
+ 719 0108 97000000 		call	spi0_txrx
+ 719      E7800000 
+ 720              	.LVL103:
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 721              		.loc 1 166 51 discriminator 3
+ 722 0110 B3078900 		add	a5,s2,s0
+ 723 0114 2380A700 		sb	a0,0(a5)
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 724              		.loc 1 166 39 discriminator 3
+ 725 0118 0504     		addi	s0,s0,1
+ 726              	.LVL104:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 20
+
+
+ 166:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 727              		.loc 1 166 13 discriminator 3
+ 728 011a E31554FF 		bne	s0,s5,.L51
+ 729              	.LBE22:
+ 167:diskio.c      ****             spi0_txrx(0xFF);
+ 730              		.loc 1 167 13
+ 731 011e 1305F00F 		li	a0,255
+ 732 0122 97000000 		call	spi0_txrx
+ 732      E7800000 
+ 733              	.LVL105:
+ 168:diskio.c      ****         } while (--count);
+ 734              		.loc 1 168 13
+ 735 012a 1305F00F 		li	a0,255
+ 736              	.LBE25:
+ 169:diskio.c      **** 
+ 737              		.loc 1 169 9
+ 738 012e FD14     		addi	s1,s1,-1
+ 739              	.LVL106:
+ 740 0130 13090920 		addi	s2,s2,512
+ 741              	.LVL107:
+ 742              	.LBB26:
+ 167:diskio.c      ****             spi0_txrx(0xFF);
+ 743              		.loc 1 167 13 is_stmt 1
+ 168:diskio.c      ****         } while (--count);
+ 744              		.loc 1 168 13
+ 745 0134 97000000 		call	spi0_txrx
+ 745      E7800000 
+ 746              	.LVL108:
+ 747              	.LBE26:
+ 169:diskio.c      **** 
+ 748              		.loc 1 169 9 is_stmt 0
+ 749 013c CDF4     		bne	s1,zero,.L53
+ 172:diskio.c      ****     }
+ 750              		.loc 1 172 9 is_stmt 1
+ 751 013e 8145     		li	a1,0
+ 752 0140 3145     		li	a0,12
+ 753 0142 97000000 		call	sd_send_cmd
+ 753      E7800000 
+ 754              	.LVL109:
+ 755 014a ADB7     		j	.L50
+ 756              	.LVL110:
+ 757              	.L54:
+ 758              	.LCFI8:
+ 759              		.cfi_def_cfa_offset 0
+ 760              		.cfi_restore 1
+ 761              		.cfi_restore 8
+ 762              		.cfi_restore 9
+ 763              		.cfi_restore 18
+ 764              		.cfi_restore 19
+ 765              		.cfi_restore 20
+ 766              		.cfi_restore 21
+ 126:diskio.c      **** 
+ 767              		.loc 1 126 27 is_stmt 0
+ 768 014c 1145     		li	a0,4
+ 769              	.LVL111:
+ 770              		.loc 1 178 1
+ 771 014e 8280     		ret
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 21
+
+
+ 772              		.cfi_endproc
+ 773              	.LFE3:
+ 775              		.section	.text.disk_write,"ax",@progbits
+ 776              		.align	1
+ 777              		.globl	disk_write
+ 779              	disk_write:
+ 780              	.LFB4:
+ 179:diskio.c      **** 
+ 180:diskio.c      **** 
+ 181:diskio.c      **** DRESULT disk_write(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count)
+ 182:diskio.c      **** {
+ 781              		.loc 1 182 1 is_stmt 1
+ 782              		.cfi_startproc
+ 783              	.LVL112:
+ 183:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 784              		.loc 1 183 5
+ 785              		.loc 1 183 8 is_stmt 0
+ 786 0000 63170514 		bne	a0,zero,.L81
+ 184:diskio.c      **** 
+ 185:diskio.c      ****     if (!(CardType & CT_SDHC)) sector *= 512;
+ 787              		.loc 1 185 8
+ 788 0004 B7070000 		lui	a5,%hi(.LANCHOR0)
+ 789 0008 83C70700 		lbu	a5,%lo(.LANCHOR0)(a5)
+ 182:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 790              		.loc 1 182 1
+ 791 000c 0111     		addi	sp,sp,-32
+ 792              	.LCFI9:
+ 793              		.cfi_def_cfa_offset 32
+ 794 000e 26CA     		sw	s1,20(sp)
+ 795 0010 4AC8     		sw	s2,16(sp)
+ 796 0012 06CE     		sw	ra,28(sp)
+ 797 0014 22CC     		sw	s0,24(sp)
+ 798 0016 4EC6     		sw	s3,12(sp)
+ 799 0018 52C4     		sw	s4,8(sp)
+ 800 001a 56C2     		sw	s5,4(sp)
+ 801              		.cfi_offset 9, -12
+ 802              		.cfi_offset 18, -16
+ 803              		.cfi_offset 1, -4
+ 804              		.cfi_offset 8, -8
+ 805              		.cfi_offset 19, -20
+ 806              		.cfi_offset 20, -24
+ 807              		.cfi_offset 21, -28
+ 808              		.loc 1 185 8
+ 809 001c 918B     		andi	a5,a5,4
+ 810 001e 2E89     		mv	s2,a1
+ 811 0020 B684     		mv	s1,a3
+ 812              		.loc 1 185 5 is_stmt 1
+ 813 0022 B285     		mv	a1,a2
+ 814              	.LVL113:
+ 815              		.loc 1 185 8 is_stmt 0
+ 816 0024 99E3     		bne	a5,zero,.L69
+ 817              		.loc 1 185 32 is_stmt 1 discriminator 1
+ 818              		.loc 1 185 39 is_stmt 0 discriminator 1
+ 819 0026 93159600 		slli	a1,a2,9
+ 820              	.LVL114:
+ 821              	.L69:
+ 186:diskio.c      **** 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 22
+
+
+ 187:diskio.c      ****     uint8_t response;
+ 822              		.loc 1 187 5 is_stmt 1
+ 188:diskio.c      **** 
+ 189:diskio.c      ****     if (count == 1) {
+ 823              		.loc 1 189 5
+ 824              		.loc 1 189 8 is_stmt 0
+ 825 002a 8547     		li	a5,1
+ 826 002c 639FF408 		bne	s1,a5,.L70
+ 827              	.LBB27:
+ 190:diskio.c      ****         // Single block write CMD24
+ 191:diskio.c      ****         response = sd_send_cmd(24, sector);
+ 828              		.loc 1 191 9 is_stmt 1
+ 829              		.loc 1 191 20 is_stmt 0
+ 830 0030 6145     		li	a0,24
+ 831              	.LVL115:
+ 832 0032 97000000 		call	sd_send_cmd
+ 832      E7800000 
+ 833              	.LVL116:
+ 192:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 834              		.loc 1 192 9 is_stmt 1
+ 835              		.loc 1 192 12 is_stmt 0
+ 836 003a 19CD     		beq	a0,zero,.L71
+ 837              	.LVL117:
+ 838              	.L73:
+ 839              		.loc 1 192 33 is_stmt 1 discriminator 1
+ 840 003c 97000000 		call	sd_cs_high
+ 840      E7800000 
+ 841              	.LVL118:
+ 842              		.loc 1 192 47 discriminator 1
+ 843              		.loc 1 192 54 is_stmt 0 discriminator 1
+ 844 0044 0545     		li	a0,1
+ 845              	.L67:
+ 846              	.LBE27:
+ 193:diskio.c      **** 
+ 194:diskio.c      ****         // Send data token
+ 195:diskio.c      ****         spi0_txrx(0xFE);
+ 196:diskio.c      **** 
+ 197:diskio.c      ****         // Send 512 bytes
+ 198:diskio.c      ****         for (int i = 0; i < 512; i++) spi0_txrx(buff[i]);
+ 199:diskio.c      **** 
+ 200:diskio.c      ****         // Dummy CRC
+ 201:diskio.c      ****         spi0_txrx(0xFF);
+ 202:diskio.c      ****         spi0_txrx(0xFF);
+ 203:diskio.c      **** 
+ 204:diskio.c      ****         // Check data response
+ 205:diskio.c      ****         response = spi0_txrx(0xFF) & 0x1F;
+ 206:diskio.c      ****         if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 207:diskio.c      **** 
+ 208:diskio.c      ****         // Wait until card not busy
+ 209:diskio.c      ****         uint16_t timeout = 10000;
+ 210:diskio.c      ****         while (spi0_txrx(0xFF) == 0x00 && --timeout);
+ 211:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 212:diskio.c      **** 
+ 213:diskio.c      ****     } else {
+ 214:diskio.c      ****         // Multiple block write CMD25
+ 215:diskio.c      ****         response = sd_send_cmd(25, sector);
+ 216:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 23
+
+
+ 217:diskio.c      **** 
+ 218:diskio.c      ****         do {
+ 219:diskio.c      ****             spi0_txrx(0xFC); // Multi block token
+ 220:diskio.c      ****             for (int i = 0; i < 512; i++) spi0_txrx(*buff++);
+ 221:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 222:diskio.c      ****             spi0_txrx(0xFF);
+ 223:diskio.c      **** 
+ 224:diskio.c      ****             response = spi0_txrx(0xFF) & 0x1F;
+ 225:diskio.c      ****             if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 226:diskio.c      **** 
+ 227:diskio.c      ****             uint16_t timeout = 10000;
+ 228:diskio.c      ****             while (spi0_txrx(0xFF) == 0x00 && --timeout);
+ 229:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 230:diskio.c      ****         } while (--count);
+ 231:diskio.c      **** 
+ 232:diskio.c      ****         spi0_txrx(0xFD); // Stop token
+ 233:diskio.c      ****     }
+ 234:diskio.c      **** 
+ 235:diskio.c      ****     sd_cs_high();
+ 236:diskio.c      ****     spi0_txrx(0xFF);
+ 237:diskio.c      ****     return RES_OK;
+ 238:diskio.c      **** }
+ 847              		.loc 1 238 1
+ 848 0046 F240     		lw	ra,28(sp)
+ 849              		.cfi_remember_state
+ 850              		.cfi_restore 1
+ 851 0048 6244     		lw	s0,24(sp)
+ 852              		.cfi_restore 8
+ 853 004a D244     		lw	s1,20(sp)
+ 854              		.cfi_restore 9
+ 855 004c 4249     		lw	s2,16(sp)
+ 856              		.cfi_restore 18
+ 857 004e B249     		lw	s3,12(sp)
+ 858              		.cfi_restore 19
+ 859 0050 224A     		lw	s4,8(sp)
+ 860              		.cfi_restore 20
+ 861 0052 924A     		lw	s5,4(sp)
+ 862              		.cfi_restore 21
+ 863 0054 0561     		addi	sp,sp,32
+ 864              	.LCFI10:
+ 865              		.cfi_def_cfa_offset 0
+ 866 0056 8280     		jr	ra
+ 867              	.LVL119:
+ 868              	.L71:
+ 869              	.LCFI11:
+ 870              		.cfi_restore_state
+ 871              	.LBB29:
+ 195:diskio.c      **** 
+ 872              		.loc 1 195 9 is_stmt 1
+ 873 0058 1305E00F 		li	a0,254
+ 874              	.LVL120:
+ 875 005c 97000000 		call	spi0_txrx
+ 875      E7800000 
+ 876              	.LVL121:
+ 198:diskio.c      **** 
+ 877              		.loc 1 198 9
+ 878              	.LBB28:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 24
+
+
+ 198:diskio.c      **** 
+ 879              		.loc 1 198 14
+ 198:diskio.c      **** 
+ 880              		.loc 1 198 18 is_stmt 0
+ 881 0064 0144     		li	s0,0
+ 198:diskio.c      **** 
+ 882              		.loc 1 198 9
+ 883 0066 93040020 		li	s1,512
+ 884              	.LVL122:
+ 885              	.L72:
+ 198:diskio.c      **** 
+ 886              		.loc 1 198 39 is_stmt 1 discriminator 3
+ 887 006a B3078900 		add	a5,s2,s0
+ 888 006e 03C50700 		lbu	a0,0(a5)
+ 198:diskio.c      **** 
+ 889              		.loc 1 198 35 is_stmt 0 discriminator 3
+ 890 0072 0504     		addi	s0,s0,1
+ 891              	.LVL123:
+ 198:diskio.c      **** 
+ 892              		.loc 1 198 39 discriminator 3
+ 893 0074 97000000 		call	spi0_txrx
+ 893      E7800000 
+ 894              	.LVL124:
+ 198:diskio.c      **** 
+ 895              		.loc 1 198 9 discriminator 3
+ 896 007c E31794FE 		bne	s0,s1,.L72
+ 897              	.LBE28:
+ 201:diskio.c      ****         spi0_txrx(0xFF);
+ 898              		.loc 1 201 9 is_stmt 1
+ 899 0080 1305F00F 		li	a0,255
+ 900 0084 97000000 		call	spi0_txrx
+ 900      E7800000 
+ 901              	.LVL125:
+ 202:diskio.c      **** 
+ 902              		.loc 1 202 9
+ 903 008c 1305F00F 		li	a0,255
+ 904 0090 97000000 		call	spi0_txrx
+ 904      E7800000 
+ 905              	.LVL126:
+ 205:diskio.c      ****         if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 906              		.loc 1 205 9
+ 205:diskio.c      ****         if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 907              		.loc 1 205 20 is_stmt 0
+ 908 0098 1305F00F 		li	a0,255
+ 909 009c 97000000 		call	spi0_txrx
+ 909      E7800000 
+ 910              	.LVL127:
+ 206:diskio.c      **** 
+ 911              		.loc 1 206 9 is_stmt 1
+ 206:diskio.c      **** 
+ 912              		.loc 1 206 12 is_stmt 0
+ 913 00a4 7D89     		andi	a0,a0,31
+ 914              	.LVL128:
+ 915 00a6 9547     		li	a5,5
+ 916 00a8 E31AF5F8 		bne	a0,a5,.L73
+ 917 00ac 0964     		li	s0,8192
+ 918              	.LVL129:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 25
+
+
+ 919 00ae 13040471 		addi	s0,s0,1808
+ 920              	.L75:
+ 921              	.LVL130:
+ 210:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 922              		.loc 1 210 53 is_stmt 1 discriminator 2
+ 210:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 923              		.loc 1 210 16 is_stmt 0 discriminator 2
+ 924 00b2 1305F00F 		li	a0,255
+ 925 00b6 97000000 		call	spi0_txrx
+ 925      E7800000 
+ 926              	.LVL131:
+ 210:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 927              		.loc 1 210 15 discriminator 2
+ 928 00be 55E1     		bne	a0,zero,.L74
+ 929              	.LVL132:
+ 930 00c0 7D14     		addi	s0,s0,-1
+ 931              	.LVL133:
+ 932 00c2 4204     		slli	s0,s0,16
+ 933 00c4 4180     		srli	s0,s0,16
+ 210:diskio.c      ****         if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 934              		.loc 1 210 40 discriminator 1
+ 935 00c6 75F4     		bne	s0,zero,.L75
+ 936 00c8 95BF     		j	.L73
+ 937              	.LVL134:
+ 938              	.L70:
+ 939              	.LBE29:
+ 215:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 940              		.loc 1 215 9 is_stmt 1
+ 215:diskio.c      ****         if (response != 0x00) { sd_cs_high(); return RES_ERROR; }
+ 941              		.loc 1 215 20 is_stmt 0
+ 942 00ca 6545     		li	a0,25
+ 943              	.LVL135:
+ 944 00cc 97000000 		call	sd_send_cmd
+ 944      E7800000 
+ 945              	.LVL136:
+ 216:diskio.c      **** 
+ 946              		.loc 1 216 9 is_stmt 1
+ 216:diskio.c      **** 
+ 947              		.loc 1 216 12 is_stmt 0
+ 948 00d4 25F5     		bne	a0,zero,.L73
+ 949              	.LBB30:
+ 950 00d6 8969     		li	s3,8192
+ 951              	.LBB31:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 952              		.loc 1 220 13
+ 953 00d8 130A0020 		li	s4,512
+ 954              	.LBE31:
+ 225:diskio.c      **** 
+ 955              		.loc 1 225 16
+ 956 00dc 954A     		li	s5,5
+ 957 00de 93890971 		addi	s3,s3,1808
+ 958              	.LVL137:
+ 959              	.L79:
+ 960              	.LBE30:
+ 218:diskio.c      ****             spi0_txrx(0xFC); // Multi block token
+ 961              		.loc 1 218 9 is_stmt 1
+ 962              	.LBB33:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 26
+
+
+ 219:diskio.c      ****             for (int i = 0; i < 512; i++) spi0_txrx(*buff++);
+ 963              		.loc 1 219 13
+ 964 00e2 1305C00F 		li	a0,252
+ 965 00e6 97000000 		call	spi0_txrx
+ 965      E7800000 
+ 966              	.LVL138:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 967              		.loc 1 220 13
+ 968              	.LBB32:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 969              		.loc 1 220 18
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 970              		.loc 1 220 22 is_stmt 0
+ 971 00ee 0144     		li	s0,0
+ 972              	.LVL139:
+ 973              	.L76:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 974              		.loc 1 220 43 is_stmt 1 discriminator 3
+ 975 00f0 B3078900 		add	a5,s2,s0
+ 976 00f4 03C50700 		lbu	a0,0(a5)
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 977              		.loc 1 220 39 is_stmt 0 discriminator 3
+ 978 00f8 0504     		addi	s0,s0,1
+ 979              	.LVL140:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 980              		.loc 1 220 43 discriminator 3
+ 981 00fa 97000000 		call	spi0_txrx
+ 981      E7800000 
+ 982              	.LVL141:
+ 220:diskio.c      ****             spi0_txrx(0xFF); // CRC
+ 983              		.loc 1 220 13 discriminator 3
+ 984 0102 E31744FF 		bne	s0,s4,.L76
+ 985              	.LBE32:
+ 221:diskio.c      ****             spi0_txrx(0xFF);
+ 986              		.loc 1 221 13
+ 987 0106 1305F00F 		li	a0,255
+ 988 010a 97000000 		call	spi0_txrx
+ 988      E7800000 
+ 989              	.LVL142:
+ 222:diskio.c      **** 
+ 990              		.loc 1 222 13
+ 991 0112 1305F00F 		li	a0,255
+ 992 0116 97000000 		call	spi0_txrx
+ 992      E7800000 
+ 993              	.LVL143:
+ 224:diskio.c      ****             if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 994              		.loc 1 224 24
+ 995 011e 1305F00F 		li	a0,255
+ 996 0122 97000000 		call	spi0_txrx
+ 996      E7800000 
+ 997              	.LVL144:
+ 225:diskio.c      **** 
+ 998              		.loc 1 225 16
+ 999 012a 7D89     		andi	a0,a0,31
+ 1000 012c 13090920 		addi	s2,s2,512
+ 1001              	.LVL145:
+ 221:diskio.c      ****             spi0_txrx(0xFF);
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 27
+
+
+ 1002              		.loc 1 221 13 is_stmt 1
+ 222:diskio.c      **** 
+ 1003              		.loc 1 222 13
+ 224:diskio.c      ****             if (response != 0x05) { sd_cs_high(); return RES_ERROR; }
+ 1004              		.loc 1 224 13
+ 225:diskio.c      **** 
+ 1005              		.loc 1 225 13
+ 225:diskio.c      **** 
+ 1006              		.loc 1 225 16 is_stmt 0
+ 1007 0130 E31655F1 		bne	a0,s5,.L73
+ 1008 0134 4E84     		mv	s0,s3
+ 1009              	.LVL146:
+ 1010              	.L78:
+ 228:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 1011              		.loc 1 228 57 is_stmt 1 discriminator 2
+ 228:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 1012              		.loc 1 228 20 is_stmt 0 discriminator 2
+ 1013 0136 1305F00F 		li	a0,255
+ 1014 013a 97000000 		call	spi0_txrx
+ 1014      E7800000 
+ 1015              	.LVL147:
+ 228:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 1016              		.loc 1 228 19 discriminator 2
+ 1017 0142 01E9     		bne	a0,zero,.L77
+ 1018              	.LVL148:
+ 1019 0144 7D14     		addi	s0,s0,-1
+ 1020              	.LVL149:
+ 1021 0146 4204     		slli	s0,s0,16
+ 1022 0148 4180     		srli	s0,s0,16
+ 228:diskio.c      ****             if (timeout == 0) { sd_cs_high(); return RES_ERROR; }
+ 1023              		.loc 1 228 44 discriminator 1
+ 1024 014a 75F4     		bne	s0,zero,.L78
+ 1025 014c C5BD     		j	.L73
+ 1026              	.LVL150:
+ 1027              	.L81:
+ 1028              	.LCFI12:
+ 1029              		.cfi_def_cfa_offset 0
+ 1030              		.cfi_restore 1
+ 1031              		.cfi_restore 8
+ 1032              		.cfi_restore 9
+ 1033              		.cfi_restore 18
+ 1034              		.cfi_restore 19
+ 1035              		.cfi_restore 20
+ 1036              		.cfi_restore 21
+ 1037              	.LBE33:
+ 183:diskio.c      **** 
+ 1038              		.loc 1 183 27
+ 1039 014e 1145     		li	a0,4
+ 1040              	.LVL151:
+ 1041              		.loc 1 238 1
+ 1042 0150 8280     		ret
+ 1043              	.LVL152:
+ 1044              	.L77:
+ 1045              	.LCFI13:
+ 1046              		.cfi_def_cfa_offset 32
+ 1047              		.cfi_offset 1, -4
+ 1048              		.cfi_offset 8, -8
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 28
+
+
+ 1049              		.cfi_offset 9, -12
+ 1050              		.cfi_offset 18, -16
+ 1051              		.cfi_offset 19, -20
+ 1052              		.cfi_offset 20, -24
+ 1053              		.cfi_offset 21, -28
+ 1054              	.LBB34:
+ 229:diskio.c      ****         } while (--count);
+ 1055              		.loc 1 229 13 is_stmt 1
+ 1056              	.LBE34:
+ 230:diskio.c      **** 
+ 1057              		.loc 1 230 9 is_stmt 0
+ 1058 0152 FD14     		addi	s1,s1,-1
+ 1059              	.LVL153:
+ 1060 0154 D9F4     		bne	s1,zero,.L79
+ 232:diskio.c      ****     }
+ 1061              		.loc 1 232 9 is_stmt 1
+ 1062 0156 1305D00F 		li	a0,253
+ 1063 015a 97000000 		call	spi0_txrx
+ 1063      E7800000 
+ 1064              	.LVL154:
+ 1065              	.L74:
+ 235:diskio.c      ****     spi0_txrx(0xFF);
+ 1066              		.loc 1 235 5
+ 1067 0162 97000000 		call	sd_cs_high
+ 1067      E7800000 
+ 1068              	.LVL155:
+ 236:diskio.c      ****     return RES_OK;
+ 1069              		.loc 1 236 5
+ 1070 016a 1305F00F 		li	a0,255
+ 1071 016e 97000000 		call	spi0_txrx
+ 1071      E7800000 
+ 1072              	.LVL156:
+ 237:diskio.c      **** }
+ 1073              		.loc 1 237 5
+ 237:diskio.c      **** }
+ 1074              		.loc 1 237 12 is_stmt 0
+ 1075 0176 0145     		li	a0,0
+ 1076 0178 F9B5     		j	.L67
+ 1077              		.cfi_endproc
+ 1078              	.LFE4:
+ 1080              		.section	.text.disk_ioctl,"ax",@progbits
+ 1081              		.align	1
+ 1082              		.globl	disk_ioctl
+ 1084              	disk_ioctl:
+ 1085              	.LFB5:
+ 239:diskio.c      **** 
+ 240:diskio.c      **** 
+ 241:diskio.c      **** DRESULT disk_ioctl(BYTE pdrv, BYTE cmd, void *buff)
+ 242:diskio.c      **** {
+ 1086              		.loc 1 242 1 is_stmt 1
+ 1087              		.cfi_startproc
+ 1088              	.LVL157:
+ 243:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 1089              		.loc 1 243 5
+ 1090              		.loc 1 243 8 is_stmt 0
+ 1091 0000 19E9     		bne	a0,zero,.L98
+ 244:diskio.c      **** 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 29
+
+
+ 245:diskio.c      ****     DRESULT res = RES_ERROR;
+ 1092              		.loc 1 245 5 is_stmt 1
+ 1093              	.LVL158:
+ 246:diskio.c      **** 
+ 247:diskio.c      ****     switch (cmd) {
+ 1094              		.loc 1 247 5
+ 1095 0002 8547     		li	a5,1
+ 1096 0004 6384F504 		beq	a1,a5,.L94
+ 1097 0008 89C9     		beq	a1,zero,.L95
+ 1098 000a 0947     		li	a4,2
+ 1099 000c 6386E504 		beq	a1,a4,.L96
+ 1100 0010 0D47     		li	a4,3
+ 1101 0012 6381E504 		beq	a1,a4,.L97
+ 1102              	.LVL159:
+ 1103              	.L98:
+ 243:diskio.c      **** 
+ 1104              		.loc 1 243 27 is_stmt 0
+ 1105 0016 1145     		li	a0,4
+ 1106              	.LVL160:
+ 248:diskio.c      ****         case CTRL_SYNC:
+ 249:diskio.c      ****             sd_cs_low();
+ 250:diskio.c      ****             if (spi0_txrx(0xFF) == 0xFF) res = RES_OK;
+ 251:diskio.c      ****             sd_cs_high();
+ 252:diskio.c      ****             break;
+ 253:diskio.c      **** 
+ 254:diskio.c      ****         case GET_SECTOR_COUNT:       // Add this
+ 255:diskio.c      ****             *(DWORD*)buff = 15759360;
+ 256:diskio.c      ****             res = RES_OK;
+ 257:diskio.c      ****             break;
+ 258:diskio.c      **** 
+ 259:diskio.c      ****         case GET_SECTOR_SIZE:
+ 260:diskio.c      ****             *(WORD*)buff = 512;
+ 261:diskio.c      ****             res = RES_OK;
+ 262:diskio.c      ****             break;
+ 263:diskio.c      **** 
+ 264:diskio.c      ****         case GET_BLOCK_SIZE:
+ 265:diskio.c      ****             *(DWORD*)buff = 1;
+ 266:diskio.c      ****             res = RES_OK;
+ 267:diskio.c      ****             break;
+ 268:diskio.c      **** 
+ 269:diskio.c      ****         default:
+ 270:diskio.c      ****             res = RES_PARERR;
+ 271:diskio.c      ****     }
+ 272:diskio.c      **** 
+ 273:diskio.c      ****     return res;
+ 274:diskio.c      **** }
+ 1107              		.loc 1 274 1
+ 1108 0018 8280     		ret
+ 1109              	.LVL161:
+ 1110              	.L95:
+ 249:diskio.c      ****             if (spi0_txrx(0xFF) == 0xFF) res = RES_OK;
+ 1111              		.loc 1 249 13 is_stmt 1
+ 242:diskio.c      ****     if (pdrv != 0) return RES_PARERR;
+ 1112              		.loc 1 242 1 is_stmt 0
+ 1113 001a 0111     		addi	sp,sp,-32
+ 1114              	.LCFI14:
+ 1115              		.cfi_def_cfa_offset 32
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 30
+
+
+ 1116 001c 06CE     		sw	ra,28(sp)
+ 1117              		.cfi_offset 1, -4
+ 249:diskio.c      ****             if (spi0_txrx(0xFF) == 0xFF) res = RES_OK;
+ 1118              		.loc 1 249 13
+ 1119 001e 97000000 		call	sd_cs_low
+ 1119      E7800000 
+ 1120              	.LVL162:
+ 250:diskio.c      ****             sd_cs_high();
+ 1121              		.loc 1 250 13 is_stmt 1
+ 250:diskio.c      ****             sd_cs_high();
+ 1122              		.loc 1 250 17 is_stmt 0
+ 1123 0026 1305F00F 		li	a0,255
+ 1124 002a 97000000 		call	spi0_txrx
+ 1124      E7800000 
+ 1125              	.LVL163:
+ 250:diskio.c      ****             sd_cs_high();
+ 1126              		.loc 1 250 16
+ 1127 0032 130515F0 		addi	a0,a0,-255
+ 1128 0036 3335A000 		snez	a0,a0
+ 1129 003a 2AC6     		sw	a0,12(sp)
+ 1130              	.LVL164:
+ 251:diskio.c      ****             break;
+ 1131              		.loc 1 251 13 is_stmt 1
+ 1132 003c 97000000 		call	sd_cs_high
+ 1132      E7800000 
+ 1133              	.LVL165:
+ 252:diskio.c      **** 
+ 1134              		.loc 1 252 13
+ 1135              		.loc 1 274 1 is_stmt 0
+ 1136 0044 F240     		lw	ra,28(sp)
+ 1137              		.cfi_restore 1
+ 252:diskio.c      **** 
+ 1138              		.loc 1 252 13
+ 1139 0046 3245     		lw	a0,12(sp)
+ 1140              		.loc 1 274 1
+ 1141 0048 0561     		addi	sp,sp,32
+ 1142              	.LCFI15:
+ 1143              		.cfi_def_cfa_offset 0
+ 1144              	.LVL166:
+ 1145 004a 8280     		jr	ra
+ 1146              	.LVL167:
+ 1147              	.L94:
+ 255:diskio.c      ****             res = RES_OK;
+ 1148              		.loc 1 255 13 is_stmt 1
+ 255:diskio.c      ****             res = RES_OK;
+ 1149              		.loc 1 255 27 is_stmt 0
+ 1150 004c B787F000 		li	a5,15761408
+ 1151 0050 93870780 		addi	a5,a5,-2048
+ 1152              	.L97:
+ 265:diskio.c      ****             res = RES_OK;
+ 1153              		.loc 1 265 13 is_stmt 1
+ 265:diskio.c      ****             res = RES_OK;
+ 1154              		.loc 1 265 27 is_stmt 0
+ 1155 0054 1CC2     		sw	a5,0(a2)
+ 1156 0056 29A0     		j	.L102
+ 1157              	.L96:
+ 260:diskio.c      ****             res = RES_OK;
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 31
+
+
+ 1158              		.loc 1 260 13 is_stmt 1
+ 260:diskio.c      ****             res = RES_OK;
+ 1159              		.loc 1 260 26 is_stmt 0
+ 1160 0058 93070020 		li	a5,512
+ 1161 005c 2310F600 		sh	a5,0(a2)
+ 261:diskio.c      ****             break;
+ 1162              		.loc 1 261 13 is_stmt 1
+ 1163              	.LVL168:
+ 262:diskio.c      **** 
+ 1164              		.loc 1 262 13
+ 1165              	.L102:
+ 266:diskio.c      ****             break;
+ 1166              		.loc 1 266 13
+ 267:diskio.c      **** 
+ 1167              		.loc 1 267 13
+ 266:diskio.c      ****             break;
+ 1168              		.loc 1 266 17 is_stmt 0
+ 1169 0060 0145     		li	a0,0
+ 1170              	.LVL169:
+ 267:diskio.c      **** 
+ 1171              		.loc 1 267 13
+ 1172 0062 8280     		ret
+ 1173              		.cfi_endproc
+ 1174              	.LFE5:
+ 1176              		.section	.sbss.CardType,"aw",@nobits
+ 1177              		.set	.LANCHOR0,. + 0
+ 1180              	CardType:
+ 1181 0000 00       		.zero	1
+ 1182              		.text
+ 1183              	.Letext0:
+ 1184              		.file 2 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/machine/_d
+ 1185              		.file 3 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_stdin
+ 1186              		.file 4 "ff.h"
+ 1187              		.file 5 "diskio.h"
+ 1188              		.file 6 "SPI_Driver.h"
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 32
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 diskio.c
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:12     .text.sd_send_cmd:0000000000000000 sd_send_cmd
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:16     .text.sd_send_cmd:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:18     .text.sd_send_cmd:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:19     .text.sd_send_cmd:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:20     .text.sd_send_cmd:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:21     .text.sd_send_cmd:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:23     .text.sd_send_cmd:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:27     .text.sd_send_cmd:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:28     .text.sd_send_cmd:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:29     .text.sd_send_cmd:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:31     .text.sd_send_cmd:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:34     .text.sd_send_cmd:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:37     .text.sd_send_cmd:0000000000000014 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:41     .text.sd_send_cmd:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:45     .text.sd_send_cmd:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:46     .text.sd_send_cmd:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:48     .text.sd_send_cmd:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:52     .text.sd_send_cmd:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:53     .text.sd_send_cmd:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:55     .text.sd_send_cmd:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:59     .text.sd_send_cmd:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:63     .text.sd_send_cmd:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:64     .text.sd_send_cmd:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:65     .text.sd_send_cmd:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:67     .text.sd_send_cmd:000000000000005c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:69     .text.sd_send_cmd:000000000000005e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:70     .text.sd_send_cmd:000000000000005e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:72     .text.sd_send_cmd:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:74     .text.sd_send_cmd:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:76     .text.sd_send_cmd:0000000000000066 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:80     .text.sd_send_cmd:000000000000006a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:83     .text.sd_send_cmd:0000000000000072 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:84     .text.sd_send_cmd:0000000000000072 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:88     .text.sd_send_cmd:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:89     .text.sd_send_cmd:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:90     .text.sd_send_cmd:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:94     .text.sd_send_cmd:0000000000000080 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:102    .text.sd_send_cmd:0000000000000090 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:105    .text.sd_send_cmd:0000000000000092 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:106    .text.sd_send_cmd:0000000000000092 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:107    .text.sd_send_cmd:0000000000000094 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:109    .text.sd_send_cmd:0000000000000096 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:111    .text.sd_send_cmd:0000000000000098 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:114    .text.sd_send_cmd:000000000000009a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:116    .text.sd_send_cmd:000000000000009c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:123    .text.disk_initialize:0000000000000000 disk_initialize
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:126    .text.disk_initialize:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:128    .text.disk_initialize:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:129    .text.disk_initialize:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:130    .text.disk_initialize:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:132    .text.disk_initialize:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:138    .text.disk_initialize:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:139    .text.disk_initialize:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:140    .text.disk_initialize:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:141    .text.disk_initialize:000000000000000c .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 33
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:142    .text.disk_initialize:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:144    .text.disk_initialize:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:148    .text.disk_initialize:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:151    .text.disk_initialize:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:152    .text.disk_initialize:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:153    .text.disk_initialize:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:155    .text.disk_initialize:0000000000000014 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:158    .text.disk_initialize:0000000000000018 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:160    .text.disk_initialize:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:162    .text.disk_initialize:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:165    .text.disk_initialize:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:170    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:172    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:173    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:175    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:176    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:177    .text.disk_initialize:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:179    .text.disk_initialize:0000000000000024 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:181    .text.disk_initialize:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:184    .text.disk_initialize:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:186    .text.disk_initialize:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:189    .text.disk_initialize:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:193    .text.disk_initialize:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:195    .text.disk_initialize:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:196    .text.disk_initialize:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:201    .text.disk_initialize:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:208    .text.disk_initialize:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:212    .text.disk_initialize:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:216    .text.disk_initialize:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:217    .text.disk_initialize:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:218    .text.disk_initialize:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:225    .text.disk_initialize:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:228    .text.disk_initialize:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:232    .text.disk_initialize:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:238    .text.disk_initialize:000000000000007e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:244    .text.disk_initialize:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:245    .text.disk_initialize:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:253    .text.disk_initialize:000000000000008a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:256    .text.disk_initialize:0000000000000092 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:258    .text.disk_initialize:0000000000000096 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:260    .text.disk_initialize:0000000000000098 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:263    .text.disk_initialize:00000000000000a0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:264    .text.disk_initialize:00000000000000a0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:268    .text.disk_initialize:00000000000000a4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:269    .text.disk_initialize:00000000000000a4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:274    .text.disk_initialize:00000000000000b2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:277    .text.disk_initialize:00000000000000ba .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:281    .text.disk_initialize:00000000000000c6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:282    .text.disk_initialize:00000000000000c6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:289    .text.disk_initialize:00000000000000d6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:292    .text.disk_initialize:00000000000000de .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:296    .text.disk_initialize:00000000000000ea .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:298    .text.disk_initialize:00000000000000ec .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:303    .text.disk_initialize:00000000000000f0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:304    .text.disk_initialize:00000000000000f0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:312    .text.disk_initialize:00000000000000fa .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:313    .text.disk_initialize:00000000000000fa .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 34
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:320    .text.disk_initialize:0000000000000100 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:321    .text.disk_initialize:0000000000000100 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:322    .text.disk_initialize:0000000000000100 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:327    .text.disk_initialize:000000000000010e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:329    .text.disk_initialize:000000000000010e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:330    .text.disk_initialize:000000000000010e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:331    .text.disk_initialize:000000000000010e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:332    .text.disk_initialize:000000000000010e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:336    .text.disk_initialize:000000000000011a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:337    .text.disk_initialize:000000000000011a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:341    .text.disk_initialize:0000000000000126 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:342    .text.disk_initialize:0000000000000126 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:346    .text.disk_initialize:0000000000000132 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:347    .text.disk_initialize:0000000000000132 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:352    .text.disk_initialize:000000000000013e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:355    .text.disk_initialize:0000000000000146 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:359    .text.disk_initialize:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:360    .text.disk_initialize:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:368    .text.disk_initialize:000000000000015a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:369    .text.disk_initialize:000000000000015a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:370    .text.disk_initialize:000000000000015a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:377    .text.disk_initialize:0000000000000168 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:378    .text.disk_initialize:0000000000000168 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:383    .text.disk_initialize:000000000000016a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:387    .text.disk_initialize:000000000000016e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:391    .text.disk_initialize:0000000000000170 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:392    .text.disk_initialize:0000000000000170 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:396    .text.disk_initialize:000000000000017c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:400    .text.disk_initialize:0000000000000184 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:403    .text.disk_initialize:0000000000000186 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:406    .text.disk_initialize:000000000000018a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:409    .text.disk_initialize:0000000000000192 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:413    .text.disk_initialize:000000000000019e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:414    .text.disk_initialize:000000000000019e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:417    .text.disk_initialize:00000000000001a2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:420    .text.disk_initialize:00000000000001a8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:425    .text.disk_initialize:00000000000001b4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:430    .text.disk_initialize:00000000000001ba .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:431    .text.disk_initialize:00000000000001ba .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:436    .text.disk_initialize:00000000000001c8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:439    .text.disk_initialize:00000000000001d0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:443    .text.disk_initialize:00000000000001dc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:444    .text.disk_initialize:00000000000001dc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:451    .text.disk_initialize:00000000000001ee .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:454    .text.disk_initialize:00000000000001f6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:458    .text.disk_initialize:0000000000000202 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:460    .text.disk_initialize:0000000000000206 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:466    .text.disk_initialize:000000000000020c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:473    .text.disk_status:0000000000000000 disk_status
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:476    .text.disk_status:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:478    .text.disk_status:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:479    .text.disk_status:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:480    .text.disk_status:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:483    .text.disk_status:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:490    .text.disk_read:0000000000000000 disk_read
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:493    .text.disk_read:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:495    .text.disk_read:0000000000000000 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 35
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:496    .text.disk_read:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:497    .text.disk_read:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:499    .text.disk_read:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:502    .text.disk_read:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:504    .text.disk_read:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:512    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:513    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:514    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:515    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:516    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:517    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:518    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:520    .text.disk_read:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:524    .text.disk_read:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:527    .text.disk_read:0000000000000024 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:529    .text.disk_read:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:530    .text.disk_read:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:534    .text.disk_read:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:535    .text.disk_read:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:536    .text.disk_read:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:540    .text.disk_read:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:541    .text.disk_read:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:546    .text.disk_read:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:547    .text.disk_read:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:551    .text.disk_read:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:554    .text.disk_read:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:555    .text.disk_read:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:560    .text.disk_read:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:561    .text.disk_read:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:562    .text.disk_read:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:564    .text.disk_read:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:566    .text.disk_read:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:568    .text.disk_read:000000000000004e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:570    .text.disk_read:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:572    .text.disk_read:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:574    .text.disk_read:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:577    .text.disk_read:0000000000000056 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:582    .text.disk_read:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:587    .text.disk_read:000000000000005e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:591    .text.disk_read:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:592    .text.disk_read:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:593    .text.disk_read:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:598    .text.disk_read:000000000000006e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:605    .text.disk_read:0000000000000078 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:611    .text.disk_read:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:614    .text.disk_read:000000000000007e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:618    .text.disk_read:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:619    .text.disk_read:0000000000000082 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:623    .text.disk_read:000000000000008e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:626    .text.disk_read:0000000000000096 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:629    .text.disk_read:0000000000000098 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:632    .text.disk_read:000000000000009c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:636    .text.disk_read:00000000000000a8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:642    .text.disk_read:00000000000000b4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:645    .text.disk_read:00000000000000bc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:649    .text.disk_read:00000000000000c8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:650    .text.disk_read:00000000000000c8 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 36
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:655    .text.disk_read:00000000000000cc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:656    .text.disk_read:00000000000000cc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:661    .text.disk_read:00000000000000d6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:662    .text.disk_read:00000000000000d6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:666    .text.disk_read:00000000000000d8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:672    .text.disk_read:00000000000000de .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:675    .text.disk_read:00000000000000e2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:682    .text.disk_read:00000000000000e6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:686    .text.disk_read:00000000000000e6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:687    .text.disk_read:00000000000000e6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:694    .text.disk_read:00000000000000e8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:695    .text.disk_read:00000000000000e8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:696    .text.disk_read:00000000000000e8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:700    .text.disk_read:00000000000000f4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:707    .text.disk_read:00000000000000fe .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:713    .text.disk_read:0000000000000102 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:717    .text.disk_read:0000000000000104 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:718    .text.disk_read:0000000000000104 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:722    .text.disk_read:0000000000000110 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:725    .text.disk_read:0000000000000118 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:728    .text.disk_read:000000000000011a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:731    .text.disk_read:000000000000011e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:735    .text.disk_read:000000000000012a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:738    .text.disk_read:000000000000012e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:744    .text.disk_read:0000000000000134 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:745    .text.disk_read:0000000000000134 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:749    .text.disk_read:000000000000013c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:751    .text.disk_read:000000000000013e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:759    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:760    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:761    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:762    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:763    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:764    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:765    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:766    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:768    .text.disk_read:000000000000014c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:771    .text.disk_read:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:772    .text.disk_read:0000000000000150 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:779    .text.disk_write:0000000000000000 disk_write
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:782    .text.disk_write:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:784    .text.disk_write:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:785    .text.disk_write:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:786    .text.disk_write:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:788    .text.disk_write:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:791    .text.disk_write:000000000000000c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:793    .text.disk_write:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:801    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:802    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:803    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:804    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:805    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:806    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:807    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:809    .text.disk_write:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:813    .text.disk_write:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:816    .text.disk_write:0000000000000024 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 37
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:818    .text.disk_write:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:819    .text.disk_write:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:823    .text.disk_write:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:824    .text.disk_write:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:825    .text.disk_write:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:829    .text.disk_write:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:830    .text.disk_write:0000000000000030 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:835    .text.disk_write:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:836    .text.disk_write:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:840    .text.disk_write:000000000000003c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:843    .text.disk_write:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:844    .text.disk_write:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:848    .text.disk_write:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:849    .text.disk_write:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:850    .text.disk_write:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:852    .text.disk_write:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:854    .text.disk_write:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:856    .text.disk_write:000000000000004e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:858    .text.disk_write:0000000000000050 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:860    .text.disk_write:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:862    .text.disk_write:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:865    .text.disk_write:0000000000000056 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:870    .text.disk_write:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:873    .text.disk_write:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:879    .text.disk_write:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:880    .text.disk_write:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:881    .text.disk_write:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:883    .text.disk_write:0000000000000066 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:887    .text.disk_write:000000000000006a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:890    .text.disk_write:0000000000000072 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:893    .text.disk_write:0000000000000074 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:896    .text.disk_write:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:899    .text.disk_write:0000000000000080 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:903    .text.disk_write:000000000000008c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:907    .text.disk_write:0000000000000098 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:908    .text.disk_write:0000000000000098 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:912    .text.disk_write:00000000000000a4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:913    .text.disk_write:00000000000000a4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:923    .text.disk_write:00000000000000b2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:924    .text.disk_write:00000000000000b2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:928    .text.disk_write:00000000000000be .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:935    .text.disk_write:00000000000000c6 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:941    .text.disk_write:00000000000000ca .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:942    .text.disk_write:00000000000000ca .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:947    .text.disk_write:00000000000000d4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:948    .text.disk_write:00000000000000d4 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:953    .text.disk_write:00000000000000d8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:956    .text.disk_write:00000000000000dc .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:963    .text.disk_write:00000000000000e2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:964    .text.disk_write:00000000000000e2 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:969    .text.disk_write:00000000000000ee .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:970    .text.disk_write:00000000000000ee .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:971    .text.disk_write:00000000000000ee .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:975    .text.disk_write:00000000000000f0 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:978    .text.disk_write:00000000000000f8 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:981    .text.disk_write:00000000000000fa .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:984    .text.disk_write:0000000000000102 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 38
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:987    .text.disk_write:0000000000000106 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:991    .text.disk_write:0000000000000112 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:995    .text.disk_write:000000000000011e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:999    .text.disk_write:000000000000012a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1003   .text.disk_write:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1004   .text.disk_write:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1005   .text.disk_write:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1006   .text.disk_write:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1007   .text.disk_write:0000000000000130 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1012   .text.disk_write:0000000000000136 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1013   .text.disk_write:0000000000000136 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1017   .text.disk_write:0000000000000142 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1024   .text.disk_write:000000000000014a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1029   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1030   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1031   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1032   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1033   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1034   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1035   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1036   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1039   .text.disk_write:000000000000014e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1042   .text.disk_write:0000000000000150 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1046   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1047   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1048   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1049   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1050   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1051   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1052   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1053   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1057   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1058   .text.disk_write:0000000000000152 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1062   .text.disk_write:0000000000000156 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1067   .text.disk_write:0000000000000162 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1070   .text.disk_write:000000000000016a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1074   .text.disk_write:0000000000000176 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1075   .text.disk_write:0000000000000176 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1077   .text.disk_write:000000000000017a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1084   .text.disk_ioctl:0000000000000000 disk_ioctl
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1087   .text.disk_ioctl:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1089   .text.disk_ioctl:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1090   .text.disk_ioctl:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1091   .text.disk_ioctl:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1094   .text.disk_ioctl:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1095   .text.disk_ioctl:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1105   .text.disk_ioctl:0000000000000016 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1108   .text.disk_ioctl:0000000000000018 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1112   .text.disk_ioctl:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1113   .text.disk_ioctl:000000000000001a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1115   .text.disk_ioctl:000000000000001c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1117   .text.disk_ioctl:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1119   .text.disk_ioctl:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1122   .text.disk_ioctl:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1123   .text.disk_ioctl:0000000000000026 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1127   .text.disk_ioctl:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1132   .text.disk_ioctl:000000000000003c .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 39
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1135   .text.disk_ioctl:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1136   .text.disk_ioctl:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1137   .text.disk_ioctl:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1139   .text.disk_ioctl:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1141   .text.disk_ioctl:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1143   .text.disk_ioctl:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1149   .text.disk_ioctl:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1150   .text.disk_ioctl:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1154   .text.disk_ioctl:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1155   .text.disk_ioctl:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1159   .text.disk_ioctl:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1160   .text.disk_ioctl:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1164   .text.disk_ioctl:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1166   .text.disk_ioctl:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1167   .text.disk_ioctl:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1168   .text.disk_ioctl:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1169   .text.disk_ioctl:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1172   .text.disk_ioctl:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1173   .text.disk_ioctl:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1177   .sbss.CardType:0000000000000000 .LANCHOR0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1180   .sbss.CardType:0000000000000000 CardType
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:119    .text.sd_send_cmd:000000000000009c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:469    .text.disk_initialize:000000000000020c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:486    .text.disk_status:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:775    .text.disk_read:0000000000000150 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1080   .text.disk_write:000000000000017a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1176   .text.disk_ioctl:0000000000000064 .L0 
+                     .debug_frame:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:77     .text.sd_send_cmd:000000000000006a .L2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:103    .text.sd_send_cmd:0000000000000092 .L3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:86     .text.sd_send_cmd:0000000000000074 .L4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:168    .text.disk_initialize:0000000000000020 .L11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:241    .text.disk_initialize:0000000000000082 .L14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:198    .text.disk_initialize:000000000000003a .L15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:364    .text.disk_initialize:000000000000015a .L16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:213    .text.disk_initialize:0000000000000052 .L17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:146    .text.disk_initialize:000000000000000e .L18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:182    .text.disk_initialize:000000000000002a .L13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:301    .text.disk_initialize:00000000000000f0 .L25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:266    .text.disk_initialize:00000000000000a4 .L26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:149    .text.disk_initialize:0000000000000010 .L38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:307    .text.disk_initialize:00000000000000f6 .L41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:250    .text.disk_initialize:000000000000008a .L39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:389    .text.disk_initialize:0000000000000170 .L19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:310    .text.disk_initialize:00000000000000fa .L24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:316    .text.disk_initialize:0000000000000100 .L21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:427    .text.disk_initialize:00000000000001ba .L22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:757    .text.disk_read:000000000000014c .L54
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:532    .text.disk_read:000000000000002a .L45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:653    .text.disk_read:00000000000000cc .L46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:580    .text.disk_read:0000000000000058 .L55
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:608    .text.disk_read:000000000000007c .L56
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:589    .text.disk_read:0000000000000062 .L47
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:549    .text.disk_read:000000000000003c .L49
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:616    .text.disk_read:0000000000000082 .L48
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:557    .text.disk_read:0000000000000046 .L43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:710    .text.disk_read:0000000000000102 .L57
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 40
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:689    .text.disk_read:00000000000000e8 .L52
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:715    .text.disk_read:0000000000000104 .L51
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:677    .text.disk_read:00000000000000e6 .L53
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:639    .text.disk_read:00000000000000b4 .L50
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1027   .text.disk_write:000000000000014e .L81
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:821    .text.disk_write:000000000000002a .L69
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:938    .text.disk_write:00000000000000ca .L70
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:868    .text.disk_write:0000000000000058 .L71
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:885    .text.disk_write:000000000000006a .L72
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:838    .text.disk_write:000000000000003c .L73
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1065   .text.disk_write:0000000000000162 .L74
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:920    .text.disk_write:00000000000000b2 .L75
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:973    .text.disk_write:00000000000000f0 .L76
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1044   .text.disk_write:0000000000000152 .L77
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1010   .text.disk_write:0000000000000136 .L78
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:959    .text.disk_write:00000000000000e2 .L79
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:845    .text.disk_write:0000000000000046 .L67
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1103   .text.disk_ioctl:0000000000000016 .L98
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1147   .text.disk_ioctl:000000000000004c .L94
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1110   .text.disk_ioctl:000000000000001a .L95
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1157   .text.disk_ioctl:0000000000000058 .L96
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1152   .text.disk_ioctl:0000000000000054 .L97
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1165   .text.disk_ioctl:0000000000000060 .L102
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2492   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3967   .debug_str:0000000000000000 .LASF43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3997   .debug_str:0000000000000138 .LASF44
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3979   .debug_str:00000000000000b8 .LASF45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3863   .debug_ranges:0000000000000000 .Ldebug_ranges0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3965   .debug_line:0000000000000000 .Ldebug_line0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4019   .debug_str:00000000000001ae .LASF0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4007   .debug_str:0000000000000172 .LASF3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4017   .debug_str:00000000000001a0 .LASF1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3975   .debug_str:00000000000000a3 .LASF2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3983   .debug_str:0000000000000100 .LASF4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4031   .debug_str:00000000000001fb .LASF5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4001   .debug_str:000000000000014f .LASF6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3977   .debug_str:00000000000000ad .LASF7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4047   .debug_str:0000000000000243 .LASF8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3999   .debug_str:0000000000000141 .LASF9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4021   .debug_str:00000000000001ba .LASF10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4025   .debug_str:00000000000001da .LASF11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3991   .debug_str:000000000000011f .LASF12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4027   .debug_str:00000000000001e7 .LASF13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4023   .debug_str:00000000000001d1 .LASF14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4039   .debug_str:0000000000000229 .LASF15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3981   .debug_str:00000000000000fb .LASF16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3989   .debug_str:000000000000011a .LASF17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4015   .debug_str:000000000000019a .LASF18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4037   .debug_str:0000000000000224 .LASF19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4013   .debug_str:0000000000000192 .LASF20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3973   .debug_str:000000000000009c .LASF21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3971   .debug_str:0000000000000092 .LASF22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4003   .debug_str:0000000000000158 .LASF23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4043   .debug_str:0000000000000233 .LASF24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4057   .debug_str:0000000000000278 .LASF25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4053   .debug_str:0000000000000264 .LASF26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3985   .debug_str:000000000000010b .LASF29
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 41
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4035   .debug_str:0000000000000219 .LASF30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1085   .text.disk_ioctl:0000000000000000 .LFB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1174   .text.disk_ioctl:0000000000000064 .LFE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2909   .debug_loc:0000000000000000 .LLST34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4045   .debug_str:000000000000023e .LASF27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2927   .debug_loc:000000000000002c .LLST35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2963   .debug_loc:000000000000007f .LLST36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4041   .debug_str:000000000000022e .LASF28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2981   .debug_loc:00000000000000ab .LLST37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:2999   .debug_loc:00000000000000d7 .LLST38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1120   .text.disk_ioctl:0000000000000026 .LVL162
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1125   .text.disk_ioctl:0000000000000032 .LVL163
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1133   .text.disk_ioctl:0000000000000044 .LVL165
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4029   .debug_str:00000000000001f0 .LASF31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:780    .text.disk_write:0000000000000000 .LFB4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1078   .text.disk_write:000000000000017a .LFE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3036   .debug_loc:0000000000000132 .LLST24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3069   .debug_loc:0000000000000182 .LLST25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3105   .debug_loc:00000000000001d5 .LLST26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3993   .debug_str:0000000000000127 .LASF32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3156   .debug_loc:000000000000023f .LLST27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4051   .debug_str:000000000000025e .LASF33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3175   .debug_loc:0000000000000273 .LLST28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4049   .debug_str:0000000000000255 .LASF34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3209   .debug_loc:00000000000002cb .LLST29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4059   .debug_str:0000000000000283 .LASF35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3232   .debug_loc:0000000000000303 .LLST30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:878    .text.disk_write:0000000000000064 .LBB28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:897    .text.disk_write:0000000000000080 .LBE28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3245   .debug_loc:0000000000000323 .LLST31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:894    .text.disk_write:000000000000007c .LVL124
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:833    .text.disk_write:000000000000003a .LVL116
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:841    .text.disk_write:0000000000000044 .LVL118
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:876    .text.disk_write:0000000000000064 .LVL121
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:901    .text.disk_write:000000000000008c .LVL125
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:905    .text.disk_write:0000000000000098 .LVL126
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:910    .text.disk_write:00000000000000a4 .LVL127
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:926    .text.disk_write:00000000000000be .LVL131
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3267   .debug_loc:000000000000035a .LLST32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3284   .debug_loc:0000000000000385 .LLST33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:982    .text.disk_write:0000000000000102 .LVL141
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:966    .text.disk_write:00000000000000ee .LVL138
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:989    .text.disk_write:0000000000000112 .LVL142
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:993    .text.disk_write:000000000000011e .LVL143
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:997    .text.disk_write:000000000000012a .LVL144
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1015   .text.disk_write:0000000000000142 .LVL147
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:945    .text.disk_write:00000000000000d4 .LVL136
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1064   .text.disk_write:0000000000000162 .LVL154
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1068   .text.disk_write:000000000000016a .LVL155
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1072   .text.disk_write:0000000000000176 .LVL156
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4011   .debug_str:0000000000000188 .LASF36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:491    .text.disk_read:0000000000000000 .LFB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:773    .text.disk_read:0000000000000150 .LFE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3306   .debug_loc:00000000000003bc .LLST14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3334   .debug_loc:0000000000000400 .LLST15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3370   .debug_loc:0000000000000453 .LLST16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3425   .debug_loc:00000000000004c8 .LLST17
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 42
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3444   .debug_loc:00000000000004fc .LLST18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3484   .debug_loc:0000000000000561 .LLST19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3507   .debug_loc:00000000000005a0 .LLST20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3524   .debug_loc:00000000000005cb .LLST21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:621    .text.disk_read:000000000000008e .LVL87
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:544    .text.disk_read:000000000000003a .LVL74
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:552    .text.disk_read:0000000000000044 .LVL76
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:596    .text.disk_read:000000000000006e .LVL81
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:634    .text.disk_read:00000000000000a8 .LVL89
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:638    .text.disk_read:00000000000000b4 .LVL90
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3531   .debug_loc:00000000000005de .LLST22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3554   .debug_loc:0000000000000617 .LLST23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:720    .text.disk_read:0000000000000110 .LVL103
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:698    .text.disk_read:00000000000000f4 .LVL98
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:733    .text.disk_read:000000000000012a .LVL105
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:746    .text.disk_read:000000000000013c .LVL108
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:643    .text.disk_read:00000000000000bc .LVL91
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:647    .text.disk_read:00000000000000c8 .LVL92
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:659    .text.disk_read:00000000000000d6 .LVL95
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:754    .text.disk_read:000000000000014a .LVL109
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4009   .debug_str:000000000000017c .LASF37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:474    .text.disk_status:0000000000000000 .LFB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:484    .text.disk_status:0000000000000006 .LFE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3561   .debug_loc:000000000000062a .LLST13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4005   .debug_str:0000000000000162 .LASF38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:124    .text.disk_initialize:0000000000000000 .LFB1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:467    .text.disk_initialize:000000000000020c .LFE1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3575   .debug_loc:000000000000064b .LLST5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3598   .debug_loc:0000000000000683 .LLST6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3634   .debug_loc:00000000000006d6 .LLST7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3665   .debug_loc:000000000000072b .LLST8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3987   .debug_str:0000000000000114 .LASF39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3682   .debug_loc:0000000000000757 .LLST9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3709   .debug_loc:000000000000078c .LLST10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:206    .text.disk_initialize:000000000000004c .LVL19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3725   .debug_loc:00000000000007af .LLST12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:394    .text.disk_initialize:000000000000017c .LVL54
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:328    .text.disk_initialize:000000000000010e .LBB8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:350    .text.disk_initialize:000000000000013e .LBE8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3732   .debug_loc:00000000000007c2 .LLST11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:334    .text.disk_initialize:000000000000011a .LVL44
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:339    .text.disk_initialize:0000000000000126 .LVL45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:344    .text.disk_initialize:0000000000000132 .LVL46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:349    .text.disk_initialize:000000000000013e .LVL47
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:325    .text.disk_initialize:000000000000010e .LVL43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:353    .text.disk_initialize:0000000000000146 .LVL48
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:357    .text.disk_initialize:0000000000000152 .LVL49
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:434    .text.disk_initialize:00000000000001c8 .LVL60
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:437    .text.disk_initialize:00000000000001d0 .LVL61
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:441    .text.disk_initialize:00000000000001dc .LVL62
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:447    .text.disk_initialize:00000000000001ec .LVL63
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:452    .text.disk_initialize:00000000000001f6 .LVL65
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:456    .text.disk_initialize:0000000000000202 .LVL66
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:407    .text.disk_initialize:0000000000000192 .LVL56
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:411    .text.disk_initialize:000000000000019e .LVL57
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:190    .text.disk_initialize:0000000000000038 .LVL16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:221    .text.disk_initialize:000000000000005e .LVL21
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 43
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:226    .text.disk_initialize:0000000000000068 .LVL23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:230    .text.disk_initialize:0000000000000074 .LVL24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:254    .text.disk_initialize:0000000000000092 .LVL29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:261    .text.disk_initialize:00000000000000a0 .LVL30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:272    .text.disk_initialize:00000000000000b2 .LVL32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:275    .text.disk_initialize:00000000000000ba .LVL33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:279    .text.disk_initialize:00000000000000c6 .LVL34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:285    .text.disk_initialize:00000000000000d4 .LVL35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:290    .text.disk_initialize:00000000000000de .LVL37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:294    .text.disk_initialize:00000000000000ea .LVL38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:373    .text.disk_initialize:0000000000000168 .LVL51
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4055   .debug_str:000000000000026c .LASF46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:13     .text.sd_send_cmd:0000000000000000 .LFB0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:117    .text.sd_send_cmd:000000000000009c .LFE0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3760   .debug_loc:0000000000000806 .LLST0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3778   .debug_loc:0000000000000832 .LLST1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3792   .debug_loc:0000000000000853 .LLST2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3810   .debug_loc:000000000000087f .LLST3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3822   .debug_loc:000000000000089e .LLST4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:35     .text.sd_send_cmd:0000000000000014 .LVL1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:39     .text.sd_send_cmd:0000000000000020 .LVL2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:43     .text.sd_send_cmd:000000000000002c .LVL3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:50     .text.sd_send_cmd:000000000000003c .LVL4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:57     .text.sd_send_cmd:000000000000004c .LVL5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:61     .text.sd_send_cmd:0000000000000058 .LVL6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:81     .text.sd_send_cmd:0000000000000072 .LVL8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:92     .text.sd_send_cmd:0000000000000080 .LVL10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3969   .debug_str:0000000000000088 .LASF40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:3995   .debug_str:000000000000012e .LASF41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:4033   .debug_str:000000000000020e .LASF42
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1114   .text.disk_ioctl:000000000000001c .LCFI14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1142   .text.disk_ioctl:000000000000004a .LCFI15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1088   .text.disk_ioctl:0000000000000000 .LVL157
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1106   .text.disk_ioctl:0000000000000018 .LVL160
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1109   .text.disk_ioctl:000000000000001a .LVL161
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1146   .text.disk_ioctl:000000000000004c .LVL167
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1170   .text.disk_ioctl:0000000000000062 .LVL169
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1093   .text.disk_ioctl:0000000000000002 .LVL158
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1102   .text.disk_ioctl:0000000000000016 .LVL159
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1130   .text.disk_ioctl:000000000000003c .LVL164
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1144   .text.disk_ioctl:000000000000004a .LVL166
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1163   .text.disk_ioctl:0000000000000060 .LVL168
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:792    .text.disk_write:000000000000000e .LCFI9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:864    .text.disk_write:0000000000000056 .LCFI10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:869    .text.disk_write:0000000000000058 .LCFI11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1028   .text.disk_write:000000000000014e .LCFI12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1045   .text.disk_write:0000000000000152 .LCFI13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:783    .text.disk_write:0000000000000000 .LVL112
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:831    .text.disk_write:0000000000000032 .LVL115
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:937    .text.disk_write:00000000000000ca .LVL134
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:943    .text.disk_write:00000000000000cc .LVL135
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1026   .text.disk_write:000000000000014e .LVL150
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1040   .text.disk_write:0000000000000150 .LVL151
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:814    .text.disk_write:0000000000000024 .LVL113
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:837    .text.disk_write:000000000000003c .LVL117
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:867    .text.disk_write:0000000000000058 .LVL119
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:972    .text.disk_write:00000000000000f0 .LVL139
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 44
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:979    .text.disk_write:00000000000000fa .LVL140
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1001   .text.disk_write:0000000000000130 .LVL145
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1009   .text.disk_write:0000000000000136 .LVL146
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1043   .text.disk_write:0000000000000152 .LVL152
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:820    .text.disk_write:000000000000002a .LVL114
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:884    .text.disk_write:000000000000006a .LVL122
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:874    .text.disk_write:000000000000005c .LVL120
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:914    .text.disk_write:00000000000000a6 .LVL128
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:958    .text.disk_write:00000000000000e2 .LVL137
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:921    .text.disk_write:00000000000000b2 .LVL130
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:929    .text.disk_write:00000000000000c0 .LVL132
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:931    .text.disk_write:00000000000000c2 .LVL133
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:891    .text.disk_write:0000000000000074 .LVL123
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:918    .text.disk_write:00000000000000ae .LVL129
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1018   .text.disk_write:0000000000000144 .LVL148
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1020   .text.disk_write:0000000000000146 .LVL149
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:503    .text.disk_read:000000000000000e .LCFI5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:576    .text.disk_read:0000000000000056 .LCFI6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:581    .text.disk_read:0000000000000058 .LCFI7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:758    .text.disk_read:000000000000014c .LCFI8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:494    .text.disk_read:0000000000000000 .LVL70
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:542    .text.disk_read:0000000000000032 .LVL73
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:652    .text.disk_read:00000000000000cc .LVL93
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:657    .text.disk_read:00000000000000ce .LVL94
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:756    .text.disk_read:000000000000014c .LVL110
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:769    .text.disk_read:000000000000014e .LVL111
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:525    .text.disk_read:0000000000000024 .LVL71
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:556    .text.disk_read:0000000000000046 .LVL77
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:579    .text.disk_read:0000000000000058 .LVL78
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:714    .text.disk_read:0000000000000104 .LVL102
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:726    .text.disk_read:000000000000011a .LVL104
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:741    .text.disk_read:0000000000000134 .LVL107
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:531    .text.disk_read:000000000000002a .LVL72
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:548    .text.disk_read:000000000000003c .LVL75
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:588    .text.disk_read:0000000000000062 .LVL79
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:739    .text.disk_read:0000000000000130 .LVL106
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:594    .text.disk_read:0000000000000066 .LVL80
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:615    .text.disk_read:0000000000000082 .LVL86
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:676    .text.disk_read:00000000000000e6 .LVL96
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:599    .text.disk_read:0000000000000072 .LVL82
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:601    .text.disk_read:0000000000000074 .LVL83
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:607    .text.disk_read:000000000000007c .LVL84
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:612    .text.disk_read:000000000000007e .LVL85
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:688    .text.disk_read:00000000000000e8 .LVL97
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:701    .text.disk_read:00000000000000f8 .LVL99
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:703    .text.disk_read:00000000000000fa .LVL100
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:709    .text.disk_read:0000000000000102 .LVL101
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:477    .text.disk_status:0000000000000000 .LVL68
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:481    .text.disk_status:0000000000000004 .LVL69
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:131    .text.disk_initialize:0000000000000002 .LCFI2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:164    .text.disk_initialize:000000000000001e .LCFI3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:169    .text.disk_initialize:0000000000000020 .LCFI4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:127    .text.disk_initialize:0000000000000000 .LVL13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:145    .text.disk_initialize:000000000000000e .LVL14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:167    .text.disk_initialize:0000000000000020 .LVL15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:240    .text.disk_initialize:0000000000000082 .LVL27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:249    .text.disk_initialize:000000000000008a .LVL28
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 45
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:223    .text.disk_initialize:0000000000000060 .LVL22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:287    .text.disk_initialize:00000000000000d6 .LVL36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:306    .text.disk_initialize:00000000000000f6 .LVL40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:315    .text.disk_initialize:0000000000000100 .LVL42
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:363    .text.disk_initialize:000000000000015a .LVL50
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:388    .text.disk_initialize:0000000000000170 .LVL53
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:449    .text.disk_initialize:00000000000001ee .LVL64
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:265    .text.disk_initialize:00000000000000a4 .LVL31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:428    .text.disk_initialize:00000000000001ba .LVL59
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:214    .text.disk_initialize:0000000000000052 .LVL20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:233    .text.disk_initialize:0000000000000078 .LVL25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:235    .text.disk_initialize:000000000000007a .LVL26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:379    .text.disk_initialize:000000000000016a .LVL52
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:197    .text.disk_initialize:000000000000003a .LVL17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:202    .text.disk_initialize:000000000000003c .LVL18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:415    .text.disk_initialize:00000000000001a2 .LVL58
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:22     .text.sd_send_cmd:0000000000000002 .LCFI0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:113    .text.sd_send_cmd:000000000000009a .LCFI1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:17     .text.sd_send_cmd:0000000000000000 .LVL0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:85     .text.sd_send_cmd:0000000000000074 .LVL9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:78     .text.sd_send_cmd:000000000000006a .LVL7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:97     .text.sd_send_cmd:000000000000008a .LVL11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:99     .text.sd_send_cmd:000000000000008c .LVL12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1190   .debug_info:0000000000000000 .Ldebug_info0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:174    .text.disk_initialize:0000000000000020 .LBB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:187    .text.disk_initialize:0000000000000030 .LBE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:242    .text.disk_initialize:0000000000000082 .LBB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:251    .text.disk_initialize:000000000000008a .LBE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:192    .text.disk_initialize:0000000000000038 .LBB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:194    .text.disk_initialize:0000000000000038 .LBE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:199    .text.disk_initialize:000000000000003a .LBB4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:210    .text.disk_initialize:0000000000000050 .LBE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:317    .text.disk_initialize:0000000000000100 .LBB6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:366    .text.disk_initialize:000000000000015a .LBE6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:375    .text.disk_initialize:0000000000000168 .LBB12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:381    .text.disk_initialize:000000000000016a .LBE12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:384    .text.disk_initialize:000000000000016e .LBB13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:465    .text.disk_initialize:000000000000020c .LBE13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:318    .text.disk_initialize:0000000000000100 .LBB7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:365    .text.disk_initialize:000000000000015a .LBE7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:423    .text.disk_initialize:00000000000001b4 .LBB11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:464    .text.disk_initialize:000000000000020c .LBE11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:376    .text.disk_initialize:0000000000000168 .LBB9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:380    .text.disk_initialize:000000000000016a .LBE9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:385    .text.disk_initialize:000000000000016e .LBB10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:404    .text.disk_initialize:000000000000018a .LBE10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:538    .text.disk_read:0000000000000030 .LBB14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:558    .text.disk_read:0000000000000046 .LBE14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:583    .text.disk_read:0000000000000058 .LBB18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:640    .text.disk_read:00000000000000b4 .LBE18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:663    .text.disk_read:00000000000000d8 .LBB19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:669    .text.disk_read:00000000000000de .LBE19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:684    .text.disk_read:00000000000000e6 .LBB24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:691    .text.disk_read:00000000000000e8 .LBE24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:609    .text.disk_read:000000000000007c .LBB15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:630    .text.disk_read:000000000000009c .LBE15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:664    .text.disk_read:00000000000000d8 .LBB16
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s 			page 46
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:668    .text.disk_read:00000000000000de .LBE16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:685    .text.disk_read:00000000000000e6 .LBB17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:690    .text.disk_read:00000000000000e8 .LBE17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:670    .text.disk_read:00000000000000de .LBB20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:679    .text.disk_read:00000000000000e6 .LBE20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:681    .text.disk_read:00000000000000e6 .LBB23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:683    .text.disk_read:00000000000000e6 .LBE23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:692    .text.disk_read:00000000000000e8 .LBB25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:736    .text.disk_read:000000000000012e .LBE25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:742    .text.disk_read:0000000000000134 .LBB26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:747    .text.disk_read:000000000000013c .LBE26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:673    .text.disk_read:00000000000000e2 .LBB21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:678    .text.disk_read:00000000000000e6 .LBE21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:711    .text.disk_read:0000000000000102 .LBB22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:729    .text.disk_read:000000000000011e .LBE22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:827    .text.disk_write:0000000000000030 .LBB27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:846    .text.disk_write:0000000000000046 .LBE27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:871    .text.disk_write:0000000000000058 .LBB29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:939    .text.disk_write:00000000000000ca .LBE29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:949    .text.disk_write:00000000000000d6 .LBB30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:960    .text.disk_write:00000000000000e2 .LBE30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:962    .text.disk_write:00000000000000e2 .LBB33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1037   .text.disk_write:000000000000014e .LBE33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1054   .text.disk_write:0000000000000152 .LBB34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:1056   .text.disk_write:0000000000000152 .LBE34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:951    .text.disk_write:00000000000000d8 .LBB31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:954    .text.disk_write:00000000000000dc .LBE31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:968    .text.disk_write:00000000000000ee .LBB32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//cchTxIV7.s:985    .text.disk_write:0000000000000106 .LBE32
+
+UNDEFINED SYMBOLS
+sd_cs_low
+spi0_txrx
+sd_cs_high

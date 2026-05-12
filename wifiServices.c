@@ -41,10 +41,10 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
                              allPlants[i].idealMoist,
                              allPlants[i].idealSun,
                              allPlants[i].idealTemp,
-                            allPlants[i].lowMoist,
+                             allPlants[i].lowMoist,
                              allPlants[i].lowSun,
                              allPlants[i].lowTemp,
-                            allPlants[i].highMoist,
+                             allPlants[i].highMoist,
                              allPlants[i].highSun,
                              allPlants[i].highTemp);
   }
@@ -85,16 +85,20 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
           sscanf(ptr, "\"cmd\":\"%14[^\"]\"", cmd);
         }
 
-        if (!strcmp(cmd, "startPump")) {
+        if (!strcmp(cmd, "startPump"))
+        {
           T1setPWMch0(900);
           LCD_Clear(BLACK);
           LCD_ShowStr(10, 10, "PUMP STARTED!", BLUE, TRANSPARENT);
         }
 
-        else if (!strcmp(cmd, "startLamp")) {
-          // ADD IN TOGGLE SUN LAMP CODE
+        else if (!strcmp(cmd, "startLamp"))
+        {
+          if (gpio_output_bit_get(GPIOB, GPIO_PIN_7)) 
+            gpio_bit_reset(GPIOB, GPIO_PIN_7);
+          else 
+            gpio_bit_set(GPIOB, GPIO_PIN_7);
           LCD_Clear(BLACK);
-          LCD_ShowStr(10, 10, "LAMP TOGGLED", YELLOW, TRANSPARENT);
         }
 
         else if (!strcmp(cmd, "addPlant"))
@@ -131,8 +135,8 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
                     idealMoist, lowMoist, highMoist,
                     idealSun, lowSun, highSun,
                     idealTemp, lowTemp, highTemp);
-        LCD_Clear(BLACK);
-        LCD_ShowStr(10, 10, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
+          LCD_Clear(BLACK);
+          LCD_ShowStr(10, 10, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
         }
         else
         {
@@ -157,7 +161,7 @@ int getValue(const volatile char *json, const char *key)
   if (ptr != NULL)
   {
     ptr += strlen(search); // lägg till längden av sökordet. Och sökordet är vårat nyckelord. Resultat: ptr innehåller indexet där värdet börjar!
-    return atoi(ptr); // atoi är såpass smart att den börjar och slutar automatiskt där värdet börjar/slutar, och " kommer ange början/slutet pga json
+    return atoi(ptr);      // atoi är såpass smart att den börjar och slutar automatiskt där värdet börjar/slutar, och " kommer ange början/slutet pga json
   }
 
   return 0;

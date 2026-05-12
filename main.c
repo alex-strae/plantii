@@ -11,11 +11,13 @@
 #include "renderPlants.h"
 #include "wifiServices.h"
 #include "pwm.h"
+#include "gd32v_tf_card_if.h"
+#include "systick.h"
+#include "sdcard.h"
+#include "ff.h"
 
 #define TIMEOUT_mins 1
 #define TIMOUT_ms (TIMEOUT_mins * 60000)
-
-#define MAXIMUM_NUMBER_OF_PLANTS 3
 #define STR_COPY(dest, src) \
   snprintf(dest, sizeof(dest), "%s", src) // AI. STR_COPY är en genväg för snprintf som i sin tur är en bättre metod än strcpy för att kopiera strängar
 
@@ -27,15 +29,16 @@ int main(void)
   int page = HOME;
   int nopress = 0;
   int pointer = 13;
-
   int currentMin = 0;
-  Plant allPlants[MAXIMUM_NUMBER_OF_PLANTS];
+
+  static Plant allPlants[MAXIMUM_NUMBER_OF_PLANTS];
   int numberOfPlants = 0;
 
   // INITIERINGAR. RTCINIT OCH ADC3powerup har några förändringar vs original. Möjligen fler.
   t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
+  gpio_init(GPIOB, GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ , GPIO_PIN_7);  // SOL LAMPA LED
   keyinit();
   rtcInit();
   rtc_counter_set(0);
@@ -43,23 +46,34 @@ int main(void)
   Lcd_SetType(LCD_INVERTED);
   Lcd_Init();
   LCD_Clear(BLACK);
-  LCD_ShowStr(10, 10, "GREEN FINGERS", GREEN, TRANSPARENT);
+  LCD_ShowStr(10, 10, "Green Fingers v1", GREEN, TRANSPARENT);
 
-  MAX31865_Init();    // Init Jocke temp-sensor
-  ADC3powerUpInit(0); // Initialize ADC0, Ch3
-  u0init(1);          // Init WiFi över UART
-  T1powerUpInitPWM(0x1);  // Init vattenpump
+  MAX31865_Init();       // Init Jocke temp-sensor
+  ADC3powerUpInit(0);    // Initialize ADC0, Ch3
+  u0init(1);             // Init WiFi över UART
+  T1powerUpInitPWM(0x1); // Init vattenpump
 
   eclic_global_interrupt_enable();
 
   putstr("System online");
 
+  FATFS fs;
+  volatile FRESULT fr;
+  fr = f_mount(&fs, "", 1);
+
+  if (loadDB(allPlants, &numberOfPlants))
+    putstr("DB loaded");
+  else
+    putstr("No DB");
+
+  delay_1ms(100);
+
+
   while (1)
   {
     idle++;
-    LCD_WR_Queue();   
-    // DENNA AKTIVERAR RX WIFI
-    if (commandBufferIndex > 0)
+    LCD_WR_Queue();
+    if (commandBufferIndex > 0) // AKTIVERAR RX WIFI
       receiveCommands(allPlants, &numberOfPlants);
 
     if (t5expq())
@@ -74,21 +88,29 @@ int main(void)
         {
           if (applyGreenFingers(allPlants, numberOfPlants))
             putstr("Green fingers working");
+         
+          if (saveDB(allPlants, numberOfPlants))
+            putstr("DB updated");
+          else
+            putstr("DB UPDATE ERROR");
+            
         }
-
+        
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);
         idle = 0;
       }
 
-       if ((key=keyscan())>=0) {  
-              nopress=0;                  ///for a time out (no button pressed after x mins return to home screen)          
-              akey = lookUpTbl[key];
-              Buttonpressed(&page, akey, &numberOfPlants, allPlants, &pointer);             
-            }
-           else {
-            no_button_press(&page, &nopress);  
-           }
+      if ((key = keyscan()) >= 0)
+      {
+        nopress = 0; /// for a time out (no button pressed after x mins return to home screen)
+        akey = lookUpTbl[key];
+        Buttonpressed(&page, akey, &numberOfPlants, allPlants, &pointer);
+      }
+      else
+      {
+        no_button_press(&page, &nopress);
+      }
     }
   }
 }

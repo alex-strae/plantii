@@ -1,4 +1,5 @@
 #include "adc.h"
+#include "menu.h"
 #include "lcd.h"
 #include "plant.h"
 #include "renderPlants.h"
@@ -93,16 +94,28 @@ void pages(int page, int point, int *pNumberOfPlants, Plant allPlants[])
         LCD_ShowStr(x, y, "need to be able to read in data", WHITE, TRANSPARENT);
         LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);  //needs function
         }break;
+      case LAMP:{
+        LCD_Clear(BLACK);
+        LCD_ShowChar(1,point,'>',TRANSPARENT,WHITE);
+        LCD_ShowStr(x, y, "LAMP on", WHITE, TRANSPARENT);y+=16;
+        gpio_bit_set(GPIOB, GPIO_PIN_7);
+        
+        LCD_ShowStr(x, BACK_Y, "back", WHITE, TRANSPARENT);
+        }break;
       case SNAPSHOT:{
        LCD_Wait_On_Queue();
        for(int i=0;i>500000;i++);
         temp = read_temp();
         LCD_Clear(BLACK);
-        int fukt = ADC_read(1);
+
+        ADC_read(3);
+        int fukt = ADC_read(3);
         LCD_ShowChar(1,point,'>',TRANSPARENT,WHITE);
         LCD_ShowStr(x, y, "Moisture: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,fukt,4,WHITE);y+=16;
-        int sun = ADC_read(3);
+        
+        ADC_read(1);
+        int sun = ADC_read(1);
         LCD_ShowStr(x, y, "sun: ", WHITE, TRANSPARENT);
         LCD_ShowNum(x+(9*8),y,sun,4,WHITE);y+=16;
         LCD_ShowStr(x, y, "Temp: ", WHITE, TRANSPARENT);
@@ -171,7 +184,7 @@ int which_page(int page, int pointer)
     switch(page)
     {
       case HOME:return MAINMENU;
-      case MAINMENU:
+    case MAINMENU:
       {
           switch (cursor)
           {
@@ -179,7 +192,8 @@ int which_page(int page, int pointer)
             case 0: return SEEDATA;break;
             case 1: return REGISTER; break;
             case 2: return RESET; break;
-            case 7: return HOME; break;
+            case 3: return LAMP; break;
+            case 7: return HOME; break;    
             default: return -1;break;
           }
       }
@@ -240,6 +254,14 @@ int which_page(int page, int pointer)
           default:return -1;  break;
         }
       }
+      case LAMP:
+      {
+         switch(cursor)
+        {
+          case 7: return HOME; break;
+          default:return -1;  break;
+        }
+      }
       case REGISTER:
       {
         switch (cursor)
@@ -265,6 +287,7 @@ int which_page(int page, int pointer)
       {
         switch (cursor)
         {
+          case 7: return HOME; break;
           default:return -1;break;
         }
       }
@@ -272,6 +295,7 @@ int which_page(int page, int pointer)
       {
         switch (cursor)
         {
+          case 7: return HOME; break;
           default:return -1;break;
         }
       }
@@ -279,6 +303,7 @@ int which_page(int page, int pointer)
       {
         switch (cursor)
         {
+          case 7: return HOME; break;
           default:return -1;break;
         }
       }
@@ -313,7 +338,7 @@ void Buttonpressed(int *P_page,int akey, int *pNumberOfPlants, Plant allPlants[]
                     {
                       (*P_point) = 13; 
                       (*P_page) = next_page;                                 //NEW PAGE PUT THE CURSOR IN THE START POSITION (ROW 0)
-                      pages(*P_page,*P_point, pNumberOfPlants,allPlants);  //numberOfPlants,allPlants = alex_code
+                      pages(*P_page,*P_point, pNumberOfPlants,allPlants);  
                     }
                     else (*P_page)=(*P_page);
                   }break;

@@ -53,7 +53,6 @@ void LCD_WR_Queue(){
     }
 }
 
-
 int is_LCD_queue_empy()
 {
 	if (r==w)
@@ -171,9 +170,6 @@ void spi_config(void)
     spi_init_struct.endian               = SPI_ENDIAN_MSB;
     spi_init(SPI1, &spi_init_struct);
 
-
-	
-
 	//spi_crc_polynomial_set(SPI1,7);
 	spi_enable(SPI1);
 }
@@ -208,7 +204,7 @@ void Lcd_Init(void)
  	rcu_periph_clock_enable(RCU_AF);
 	rcu_periph_clock_enable(RCU_SPI1);
 	
-    gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13 |GPIO_PIN_14| GPIO_PIN_15);
+    gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13 | GPIO_PIN_15);
 	gpio_init(GPIOC, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13 | GPIO_PIN_15); //CS
 
 	spi_config();

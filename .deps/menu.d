@@ -1,4 +1,4 @@
-build/menu.o: menu.c adc.h lcd.h \
+build/menu.o: menu.c adc.h menu.h plant.h lcd.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h \
@@ -26,9 +26,13 @@ build/menu.o: menu.c adc.h lcd.h \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h plant.h
+ ../../firmware/RISCV/drivers/riscv_const.h renderPlants.h
 
 adc.h:
+
+menu.h:
+
+plant.h:
 
 lcd.h:
 
@@ -88,4 +92,4 @@ lcd.h:
 
 ../../firmware/RISCV/drivers/riscv_const.h:
 
-plant.h:
+renderPlants.h:

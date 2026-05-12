@@ -3,10 +3,31 @@
 
 #include "plant.h"
 
-void pages(int page, int point, int numberOfPlants, Plant allPlants[]);
+enum {
+    HOME,
+    MAINMENU,
+    SEEDATA,
+    plant1,
+    SNAPSHOT,
+    VIEWHISTORY,
+    plant2,
+    plant3,
+    REGISTER,
+    CHOOSE_DEFUALT,
+    TOMATO,
+    CUCUMBER,
+    PURPLEHAZE,
+    CUSTOM_SETTINGS,
+    RESETDATA,
+    SHOW_ALEX_CODE,
+    PROVE_MUX,
+    LAMP,
+};
+
+void pages(int page, int point, int *numberOfPlants, Plant allPlants[]);
 void move_pointer(int *P_pointer, int key,int page);
 int which_page(int page, int pointer);
-void Buttonpressed(int *P_page,int akey, int numberOfPlants, Plant allPlants[], int *P_point);
+void Buttonpressed(int *P_page,int akey, int *numberOfPlants, Plant allPlants[], int *P_point);
 void no_button_press(int *P_page,int *P_nopress);
 
 #endif

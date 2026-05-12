@@ -26,7 +26,7 @@ build/wifiServices.o: wifiServices.c lcd.h \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h plant.h usart.h \
+ ../../firmware/RISCV/drivers/riscv_const.h plant.h usart.h pwm.h \
  wifiServices.h renderPlants.h
 
 lcd.h:
@@ -90,6 +90,8 @@ lcd.h:
 plant.h:
 
 usart.h:
+
+pwm.h:
 
 wifiServices.h:
 

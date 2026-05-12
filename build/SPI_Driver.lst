@@ -1,0 +1,710 @@
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 1
+
+
+   1              		.file	"SPI_Driver.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv32i2p0_m2p0_a2p0_c2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.section	.text.spi0_init,"ax",@progbits
+  10              		.align	1
+  11              		.globl	spi0_init
+  13              	spi0_init:
+  14              	.LFB3:
+  15              		.file 1 "SPI_Driver.c"
+   1:SPI_Driver.c  **** #include "gd32vf103.h"
+   2:SPI_Driver.c  **** #include "gd32vf103_spi.h"
+   3:SPI_Driver.c  **** #include "spi_driver.h"
+   4:SPI_Driver.c  **** 
+   5:SPI_Driver.c  **** 
+   6:SPI_Driver.c  **** // GPIO INIT
+   7:SPI_Driver.c  **** void spi0_gpio_init(void)
+   8:SPI_Driver.c  **** {
+   9:SPI_Driver.c  ****     // Enable clocks 
+  10:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_GPIOC);
+  11:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_GPIOB);
+  12:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_AF);   // Important for alternate functions
+  13:SPI_Driver.c  **** 
+  14:SPI_Driver.c  ****     // SCK
+  15:SPI_Driver.c  ****     gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13);
+  16:SPI_Driver.c  **** 
+  17:SPI_Driver.c  ****     //MOSI
+  18:SPI_Driver.c  ****     gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_15);
+  19:SPI_Driver.c  **** 
+  20:SPI_Driver.c  ****     //MISO
+  21:SPI_Driver.c  ****     gpio_init(GPIOB, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, GPIO_PIN_14);
+  22:SPI_Driver.c  **** 
+  23:SPI_Driver.c  ****     //CS 
+  24:SPI_Driver.c  ****     gpio_init(GPIOC, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_14);
+  25:SPI_Driver.c  **** 
+  26:SPI_Driver.c  ****     // Deselect SD card
+  27:SPI_Driver.c  ****     sd_cs_high();
+  28:SPI_Driver.c  **** }
+  29:SPI_Driver.c  **** 
+  30:SPI_Driver.c  **** 
+  31:SPI_Driver.c  **** // SPI INIT
+  32:SPI_Driver.c  **** void spi0_init(void)
+  33:SPI_Driver.c  **** {
+  16              		.loc 1 33 1
+  17              		.cfi_startproc
+  34:SPI_Driver.c  ****     spi_parameter_struct spi_init_struct;
+  18              		.loc 1 34 5
+  35:SPI_Driver.c  **** 
+  36:SPI_Driver.c  ****     // Enable SPI clock
+  37:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_SPI1);
+  19              		.loc 1 37 5
+  33:SPI_Driver.c  ****     spi_parameter_struct spi_init_struct;
+  20              		.loc 1 33 1 is_stmt 0
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 2
+
+
+  21 0000 7971     		addi	sp,sp,-48
+  22              	.LCFI0:
+  23              		.cfi_def_cfa_offset 48
+  24              		.loc 1 37 5
+  25 0002 1305E070 		li	a0,1806
+  33:SPI_Driver.c  ****     spi_parameter_struct spi_init_struct;
+  26              		.loc 1 33 1
+  27 0006 06D6     		sw	ra,44(sp)
+  28 0008 22D4     		sw	s0,40(sp)
+  29              		.cfi_offset 1, -4
+  30              		.cfi_offset 8, -8
+  31              		.loc 1 37 5
+  32 000a 97000000 		call	rcu_periph_clock_enable
+  32      E7800000 
+  33              	.LVL0:
+  38:SPI_Driver.c  **** 
+  39:SPI_Driver.c  ****     // Reset SPI
+  40:SPI_Driver.c  ****     spi_i2s_deinit(SPI1);
+  34              		.loc 1 40 5 is_stmt 1
+  35 0012 37440040 		li	s0,1073758208
+  36 0016 13050480 		addi	a0,s0,-2048
+  37 001a 97000000 		call	spi_i2s_deinit
+  37      E7800000 
+  38              	.LVL1:
+  41:SPI_Driver.c  **** 
+  42:SPI_Driver.c  ****     // Default config
+  43:SPI_Driver.c  ****     spi_struct_para_init(&spi_init_struct);
+  39              		.loc 1 43 5
+  40 0022 4800     		addi	a0,sp,4
+  41 0024 97000000 		call	spi_struct_para_init
+  41      E7800000 
+  42              	.LVL2:
+  44:SPI_Driver.c  **** 
+  45:SPI_Driver.c  ****     spi_init_struct.device_mode = SPI_MASTER;
+  43              		.loc 1 45 5
+  44              		.loc 1 45 33 is_stmt 0
+  45 002c 93074010 		li	a5,260
+  46 0030 3EC2     		sw	a5,4(sp)
+  46:SPI_Driver.c  ****     spi_init_struct.trans_mode = SPI_TRANSMODE_FULLDUPLEX;
+  47              		.loc 1 46 5 is_stmt 1
+  47:SPI_Driver.c  ****     spi_init_struct.frame_size = SPI_FRAMESIZE_8BIT;
+  48:SPI_Driver.c  ****     spi_init_struct.nss = SPI_NSS_SOFT;
+  48              		.loc 1 48 25 is_stmt 0
+  49 0032 93070020 		li	a5,512
+  50 0036 3EC8     		sw	a5,16(sp)
+  49:SPI_Driver.c  ****     spi_init_struct.endian = SPI_ENDIAN_MSB;
+  50:SPI_Driver.c  **** 
+  51:SPI_Driver.c  ****     // SD card SPI mode: MODE 0
+  52:SPI_Driver.c  ****     spi_init_struct.clock_polarity_phase = SPI_CK_PL_LOW_PH_1EDGE;
+  53:SPI_Driver.c  **** 
+  54:SPI_Driver.c  ****     // Slow clock for SD init (~<400 kHz)
+  55:SPI_Driver.c  ****     spi_init_struct.prescale = SPI_PSC_128;
+  56:SPI_Driver.c  **** 
+  57:SPI_Driver.c  ****     spi_init(SPI1, &spi_init_struct);
+  51              		.loc 1 57 5
+  52 0038 4C00     		addi	a1,sp,4
+  55:SPI_Driver.c  **** 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 3
+
+
+  53              		.loc 1 55 30
+  54 003a 93070003 		li	a5,48
+  55              		.loc 1 57 5
+  56 003e 13050480 		addi	a0,s0,-2048
+  55:SPI_Driver.c  **** 
+  57              		.loc 1 55 30
+  58 0042 3ECE     		sw	a5,28(sp)
+  46:SPI_Driver.c  ****     spi_init_struct.frame_size = SPI_FRAMESIZE_8BIT;
+  59              		.loc 1 46 32
+  60 0044 02C4     		sw	zero,8(sp)
+  47:SPI_Driver.c  ****     spi_init_struct.nss = SPI_NSS_SOFT;
+  61              		.loc 1 47 5 is_stmt 1
+  47:SPI_Driver.c  ****     spi_init_struct.nss = SPI_NSS_SOFT;
+  62              		.loc 1 47 32 is_stmt 0
+  63 0046 02C6     		sw	zero,12(sp)
+  48:SPI_Driver.c  ****     spi_init_struct.endian = SPI_ENDIAN_MSB;
+  64              		.loc 1 48 5 is_stmt 1
+  49:SPI_Driver.c  **** 
+  65              		.loc 1 49 5
+  49:SPI_Driver.c  **** 
+  66              		.loc 1 49 28 is_stmt 0
+  67 0048 02CA     		sw	zero,20(sp)
+  52:SPI_Driver.c  **** 
+  68              		.loc 1 52 5 is_stmt 1
+  52:SPI_Driver.c  **** 
+  69              		.loc 1 52 42 is_stmt 0
+  70 004a 02CC     		sw	zero,24(sp)
+  55:SPI_Driver.c  **** 
+  71              		.loc 1 55 5 is_stmt 1
+  72              		.loc 1 57 5
+  73 004c 97000000 		call	spi_init
+  73      E7800000 
+  74              	.LVL3:
+  58:SPI_Driver.c  **** 
+  59:SPI_Driver.c  ****     // Enable SPI 
+  60:SPI_Driver.c  ****     spi_enable(SPI1);
+  75              		.loc 1 60 5
+  76 0054 13050480 		addi	a0,s0,-2048
+  77 0058 97000000 		call	spi_enable
+  77      E7800000 
+  78              	.LVL4:
+  61:SPI_Driver.c  **** }
+  79              		.loc 1 61 1 is_stmt 0
+  80 0060 B250     		lw	ra,44(sp)
+  81              		.cfi_restore 1
+  82 0062 2254     		lw	s0,40(sp)
+  83              		.cfi_restore 8
+  84 0064 4561     		addi	sp,sp,48
+  85              	.LCFI1:
+  86              		.cfi_def_cfa_offset 0
+  87 0066 8280     		jr	ra
+  88              		.cfi_endproc
+  89              	.LFE3:
+  91              		.section	.text.sd_cs_low,"ax",@progbits
+  92              		.align	1
+  93              		.globl	sd_cs_low
+  95              	sd_cs_low:
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 4
+
+
+  96              	.LFB4:
+  62:SPI_Driver.c  **** 
+  63:SPI_Driver.c  **** 
+  64:SPI_Driver.c  **** // CS CONTROL
+  65:SPI_Driver.c  **** void sd_cs_low(void)
+  66:SPI_Driver.c  **** {
+  97              		.loc 1 66 1 is_stmt 1
+  98              		.cfi_startproc
+  67:SPI_Driver.c  ****     gpio_bit_reset(GPIOC, GPIO_PIN_14);
+  99              		.loc 1 67 5
+ 100 0000 9165     		li	a1,16384
+ 101 0002 37150140 		li	a0,1073811456
+ 102 0006 17030000 		tail	gpio_bit_reset
+ 102      67000300 
+ 103              	.LVL5:
+ 104              		.cfi_endproc
+ 105              	.LFE4:
+ 107              		.section	.text.sd_cs_high,"ax",@progbits
+ 108              		.align	1
+ 109              		.globl	sd_cs_high
+ 111              	sd_cs_high:
+ 112              	.LFB5:
+  68:SPI_Driver.c  **** }
+  69:SPI_Driver.c  **** 
+  70:SPI_Driver.c  **** void sd_cs_high(void)
+  71:SPI_Driver.c  **** {
+ 113              		.loc 1 71 1
+ 114              		.cfi_startproc
+  72:SPI_Driver.c  ****     gpio_bit_set(GPIOC, GPIO_PIN_14);
+ 115              		.loc 1 72 5
+ 116 0000 9165     		li	a1,16384
+ 117 0002 37150140 		li	a0,1073811456
+ 118 0006 17030000 		tail	gpio_bit_set
+ 118      67000300 
+ 119              	.LVL6:
+ 120              		.cfi_endproc
+ 121              	.LFE5:
+ 123              		.section	.text.spi0_gpio_init,"ax",@progbits
+ 124              		.align	1
+ 125              		.globl	spi0_gpio_init
+ 127              	spi0_gpio_init:
+ 128              	.LFB2:
+   8:SPI_Driver.c  ****     // Enable clocks 
+ 129              		.loc 1 8 1
+ 130              		.cfi_startproc
+  10:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_GPIOB);
+ 131              		.loc 1 10 5
+   8:SPI_Driver.c  ****     // Enable clocks 
+ 132              		.loc 1 8 1 is_stmt 0
+ 133 0000 4111     		addi	sp,sp,-16
+ 134              	.LCFI2:
+ 135              		.cfi_def_cfa_offset 16
+  10:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_GPIOB);
+ 136              		.loc 1 10 5
+ 137 0002 13054060 		li	a0,1540
+   8:SPI_Driver.c  ****     // Enable clocks 
+ 138              		.loc 1 8 1
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 5
+
+
+ 139 0006 06C6     		sw	ra,12(sp)
+ 140 0008 22C4     		sw	s0,8(sp)
+ 141              		.cfi_offset 1, -4
+ 142              		.cfi_offset 8, -8
+  10:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_GPIOB);
+ 143              		.loc 1 10 5
+ 144 000a 97000000 		call	rcu_periph_clock_enable
+ 144      E7800000 
+ 145              	.LVL7:
+  11:SPI_Driver.c  ****     rcu_periph_clock_enable(RCU_AF);   // Important for alternate functions
+ 146              		.loc 1 11 5 is_stmt 1
+ 147 0012 13053060 		li	a0,1539
+ 148 0016 97000000 		call	rcu_periph_clock_enable
+ 148      E7800000 
+ 149              	.LVL8:
+  12:SPI_Driver.c  **** 
+ 150              		.loc 1 12 5
+ 151 001e 13050060 		li	a0,1536
+ 152 0022 97000000 		call	rcu_periph_clock_enable
+ 152      E7800000 
+ 153              	.LVL9:
+  15:SPI_Driver.c  **** 
+ 154              		.loc 1 15 5
+ 155 002a 37140140 		li	s0,1073811456
+ 156 002e 130504C0 		addi	a0,s0,-1024
+ 157 0032 8966     		li	a3,8192
+ 158 0034 0D46     		li	a2,3
+ 159 0036 E145     		li	a1,24
+ 160 0038 97000000 		call	gpio_init
+ 160      E7800000 
+ 161              	.LVL10:
+  18:SPI_Driver.c  **** 
+ 162              		.loc 1 18 5
+ 163 0040 130504C0 		addi	a0,s0,-1024
+ 164 0044 A166     		li	a3,32768
+ 165 0046 0D46     		li	a2,3
+ 166 0048 E145     		li	a1,24
+ 167 004a 97000000 		call	gpio_init
+ 167      E7800000 
+ 168              	.LVL11:
+  21:SPI_Driver.c  **** 
+ 169              		.loc 1 21 5
+ 170 0052 130504C0 		addi	a0,s0,-1024
+ 171 0056 9166     		li	a3,16384
+ 172 0058 0D46     		li	a2,3
+ 173 005a 93058004 		li	a1,72
+ 174 005e 97000000 		call	gpio_init
+ 174      E7800000 
+ 175              	.LVL12:
+  24:SPI_Driver.c  **** 
+ 176              		.loc 1 24 5
+ 177 0066 9166     		li	a3,16384
+ 178 0068 0D46     		li	a2,3
+ 179 006a C145     		li	a1,16
+ 180 006c 37150140 		li	a0,1073811456
+ 181 0070 97000000 		call	gpio_init
+ 181      E7800000 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 6
+
+
+ 182              	.LVL13:
+  27:SPI_Driver.c  **** }
+ 183              		.loc 1 27 5
+  28:SPI_Driver.c  **** 
+ 184              		.loc 1 28 1 is_stmt 0
+ 185 0078 2244     		lw	s0,8(sp)
+ 186              		.cfi_restore 8
+ 187 007a B240     		lw	ra,12(sp)
+ 188              		.cfi_restore 1
+ 189 007c 4101     		addi	sp,sp,16
+ 190              	.LCFI3:
+ 191              		.cfi_def_cfa_offset 0
+  27:SPI_Driver.c  **** }
+ 192              		.loc 1 27 5
+ 193 007e 17030000 		tail	sd_cs_high
+ 193      67000300 
+ 194              	.LVL14:
+ 195              		.cfi_endproc
+ 196              	.LFE2:
+ 198              		.section	.text.spi0_txrx,"ax",@progbits
+ 199              		.align	1
+ 200              		.globl	spi0_txrx
+ 202              	spi0_txrx:
+ 203              	.LFB6:
+  73:SPI_Driver.c  **** }
+  74:SPI_Driver.c  **** 
+  75:SPI_Driver.c  **** 
+  76:SPI_Driver.c  **** // SPI TRANSFER
+  77:SPI_Driver.c  **** uint8_t spi0_txrx(uint8_t data)
+  78:SPI_Driver.c  **** {
+ 204              		.loc 1 78 1 is_stmt 1
+ 205              		.cfi_startproc
+ 206              	.LVL15:
+  79:SPI_Driver.c  ****     // Wait until transmit buffer empty
+  80:SPI_Driver.c  ****     while (RESET == spi_i2s_flag_get(SPI1, SPI_FLAG_TBE));
+ 207              		.loc 1 80 5
+  78:SPI_Driver.c  ****     // Wait until transmit buffer empty
+ 208              		.loc 1 78 1 is_stmt 0
+ 209 0000 4111     		addi	sp,sp,-16
+ 210              	.LCFI4:
+ 211              		.cfi_def_cfa_offset 16
+ 212 0002 22C4     		sw	s0,8(sp)
+ 213              		.cfi_offset 8, -8
+ 214              		.loc 1 80 21
+ 215 0004 37440040 		li	s0,1073758208
+  78:SPI_Driver.c  ****     // Wait until transmit buffer empty
+ 216              		.loc 1 78 1
+ 217 0008 26C2     		sw	s1,4(sp)
+ 218 000a 4AC0     		sw	s2,0(sp)
+ 219 000c 06C6     		sw	ra,12(sp)
+ 220              		.cfi_offset 9, -12
+ 221              		.cfi_offset 18, -16
+ 222              		.cfi_offset 1, -4
+  78:SPI_Driver.c  ****     // Wait until transmit buffer empty
+ 223              		.loc 1 78 1
+ 224 000e AA84     		mv	s1,a0
+ 225              		.loc 1 80 21
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 7
+
+
+ 226 0010 13090480 		addi	s2,s0,-2048
+ 227              	.LVL16:
+ 228              	.L8:
+ 229              		.loc 1 80 58 is_stmt 1 discriminator 1
+ 230              		.loc 1 80 21 is_stmt 0 discriminator 1
+ 231 0014 8945     		li	a1,2
+ 232 0016 4A85     		mv	a0,s2
+ 233 0018 97000000 		call	spi_i2s_flag_get
+ 233      E7800000 
+ 234              	.LVL17:
+ 235              		.loc 1 80 11 discriminator 1
+ 236 0020 75D9     		beq	a0,zero,.L8
+  81:SPI_Driver.c  **** 
+  82:SPI_Driver.c  ****     spi_i2s_data_transmit(SPI1, data);
+ 237              		.loc 1 82 5 is_stmt 1
+ 238 0022 A685     		mv	a1,s1
+ 239 0024 13050480 		addi	a0,s0,-2048
+  83:SPI_Driver.c  **** 
+  84:SPI_Driver.c  ****     // Wait until data received
+  85:SPI_Driver.c  ****     while (RESET == spi_i2s_flag_get(SPI1, SPI_FLAG_RBNE));
+ 240              		.loc 1 85 21 is_stmt 0
+ 241 0028 37440040 		li	s0,1073758208
+  82:SPI_Driver.c  **** 
+ 242              		.loc 1 82 5
+ 243 002c 97000000 		call	spi_i2s_data_transmit
+ 243      E7800000 
+ 244              	.LVL18:
+ 245              		.loc 1 85 5 is_stmt 1
+ 246              		.loc 1 85 21 is_stmt 0
+ 247 0034 93040480 		addi	s1,s0,-2048
+ 248              	.L9:
+ 249              		.loc 1 85 59 is_stmt 1 discriminator 1
+ 250              		.loc 1 85 21 is_stmt 0 discriminator 1
+ 251 0038 8545     		li	a1,1
+ 252 003a 2685     		mv	a0,s1
+ 253 003c 97000000 		call	spi_i2s_flag_get
+ 253      E7800000 
+ 254              	.LVL19:
+ 255              		.loc 1 85 11 discriminator 1
+ 256 0044 75D9     		beq	a0,zero,.L9
+  86:SPI_Driver.c  **** 
+  87:SPI_Driver.c  ****     return (uint8_t)spi_i2s_data_receive(SPI1);
+ 257              		.loc 1 87 5 is_stmt 1
+ 258              		.loc 1 87 21 is_stmt 0
+ 259 0046 13050480 		addi	a0,s0,-2048
+ 260 004a 97000000 		call	spi_i2s_data_receive
+ 260      E7800000 
+ 261              	.LVL20:
+  88:SPI_Driver.c  **** }...
+ 262              		.loc 1 88 1
+ 263 0052 B240     		lw	ra,12(sp)
+ 264              		.cfi_restore 1
+ 265 0054 2244     		lw	s0,8(sp)
+ 266              		.cfi_restore 8
+ 267 0056 9244     		lw	s1,4(sp)
+ 268              		.cfi_restore 9
+ 269 0058 0249     		lw	s2,0(sp)
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 8
+
+
+ 270              		.cfi_restore 18
+ 271 005a 1375F50F 		andi	a0,a0,0xff
+ 272 005e 4101     		addi	sp,sp,16
+ 273              	.LCFI5:
+ 274              		.cfi_def_cfa_offset 0
+ 275 0060 8280     		jr	ra
+ 276              		.cfi_endproc
+ 277              	.LFE6:
+ 279              		.text
+ 280              	.Letext0:
+ 281              		.file 2 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/machine/_d
+ 282              		.file 3 "/Users/alexstrae/toolchain-gd32v-v202-osx/compiler/riscv64-unknown-elf/include/sys/_stdin
+ 283              		.file 4 "../../firmware/GD32VF103_standard_peripheral/gd32vf103.h"
+ 284              		.file 5 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_rcu.h"
+ 285              		.file 6 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_spi.h"
+ 286              		.file 7 "../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h"
+ 287              		.file 8 "../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h"
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 SPI_Driver.c
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:13     .text.spi0_init:0000000000000000 spi0_init
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:17     .text.spi0_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:18     .text.spi0_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:19     .text.spi0_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:20     .text.spi0_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:21     .text.spi0_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:23     .text.spi0_init:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:25     .text.spi0_init:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:27     .text.spi0_init:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:29     .text.spi0_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:30     .text.spi0_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:32     .text.spi0_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:35     .text.spi0_init:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:40     .text.spi0_init:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:44     .text.spi0_init:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:45     .text.spi0_init:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:48     .text.spi0_init:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:49     .text.spi0_init:0000000000000032 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:52     .text.spi0_init:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:54     .text.spi0_init:000000000000003a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:56     .text.spi0_init:000000000000003e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:58     .text.spi0_init:0000000000000042 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:60     .text.spi0_init:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:62     .text.spi0_init:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:63     .text.spi0_init:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:65     .text.spi0_init:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:66     .text.spi0_init:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:67     .text.spi0_init:0000000000000048 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:69     .text.spi0_init:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:70     .text.spi0_init:000000000000004a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:72     .text.spi0_init:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:73     .text.spi0_init:000000000000004c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:76     .text.spi0_init:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:80     .text.spi0_init:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:81     .text.spi0_init:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:83     .text.spi0_init:0000000000000064 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:86     .text.spi0_init:0000000000000066 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:88     .text.spi0_init:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:95     .text.sd_cs_low:0000000000000000 sd_cs_low
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:98     .text.sd_cs_low:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:99     .text.sd_cs_low:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:100    .text.sd_cs_low:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:104    .text.sd_cs_low:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:111    .text.sd_cs_high:0000000000000000 sd_cs_high
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:114    .text.sd_cs_high:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:115    .text.sd_cs_high:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:116    .text.sd_cs_high:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:120    .text.sd_cs_high:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:127    .text.spi0_gpio_init:0000000000000000 spi0_gpio_init
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:130    .text.spi0_gpio_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:131    .text.spi0_gpio_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:132    .text.spi0_gpio_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:133    .text.spi0_gpio_init:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:135    .text.spi0_gpio_init:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:137    .text.spi0_gpio_init:0000000000000002 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 10
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:139    .text.spi0_gpio_init:0000000000000006 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:141    .text.spi0_gpio_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:142    .text.spi0_gpio_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:144    .text.spi0_gpio_init:000000000000000a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:147    .text.spi0_gpio_init:0000000000000012 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:151    .text.spi0_gpio_init:000000000000001e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:155    .text.spi0_gpio_init:000000000000002a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:163    .text.spi0_gpio_init:0000000000000040 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:170    .text.spi0_gpio_init:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:177    .text.spi0_gpio_init:0000000000000066 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:184    .text.spi0_gpio_init:0000000000000078 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:185    .text.spi0_gpio_init:0000000000000078 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:186    .text.spi0_gpio_init:000000000000007a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:188    .text.spi0_gpio_init:000000000000007c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:191    .text.spi0_gpio_init:000000000000007e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:193    .text.spi0_gpio_init:000000000000007e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:195    .text.spi0_gpio_init:0000000000000086 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:202    .text.spi0_txrx:0000000000000000 spi0_txrx
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:205    .text.spi0_txrx:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:207    .text.spi0_txrx:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:208    .text.spi0_txrx:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:209    .text.spi0_txrx:0000000000000000 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:211    .text.spi0_txrx:0000000000000002 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:213    .text.spi0_txrx:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:215    .text.spi0_txrx:0000000000000004 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:217    .text.spi0_txrx:0000000000000008 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:220    .text.spi0_txrx:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:221    .text.spi0_txrx:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:222    .text.spi0_txrx:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:224    .text.spi0_txrx:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:226    .text.spi0_txrx:0000000000000010 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:230    .text.spi0_txrx:0000000000000014 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:231    .text.spi0_txrx:0000000000000014 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:236    .text.spi0_txrx:0000000000000020 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:238    .text.spi0_txrx:0000000000000022 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:241    .text.spi0_txrx:0000000000000028 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:243    .text.spi0_txrx:000000000000002c .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:246    .text.spi0_txrx:0000000000000034 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:247    .text.spi0_txrx:0000000000000034 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:250    .text.spi0_txrx:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:251    .text.spi0_txrx:0000000000000038 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:256    .text.spi0_txrx:0000000000000044 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:258    .text.spi0_txrx:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:259    .text.spi0_txrx:0000000000000046 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:263    .text.spi0_txrx:0000000000000052 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:264    .text.spi0_txrx:0000000000000054 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:266    .text.spi0_txrx:0000000000000056 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:268    .text.spi0_txrx:0000000000000058 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:270    .text.spi0_txrx:000000000000005a .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:274    .text.spi0_txrx:0000000000000060 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:276    .text.spi0_txrx:0000000000000062 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:91     .text.spi0_init:0000000000000068 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:107    .text.sd_cs_low:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:123    .text.sd_cs_high:000000000000000e .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:198    .text.spi0_gpio_init:0000000000000086 .L0 
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:279    .text.spi0_txrx:0000000000000062 .L0 
+                     .debug_frame:0000000000000000 .L0 
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 11
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:228    .text.spi0_txrx:0000000000000014 .L8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:248    .text.spi0_txrx:0000000000000038 .L9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1065   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1552   .debug_str:0000000000000000 .LASF74
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1672   .debug_str:0000000000000380 .LASF75
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1568   .debug_str:00000000000000da .LASF76
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1536   .debug_ranges:0000000000000000 .Ldebug_ranges0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1550   .debug_line:0000000000000000 .Ldebug_line0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1650   .debug_str:00000000000002f8 .LASF0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1642   .debug_str:00000000000002c3 .LASF1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1712   .debug_str:0000000000000459 .LASF6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1630   .debug_str:0000000000000277 .LASF2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1580   .debug_str:0000000000000160 .LASF3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1670   .debug_str:000000000000036d .LASF4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1598   .debug_str:00000000000001c1 .LASF5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1572   .debug_str:000000000000012b .LASF7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1654   .debug_str:000000000000030b .LASF8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1570   .debug_str:000000000000011d .LASF9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1644   .debug_str:00000000000002cf .LASF10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1586   .debug_str:000000000000018c .LASF11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1648   .debug_str:00000000000002ef .LASF12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1556   .debug_str:0000000000000092 .LASF77
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1652   .debug_str:0000000000000305 .LASF13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1674   .debug_str:000000000000038d .LASF14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1676   .debug_str:0000000000000396 .LASF15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1708   .debug_str:0000000000000446 .LASF16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1706   .debug_str:000000000000043d .LASF17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1698   .debug_str:0000000000000410 .LASF18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1610   .debug_str:000000000000020b .LASF19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1612   .debug_str:0000000000000216 .LASF20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1614   .debug_str:0000000000000221 .LASF21
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1616   .debug_str:000000000000022c .LASF22
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1618   .debug_str:0000000000000237 .LASF23
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1620   .debug_str:0000000000000242 .LASF24
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1596   .debug_str:00000000000001b7 .LASF25
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1602   .debug_str:00000000000001d3 .LASF26
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1622   .debug_str:000000000000024d .LASF27
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1658   .debug_str:0000000000000325 .LASF28
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1696   .debug_str:0000000000000405 .LASF29
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1700   .debug_str:000000000000041a .LASF30
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1702   .debug_str:0000000000000424 .LASF31
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1662   .debug_str:000000000000033b .LASF32
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1664   .debug_str:0000000000000344 .LASF33
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1590   .debug_str:000000000000019e .LASF34
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1592   .debug_str:00000000000001a7 .LASF35
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1640   .debug_str:00000000000002ba .LASF36
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1656   .debug_str:000000000000031d .LASF37
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1682   .debug_str:00000000000003ae .LASF38
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1576   .debug_str:0000000000000143 .LASF39
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1684   .debug_str:00000000000003b6 .LASF40
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1560   .debug_str:00000000000000b2 .LASF41
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1562   .debug_str:00000000000000bc .LASF42
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1564   .debug_str:00000000000000c6 .LASF43
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1566   .debug_str:00000000000000d0 .LASF44
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1624   .debug_str:0000000000000256 .LASF45
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1634   .debug_str:000000000000029d .LASF46
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1636   .debug_str:00000000000002a6 .LASF47
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 12
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1608   .debug_str:0000000000000200 .LASF48
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1600   .debug_str:00000000000001ca .LASF49
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1692   .debug_str:00000000000003e5 .LASF50
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1582   .debug_str:000000000000016a .LASF51
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1626   .debug_str:0000000000000260 .LASF52
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1638   .debug_str:00000000000002af .LASF53
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1594   .debug_str:00000000000001b0 .LASF54
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1604   .debug_str:00000000000001dc .LASF55
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1690   .debug_str:00000000000003dc .LASF56
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1686   .debug_str:00000000000003bd .LASF57
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1628   .debug_str:000000000000026b .LASF58
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1588   .debug_str:0000000000000194 .LASF78
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:203    .text.spi0_txrx:0000000000000000 .LFB6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:277    .text.spi0_txrx:0000000000000062 .LFE6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1447   .debug_loc:0000000000000000 .LLST2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1680   .debug_str:00000000000003a9 .LASF79
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1465   .debug_loc:000000000000002c .LLST3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:234    .text.spi0_txrx:0000000000000020 .LVL17
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:244    .text.spi0_txrx:0000000000000034 .LVL18
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:254    .text.spi0_txrx:0000000000000044 .LVL19
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:261    .text.spi0_txrx:0000000000000052 .LVL20
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1660   .debug_str:0000000000000330 .LASF59
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:112    .text.sd_cs_high:0000000000000000 .LFB5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:121    .text.sd_cs_high:000000000000000e .LFE5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:119    .text.sd_cs_high:000000000000000e .LVL6
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1554   .debug_str:0000000000000088 .LASF60
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:96     .text.sd_cs_low:0000000000000000 .LFB4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:105    .text.sd_cs_low:000000000000000e .LFE4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:103    .text.sd_cs_low:000000000000000e .LVL5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1678   .debug_str:000000000000039f .LASF61
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:14     .text.spi0_init:0000000000000000 .LFB3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:89     .text.spi0_init:0000000000000068 .LFE3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1479   .debug_loc:000000000000004d .LLST0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1558   .debug_str:00000000000000a2 .LASF80
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:33     .text.spi0_init:0000000000000012 .LVL0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:38     .text.spi0_init:0000000000000022 .LVL1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:42     .text.spi0_init:000000000000002c .LVL2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:74     .text.spi0_init:0000000000000054 .LVL3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:78     .text.spi0_init:0000000000000060 .LVL4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1704   .debug_str:000000000000042e .LASF62
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:128    .text.spi0_gpio_init:0000000000000000 .LFB2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:196    .text.spi0_gpio_init:0000000000000086 .LFE2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1497   .debug_loc:0000000000000079 .LLST1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:145    .text.spi0_gpio_init:0000000000000012 .LVL7
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:149    .text.spi0_gpio_init:000000000000001e .LVL8
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:153    .text.spi0_gpio_init:000000000000002a .LVL9
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:161    .text.spi0_gpio_init:0000000000000040 .LVL10
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:168    .text.spi0_gpio_init:0000000000000052 .LVL11
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:175    .text.spi0_gpio_init:0000000000000066 .LVL12
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:182    .text.spi0_gpio_init:0000000000000078 .LVL13
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:194    .text.spi0_gpio_init:0000000000000086 .LVL14
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1668   .debug_str:000000000000035c .LASF63
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1584   .debug_str:0000000000000176 .LASF64
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1694   .debug_str:00000000000003f0 .LASF65
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1574   .debug_str:0000000000000136 .LASF66
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1666   .debug_str:000000000000034d .LASF67
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1632   .debug_str:0000000000000285 .LASF68
+GAS LISTING /var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s 			page 13
+
+
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1606   .debug_str:00000000000001f1 .LASF69
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1578   .debug_str:000000000000014b .LASF70
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1646   .debug_str:00000000000002e6 .LASF71
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1710   .debug_str:000000000000044e .LASF72
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:1688   .debug_str:00000000000003d2 .LASF73
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:210    .text.spi0_txrx:0000000000000002 .LCFI4
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:273    .text.spi0_txrx:0000000000000060 .LCFI5
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:206    .text.spi0_txrx:0000000000000000 .LVL15
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:227    .text.spi0_txrx:0000000000000014 .LVL16
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:22     .text.spi0_init:0000000000000002 .LCFI0
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:85     .text.spi0_init:0000000000000066 .LCFI1
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:134    .text.spi0_gpio_init:0000000000000002 .LCFI2
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:190    .text.spi0_gpio_init:000000000000007e .LCFI3
+/var/folders/rt/4gvqv631095f64jvm7jfj_000000gn/T//ccE5dwgl.s:289    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+rcu_periph_clock_enable
+spi_i2s_deinit
+spi_struct_para_init
+spi_init
+spi_enable
+gpio_bit_reset
+gpio_bit_set
+gpio_init
+spi_i2s_flag_get
+spi_i2s_data_transmit
+spi_i2s_data_receive

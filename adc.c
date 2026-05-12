@@ -6,7 +6,8 @@
 #include "gd32vf103.h"
 
 #define FCLK_SLOW() { SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x20; }	// Set SCLK = PCLK2 / 64 
-#define FCLK_FAST() { SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x08; }	// Set SCLK = PCLK2
+#define FCLK_FAST() { SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x08; }
+
 #define MAX_CS_Clr() gpio_bit_reset(GPIOA, GPIO_PIN_4)
 #define MAX_CS_Set() gpio_bit_set(GPIOA, GPIO_PIN_4)
 
@@ -73,7 +74,7 @@ void MAX31865_Init(void) {
     gpio_init(GPIOB, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_13 | GPIO_PIN_15); // SCK (Serial clock) och MOSI (Master Out, Slave In) 
     gpio_init(GPIOB, GPIO_MODE_IN_FLOATING, GPIO_OSPEED_50MHZ, GPIO_PIN_14); // MISO (Master In, Slave Out) 
     
-   MAX_CS_Set(); // Sätter CS hög så sensorn är inaktiv under uppstart
+    MAX_CS_Set(); // Sätter CS hög så sensorn är inaktiv under uppstart
 
    //  SPI-parametrar: Master, 8-bit, Mode 3 (CPOL=1, CPHA=1), Hastighet: dividerat med 32
    spi_struct_para_init(&spi_init_struct);
@@ -84,7 +85,6 @@ void MAX31865_Init(void) {
     spi_init_struct.nss                  = SPI_NSS_SOFT;
     spi_init_struct.prescale             = SPI_PSC_32; 
     spi_init_struct.endian               = SPI_ENDIAN_MSB; 
-    
     spi_init(SPI1, &spi_init_struct);
 
     spi_enable(SPI1); // Startar SPI0-modulen
@@ -137,13 +137,13 @@ float read_temp(void) {
 }
         sample_count++;
     }
-    return (temp_sum / 5.0f);//temp_sum / 5.0f
+    return (temp_sum / 5.0f);
 }
 
 int ADC_read(int channel) {
 
     if(channel == 1)
-    adc_regular_channel_config(ADC0, 0, ADC_CHANNEL_1, ADC_SAMPLETIME_13POINT5);  ////////
+    adc_regular_channel_config(ADC0, 0, ADC_CHANNEL_1, ADC_SAMPLETIME_13POINT5);  
     if(channel == 3)
     adc_regular_channel_config(ADC0, 0, ADC_CHANNEL_3, ADC_SAMPLETIME_13POINT5);
 
@@ -152,12 +152,13 @@ int ADC_read(int channel) {
     while(!adc_flag_get(ADC0, ADC_FLAG_EOC));
 
     int sensorValue = (int) adc_regular_data_read(ADC0);
-    if (channel == 3) {
-        //KALIBRERA SOLVÄRDE. PITCH BLACK = 4000. FULL SOL = 0
-        sensorValue = 3800 - sensorValue;
+    
+    if (channel == 1) {
+        //KALIBRERA SOLVÄRDE. PITCH BLACK = 0. FULL SOL = 4000
+        //sensorValue = 3800 - sensorValue;
         if (sensorValue < 0) sensorValue = 0;
-        sensorValue /= 38;
-    } else if (channel == 1) {
+        sensorValue /= 39;
+    } else if (channel == 3) {
         //KALIBRERA FUKTVÄRDE. WET = 1600. DRY = 2500
         sensorValue = 2500 - sensorValue;
         if (sensorValue < 0) sensorValue = 0;

@@ -182,10 +182,12 @@ void updatePlantStatus(Plant *plant)
   if (plant->sun[plant->numberOfSunReadings - 1].reading > plant->highSun)
   {
     STR_COPY(plant->currentStatus, "BEHÖVER SKUGGA");
+    gpio_bit_reset(GPIOB, GPIO_PIN_7);
   }
   else if (plant->sun[plant->numberOfSunReadings - 1].reading < plant->lowSun)
   {
     STR_COPY(plant->currentStatus, "BEHÖVER LJUS");
+    gpio_bit_set(GPIOB, GPIO_PIN_7);
   }
 
   if (plant->moisture[plant->numberOfMoistureReadings - 1].reading < plant->lowMoist)

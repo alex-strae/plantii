@@ -26,7 +26,7 @@ build/plant.o: plant.c plant.h lcd.h \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h adc.h
+ ../../firmware/RISCV/drivers/riscv_const.h pwm.h adc.h
 
 plant.h:
 
@@ -87,5 +87,7 @@ lcd.h:
 ../../firmware/RISCV/drivers/n200_eclic.h:
 
 ../../firmware/RISCV/drivers/riscv_const.h:
+
+pwm.h:
 
 adc.h:
