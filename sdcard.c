@@ -3,14 +3,19 @@
 #include "stdio.h"
 #include "string.h"
 #include "ff.h"
-#define ENABLE_LCD_SPEED() { SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x08; }
-#define ENABLE_SD_SPEED() { SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x28; }	// Set SCLK = PCLK2
-
+#define ENABLE_LCD_SPEED()                                \
+    {                                                     \
+        SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x08; \
+    }
+#define ENABLE_SD_SPEED()                                 \
+    {                                                     \
+        SPI_CTL0(SPI1) = (SPI_CTL0(SPI1) & ~0x38) | 0x28; \
+    } // Set SCLK = PCLK2
 
 int loadDB(Plant allPlants[], int *numberOfPlants)
 {
     ENABLE_SD_SPEED();
-    PlantDatabase db;
+    PlantDatabase db = {0};
     FIL file;
     UINT br;
 
@@ -20,11 +25,12 @@ int loadDB(Plant allPlants[], int *numberOfPlants)
         {
             f_close(&file);
             *numberOfPlants = db.numberOfPlants;
-            memcpy(allPlants,
-                   db.plants,
-                   sizeof(db.plants));
+            if (db.numberOfPlants > 0)
+            {
+                memcpy(allPlants, db.plants, sizeof(db.plants));
                 ENABLE_LCD_SPEED();
-            return 1;
+                return 1;
+            }
         }
         f_close(&file);
     }
@@ -32,19 +38,15 @@ int loadDB(Plant allPlants[], int *numberOfPlants)
     return 0;
 }
 
-
 int saveDB(Plant allPlants[], int numberOfPlants)
 {
     ENABLE_SD_SPEED();
-    PlantDatabase db;
+    PlantDatabase db = {0};
     FIL file;
     UINT bw;
 
     db.numberOfPlants = numberOfPlants;
-
-    memcpy(db.plants,
-           allPlants,
-           sizeof(db.plants));
+    memcpy(db.plants, allPlants, numberOfPlants * sizeof(Plant));
 
     if (f_open(&file, "database.bin", FA_CREATE_ALWAYS | FA_WRITE) == FR_OK)
     {

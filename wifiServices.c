@@ -1,7 +1,7 @@
 #include "lcd.h"
 #include "plant.h"
 #include "usart.h"
-#include "pwm.h"
+#include "adc.h"
 #include "wifiServices.h"
 #include <stdio.h>
 #include <string.h>
@@ -60,37 +60,21 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
     if (commandBuffer[j] == '\n')
     {
       commandBuffer[j] = '\0';
-      if (!strcmp((char *)commandBuffer, "renderAllPlants"))
+      if (!strcmp((char *)commandBuffer, "getAllPlants"))
       {
-        LCD_Clear(BLACK);
-        renderAllPlants(allPlants, *numberOfPlants);
-      }
-
-      else if (!strcmp((char *)commandBuffer, "getAllPlants"))
-      {
-        LCD_Clear(BLACK);
-        LCD_ShowStr(10, 10, "data transmitted", WHITE, TRANSPARENT);
-
         char data[512];
         jsonAllPlants(data, sizeof(data), allPlants, *numberOfPlants);
         putstr(data);
       }
-
       else
       {
         char cmd[15];
         char *ptr = strstr(commandBuffer, "\"cmd\":\"");
-        if (ptr != NULL)
-        {
-          sscanf(ptr, "\"cmd\":\"%14[^\"]\"", cmd);
-        }
-
+        if (ptr != NULL)    // Inträffar om -^ hittades i body, då är pointer värdet där det börjar
+          sscanf(ptr, "\"cmd\":\"%14[^\"]\"", cmd); // spara det som kommer efter ptr och cmd syntaxen, dvs spara value från cmd key
+        
         if (!strcmp(cmd, "startPump"))
-        {
-          T1setPWMch0(900);
-          LCD_Clear(BLACK);
-          LCD_ShowStr(10, 10, "PUMP STARTED!", BLUE, TRANSPARENT);
-        }
+          T1setPWMch0(500);
 
         else if (!strcmp(cmd, "startLamp"))
         {
@@ -98,7 +82,6 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
             gpio_bit_reset(GPIOB, GPIO_PIN_7);
           else 
             gpio_bit_set(GPIOB, GPIO_PIN_7);
-          LCD_Clear(BLACK);
         }
 
         else if (!strcmp(cmd, "addPlant"))
@@ -135,13 +118,11 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
                     idealMoist, lowMoist, highMoist,
                     idealSun, lowSun, highSun,
                     idealTemp, lowTemp, highTemp);
-          LCD_Clear(BLACK);
-          LCD_ShowStr(10, 10, "NEW PLANT ADDED!", BLUE, TRANSPARENT);
         }
         else
         {
           LCD_Clear(BLACK);
-          LCD_ShowStr(10, 10, "BAD COMMAND:", WHITE, TRANSPARENT);
+          LCD_ShowStr(10, 10, "BAD COMMAND:", RED, TRANSPARENT);
           LCD_ShowStr(10, 23, (char *)commandBuffer, WHITE, TRANSPARENT);
           putstr((char *)commandBuffer);
         }

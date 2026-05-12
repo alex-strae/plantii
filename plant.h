@@ -10,6 +10,9 @@
 #define STAMP_LENGTH 10
 #define AVG_HISTORY_DAYS 30
 #define MAXIMUM_NUMBER_OF_PLANTS 3
+#define SUN_INTERVAL 60
+#define MOIST_INTERVAL 1800
+#define TEMP_INTERVAL 1800
 
 typedef struct __attribute__((packed))
 {

@@ -1,11 +1,10 @@
 #include "gd32vf103.h"
 #include "usart.h"
 #include "eclicw.h"
-#include "drivers.h"
-#include "lcd.h"
 #define BUF_SIZE 256
 
 int txr = 0, txw = 0, txq[512] = {0}; // 256 Byte wr queue
+
 volatile char commandBuffer[BUF_SIZE];
 volatile int commandBufferIndex = 0;
 
@@ -16,7 +15,7 @@ void wifiIsrHandler(void)
   {
     if (txr != txw)
     {
-      l88mem(4, 1);                            // ...no! Device redy?
+                                                // ...no! Device redy?
       usart_data_transmit(USART0, txq[txr++]); //        Yes Write!
       txr %= 512;                              //            wrap around.
     }
