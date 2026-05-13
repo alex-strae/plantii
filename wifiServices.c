@@ -14,9 +14,7 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
   for (int i = 0; i < numberOfPlants; i++)
   {
     if (i > 0)
-    {
       currentIndex += snprintf(out + currentIndex, outSize - currentIndex, ",");
-    }
 
     currentIndex += snprintf(out + currentIndex, outSize - currentIndex,
                              "{\"name\":\"%s\","
@@ -32,7 +30,8 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
                              "\"minTemp\":%d,"
                              "\"maxMoist\":%d,"
                              "\"maxSun\":%d,"
-                             "\"maxTemp\":%d}",
+                             "\"maxTemp\":%d,"
+                             "\"sunHistory\":[",// ORIGINAL: "\"maxTemp\":%d}"
                              allPlants[i].name,
                              allPlants[i].currentStatus,
                              allPlants[i].sun[allPlants[i].numberOfSunReadings - 1].reading,
@@ -47,14 +46,20 @@ void jsonAllPlants(char *out, size_t outSize, Plant allPlants[], int numberOfPla
                              allPlants[i].highMoist,
                              allPlants[i].highSun,
                              allPlants[i].highTemp);
+            
+  for (int j = 0; j < allPlants[i].numberOfSunHistory; j++) {
+     if (i > 0)
+      currentIndex += snprintf(out + currentIndex, outSize - currentIndex, ",");
+    currentIndex += snprintf(out + currentIndex, outSize - currentIndex, "%d", allPlants[i].sunHistory[j]);
+  }
+  currentIndex += snprintf(out + currentIndex, outSize - currentIndex, "]");
+  currentIndex += snprintf(out + currentIndex, outSize - currentIndex, "}");
   }
   snprintf(out + currentIndex, outSize - currentIndex, "]\n");
 }
 
 void receiveCommands(Plant allPlants[], int *numberOfPlants)
 {
-  LCD_Clear(BLACK);
-  LCD_ShowStr(10, 10, "in receive commands", WHITE, TRANSPARENT);
   for (int j = 0; j < commandBufferIndex; j++)
   {
     if (commandBuffer[j] == '\n')
@@ -122,7 +127,7 @@ void receiveCommands(Plant allPlants[], int *numberOfPlants)
         else
         {
           LCD_Clear(BLACK);
-          LCD_ShowStr(10, 10, "BAD COMMAND:", RED, TRANSPARENT);
+          LCD_ShowStr(10, 10, "HTTP_500:", RED, TRANSPARENT);
           LCD_ShowStr(10, 23, (char *)commandBuffer, WHITE, TRANSPARENT);
           putstr((char *)commandBuffer);
         }

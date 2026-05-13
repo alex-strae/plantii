@@ -26,7 +26,7 @@ build/utilities.o: utilities.c \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h lcd.h
+ ../../firmware/RISCV/drivers/riscv_const.h lib/lcd/include/lcd.h
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 
@@ -84,4 +84,4 @@ build/utilities.o: utilities.c \
 
 ../../firmware/RISCV/drivers/riscv_const.h:
 
-lcd.h:
+lib/lcd/include/lcd.h:

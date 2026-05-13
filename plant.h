@@ -60,6 +60,7 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+  uint32_t systemTime;
   uint32_t magic;
   uint32_t crc;
   int32_t numberOfPlants;

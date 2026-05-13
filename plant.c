@@ -1,7 +1,6 @@
 #include "plant.h"
 #include <stdio.h>
 #include "lcd.h"
-#include "pwm.h"
 #include "adc.h"
 #include "gd32vf103.h"
 #define STR_COPY(dest, src) \
@@ -190,9 +189,9 @@ void updatePlantStatus(Plant *plant)
   if (plant->moisture[plant->numberOfMoistureReadings].reading < plant->lowMoist)
     T1setPWMch0(900); // BÖRJA VATTNA, LAGOM FLÖDE = 900?
   if (plant->temp[plant->numberOfTempReadings].reading > plant->highTemp)
-    STR_COPY(plant->currentStatus, "PLANTAN FÖR VARM");
+    STR_COPY(plant->currentStatus, "FÖR VARM!");
   else if (plant->temp[plant->numberOfTempReadings].reading < plant->lowTemp)
-    STR_COPY(plant->currentStatus, "PLANTAN FRYSER");
+    STR_COPY(plant->currentStatus, "FRYSER!");
 }
 
 int applyGreenFingers(Plant allPlants[], int numberOfPlants)

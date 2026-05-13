@@ -48,14 +48,26 @@ void renderAllHistory(Plant allPlants[], int numberOfPlants) {
   /// WIP
   for (int i = 0; i < numberOfPlants; i++)
   {
-    LCD_ShowStr(0, 40*i, "SUN:", WHITE, TRANSPARENT);        
-    LCD_ShowStr(0, 10*(i+1), "MOIST:", WHITE, TRANSPARENT);
-    LCD_ShowStr(0, (i*30), "TEMP:", WHITE, TRANSPARENT);
-    LCD_ShowNum(25, 10*(i+1), allPlants[i].sunHistory[0], 3, WHITE);
-    LCD_ShowNum(25, 20*(i+1), allPlants[i].moistHistory[0], 3, WHITE);
-    LCD_ShowNum(25, 30*(i+1), allPlants[i].tempHistory[0], 3, WHITE);
-    LCD_ShowNum(40, 10*(i+1), allPlants[i].sunHistory[1], 3, WHITE);
-    LCD_ShowNum(40, 20*(i+1), allPlants[i].moistHistory[1], 3, WHITE);
-    LCD_ShowNum(40, 30*(i+1), allPlants[i].tempHistory[1], 3, WHITE);
+    LCD_ShowStr(0, 10+i*1, "SUN:", WHITE, TRANSPARENT);        
+    LCD_ShowStr(0, 20+(i*2), "MOIST:", WHITE, TRANSPARENT);
+    LCD_ShowStr(0, 30+(i*3), "TEMP:", WHITE, TRANSPARENT);
+    LCD_ShowNum(30, 10+i*1, allPlants[i].sunHistory[0], 3, WHITE);
+    LCD_ShowNum(30, 20+(i*2), allPlants[i].moistHistory[0], 3, WHITE);
+    LCD_ShowNum(30, 30+(i*3), allPlants[i].tempHistory[0], 3, WHITE);
+    LCD_ShowNum(55, 10+i*1, allPlants[i].sunHistory[1], 3, WHITE);
+    LCD_ShowNum(55, 20+(i*2), allPlants[i].moistHistory[1], 3, WHITE);
+    LCD_ShowNum(55, 30+(i*3), allPlants[i].tempHistory[1], 3, WHITE);
+    LCD_ShowNum(70, 10+i*1, allPlants[i].sunHistory[2], 3, WHITE);
+    LCD_ShowNum(70, 20+(i*2), allPlants[i].moistHistory[2], 3, WHITE);
+    LCD_ShowNum(70, 30+(i*3), allPlants[i].tempHistory[2], 3, WHITE);
+    LCD_ShowNum(95, 10+i*1, allPlants[i].sunHistory[3], 3, WHITE);
+    LCD_ShowNum(95, 20+(i*2), allPlants[i].moistHistory[3], 3, WHITE);
+    LCD_ShowNum(95, 30+(i*3), allPlants[i].tempHistory[3], 3, WHITE);
+    LCD_ShowNum(120, 10+i*1, allPlants[i].sunHistory[4], 3, WHITE);
+    LCD_ShowNum(120, 20+(i*2), allPlants[i].moistHistory[4], 3, WHITE);
+    LCD_ShowNum(120, 30+(i*3), allPlants[i].tempHistory[4], 3, WHITE);
+    LCD_ShowNum(145, 10+i*1, allPlants[i].sunHistory[5], 3, WHITE);
+    LCD_ShowNum(145, 20+(i*2), allPlants[i].moistHistory[5], 3, WHITE);
+    LCD_ShowNum(145, 30+(i*3), allPlants[i].tempHistory[5], 3, WHITE);
   }
 }

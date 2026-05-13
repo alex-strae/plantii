@@ -1,4 +1,4 @@
-build/renderPlants.o: renderPlants.c lcd.h \
+build/renderPlants.o: renderPlants.c lib/lcd/include/lcd.h \
  ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h \
@@ -29,7 +29,7 @@ build/renderPlants.o: renderPlants.c lcd.h \
  ../../firmware/RISCV/drivers/riscv_const.h plant.h utilities.h \
  renderPlants.h
 
-lcd.h:
+lib/lcd/include/lcd.h:
 
 ../../firmware/GD32VF103_standard_peripheral/Include/gd32vf103_gpio.h:
 

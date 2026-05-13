@@ -1,1 +1,1 @@
-build/drivers.o: drivers.S
+build/drivers.o: lib/drivers/src/drivers.S

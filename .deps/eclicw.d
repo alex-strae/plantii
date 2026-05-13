@@ -1,4 +1,4 @@
-build/eclicw.o: eclicw.c eclicw.h \
+build/eclicw.o: lib/eclicw/src/eclicw.c lib/eclicw/include/eclicw.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/system_gd32vf103.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103_libopt.h \
@@ -28,7 +28,7 @@ build/eclicw.o: eclicw.c eclicw.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
  ../../firmware/RISCV/drivers/riscv_const.h
 
-eclicw.h:
+lib/eclicw/include/eclicw.h:
 
 ../../firmware/GD32VF103_standard_peripheral/gd32vf103.h:
 

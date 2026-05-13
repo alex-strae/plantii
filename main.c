@@ -37,23 +37,24 @@ int main(void)
   t5omsi(); // Initialize timer5 1kHz
   colinit();
   l88init();
-  gpio_init(GPIOB, GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ , GPIO_PIN_7);  // SOL LAMPA LED
+  gpio_init(GPIOB, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_7); // SOL LAMPA LED
   keyinit();
-  rtcInit();
-  rtc_counter_set(0);
+  rtcInit();          // Init real time clock för att hålla koll på längre tid än t5omsi
+  rtc_counter_set(0); // Overwriteas till annat värde om databas laddas från sdkort nedan
 
   Lcd_SetType(LCD_INVERTED);
   Lcd_Init();
   LCD_Clear(BLACK);
-  LCD_ShowStr(10, 10, "Green Fingers v1", GREEN, TRANSPARENT);
 
   MAX31865_Init();       // Init Jocke temp-sensor
-  ADC3powerUpInit(0);    // Initialize ADC0, Ch3
+  ADC3powerUpInit(0);    // Initialize ADC0, Ch3 och Ch1 för fukt & ljussensor
   u0init(1);             // Init WiFi över UART
   T1powerUpInitPWM(0x1); // Init vattenpump
+  delay_1ms(50);         // Onödig väntetid: det är coolt att vänta
 
   eclic_global_interrupt_enable();
 
+  LCD_ShowStr(10, 10, "Green Fingers v1", GREEN, TRANSPARENT);
   putstr("System online");
 
   FATFS fs;
@@ -61,18 +62,22 @@ int main(void)
   fr = f_mount(&fs, "", 1);
 
   if (loadDB(allPlants, &numberOfPlants))
-    putstr("DB loaded");
+  {
+    putstr(". DB loaded");
+    LCD_ShowStr(10, 25, "DB loaded", WHITE, TRANSPARENT);
+  }
   else
-    putstr("No DB");
+  {
+    putstr(". No DB");
+    LCD_ShowStr(10, 25, "No DB", WHITE, TRANSPARENT);
+  }
 
-  delay_1ms(100);
-
-
-  while (1)
+  int alive = 1;
+  while (alive)
   {
     idle++;
     LCD_WR_Queue();
-    if (commandBufferIndex > 0) // AKTIVERAR RX WIFI
+    if (commandBufferIndex > 0) // AKTIVERAR RX WIFI. commandBufferIndex fylls via ISR. Kommandot utförs av pollad loop (raden nedan)
       receiveCommands(allPlants, &numberOfPlants);
 
     if (t5expq())
@@ -82,19 +87,16 @@ int main(void)
       if (ms == 1000)
       {
         ms = 0;
-        // DENNA KÖR CHECK AV SENSORER
-        if (oneMinuteHasPassed(&currentMin) && numberOfPlants)
+        if (oneMinuteHasPassed(&currentMin) && numberOfPlants) // DENNA KÖR CHECK AV SENSORER
         {
           if (applyGreenFingers(allPlants, numberOfPlants))
-            putstr("Green fingers working");
-         
+            putstr("Green fingers working. ");
           if (saveDB(allPlants, numberOfPlants))
-            putstr("DB updated");
+            putstr("DB update successful");
           else
-            putstr("DB UPDATE ERROR");
-            
+            putstr("DB update failed");
         }
-        
+
         l88mem(0, idle >> 8); // ...Performance monitor
         l88mem(1, idle);
         idle = 0;
@@ -104,11 +106,23 @@ int main(void)
       {
         nopress = 0; /// for a time out (no button pressed after x mins return to home screen)
         akey = lookUpTbl[key];
-        Buttonpressed(&page, akey, &numberOfPlants, allPlants, &pointer);
+        Buttonpressed(&page, akey, &numberOfPlants, allPlants, &pointer, &alive);
+      }
+      else
+        no_button_press(&page, &nopress);
+    }
+
+    if (!alive)
+    {
+      if (saveDB(allPlants, numberOfPlants))
+      {
+        putstr("SAFE TO SHUT DOWN");
+        LCD_ShowStr(10, 25, "SAFE TO SHUT DOWN", GREEN, TRANSPARENT);
       }
       else
       {
-        no_button_press(&page, &nopress);
+        putstr("DB SAVE ERROR");
+        LCD_ShowStr(10, 25, "DB SAVE ERROR", RED, TRANSPARENT);
       }
     }
   }

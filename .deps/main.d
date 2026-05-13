@@ -26,10 +26,10 @@ build/main.o: main.c \
  ../../firmware/RISCV/drivers/n200_func.h \
  ../../firmware/RISCV/drivers/n200_timer.h \
  ../../firmware/RISCV/drivers/n200_eclic.h \
- ../../firmware/RISCV/drivers/riscv_const.h drivers.h adc.h lcd.h menu.h \
- plant.h utilities.h usart.h renderPlants.h wifiServices.h pwm.h \
- lib/fatfs/include/gd32v_tf_card_if.h lib/fatfs/include/tf_card.h \
- lib/fatfs/include/gd32v_pjt_include.h \
+ ../../firmware/RISCV/drivers/riscv_const.h lib/drivers/include/drivers.h \
+ adc.h lib/lcd/include/lcd.h menu.h plant.h utilities.h usart.h \
+ renderPlants.h wifiServices.h lib/fatfs/include/gd32v_tf_card_if.h \
+ lib/fatfs/include/tf_card.h lib/fatfs/include/gd32v_pjt_include.h \
  ../../firmware/GD32VF103_standard_peripheral/gd32vf103_libopt.h \
  lib/fatfs/include/diskio.h lib/fatfs/include/ff.h \
  lib/fatfs/include/ffconf.h lib/systick/include/systick.h sdcard.h \
@@ -91,11 +91,11 @@ build/main.o: main.c \
 
 ../../firmware/RISCV/drivers/riscv_const.h:
 
-drivers.h:
+lib/drivers/include/drivers.h:
 
 adc.h:
 
-lcd.h:
+lib/lcd/include/lcd.h:
 
 menu.h:
 
@@ -108,8 +108,6 @@ usart.h:
 renderPlants.h:
 
 wifiServices.h:
-
-pwm.h:
 
 lib/fatfs/include/gd32v_tf_card_if.h:
 
